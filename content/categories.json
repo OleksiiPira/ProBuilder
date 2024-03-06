@@ -1,831 +1,831 @@
 {
-  "f4472260-e639-49f1-b851-a0463b430744": [
+  "7113068a-66e8-4ccf-94b4-aa999e6c0e0d": [
     {
-      "id": "c8f03b81-90df-4611-9912-dbd97676cd63",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "135feaad-3565-4868-9f96-49f7a865a795",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Плиточні роботи"
     },
     {
-      "id": "1ecf851c-a315-4546-81d3-46937a95ac5b",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "7c709771-1a92-4870-89a4-2fbc20e5330b",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Малярні роботи"
     },
     {
-      "id": "f7def821-1c6e-4b9c-a1e5-dedb838d5c2d",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "82ec72cc-982b-489f-8660-e9f1b06d658d",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Штукатурні роботи"
     },
     {
-      "id": "4b0c55a8-e3d1-4af7-b23f-bbb5350db5b5",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "01e83103-bebe-45ad-be87-dfc95c488f74",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Монтаж гіпсокартону"
     },
     {
-      "id": "0c48be8e-9b56-46cc-afaf-9b2132fe3701",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "8641c7ac-53a2-4cb3-accf-61d7316ec23e",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Поклейка шпалер"
     },
     {
-      "id": "ce9560ba-013f-43d0-9947-91aaf89e42a6",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "74253a7d-c7da-400d-b1d6-ca4f99cd77ce",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Чорнові роботи по підлозі"
     },
     {
-      "id": "e6d4478d-ffbb-4399-9cf1-b9bba79c1576",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "e4bc5e16-cb13-4328-a6a8-d15db6063349",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Покриття для підлоги"
     },
     {
-      "id": "4016e56f-1695-4f62-a01c-3538178a1aa8",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "70bffa80-6711-44c1-b1c9-c4a5b9bb6e1d",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Стеля"
     },
     {
-      "id": "bebe8b40-66bb-4d43-9201-d483ba3479a9",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "3ff6ebcf-f5e0-48f3-961a-fb79631906d1",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Монтаж вагонки"
     },
     {
-      "id": "edc80e06-b653-4e71-aa2a-b31145644c1c",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "2563e346-b461-4919-8fba-82ce59aee501",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Декоративне оздоблення стін"
     },
     {
-      "id": "a22fa988-e80e-4162-8e34-4f9d7fb74e0a",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "4e25debd-76d6-4f69-9212-7002d682aee6",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Стінова панель"
     },
     {
-      "id": "2a2b8998-bea2-4e3c-874f-ac630f57fa54",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "7058be68-fc4f-44e9-bafa-900e750615d2",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Ліпнина"
     },
     {
-      "id": "ee9a10ec-3f7a-44b5-a307-cb502b1de153",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "aa95ad38-393b-429a-8f90-d0f9a9f9848a",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Розпис стін"
     },
     {
-      "id": "492f00e8-0238-4ef7-a379-818f88653c17",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "d37f871f-0ec9-4824-87e3-0d869959a6b6",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Роботи з каменем, мармуром, гранітом"
     },
     {
-      "id": "5e83b340-9154-4c36-b84c-d8c0701a021c",
-      "rowId": "f4472260-e639-49f1-b851-a0463b430744",
+      "id": "7c7c6896-2b2a-4082-ac60-f5b9aaaa92d8",
+      "rowId": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
       "name": "Промислові підлоги"
     }
   ],
-  "345c2c48-79de-4698-9d8d-62de1d3d654f": [
+  "94b0e5c3-267a-41ee-a391-cf4a7a2fea27": [
     {
-      "id": "289e88af-8635-412d-9290-acdbd394727d",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "75893118-421e-42d3-a112-99a21f0d4fed",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Електромонтажні роботи"
     },
     {
-      "id": "10d621be-0479-44af-ae27-dd1d36712668",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "78300f4c-3761-46d7-a710-59c45b9417b5",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Сантехнічні роботи"
     },
     {
-      "id": "8f13f0e4-e8fa-456d-9971-bae81a2176fd",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "850a0da2-63a0-4430-bfd2-baa0c2b34e3e",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Системи опалення"
     },
     {
-      "id": "453d7b02-7ad4-4e86-9a58-072bf3716565",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "64f33875-8308-4cb5-9207-ade9d230983c",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Кліматичне обладнання"
     },
     {
-      "id": "154029d1-3d26-4532-a82e-7affd218fb6b",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "3d457e44-7fb0-4a99-811b-d5460961379b",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Водопостачання та очищення води"
     },
     {
-      "id": "6d9ae722-b549-40ad-b0d8-db6012793ebe",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "0c8f72d9-764b-4a5c-9cb1-6cfa11781cc2",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Тепла підлога"
     },
     {
-      "id": "0d546b35-44e7-4b8b-86d6-8095c083349c",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "4a542158-e795-45ff-9452-c6ca386124f7",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Інтернет і ТБ"
     },
     {
-      "id": "787122fc-08ae-4e1b-abf9-9ed288fdd5e7",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "e0e71ab1-2a17-49c0-bd0e-c244c7049abd",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Охоронні системи та контроль доступу"
     },
     {
-      "id": "534cf2b9-5d0e-4696-8797-15068f3a0144",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "0bfaf0fd-b8d6-4825-878d-041ab4827bb4",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Пожежні сигналізації"
     },
     {
-      "id": "d986cb4f-e8e6-4bb8-8e3e-13fb68f23e50",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "367134d8-ef74-4f4a-bfec-fef803ba4ac0",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Системи відеоспостереження"
     },
     {
-      "id": "e06a3194-7ba0-4f79-af61-9462bf4ab523",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "0719ab8b-1648-421b-b279-c59c691230b2",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Системи пожежогасіння"
     },
     {
-      "id": "9d21f2cc-0107-436f-910f-df0e2e62d003",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "04431958-9e53-491f-9d96-1b0ed052a3d0",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Газифікація"
     },
     {
-      "id": "b0fd5d07-c545-46af-9738-956472b8167f",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "8fcbac8e-66b0-4d39-90aa-fdfb61694b88",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Ліфти та ескалатори"
     },
     {
-      "id": "7f64d7a1-cc8c-4971-a6ae-6ab53b4c4eba",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "49922c70-61b6-4943-8991-0092a4784f09",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Розумний будинок"
     },
     {
-      "id": "70471ed4-2c2f-4b24-9735-fdfa83e87984",
-      "rowId": "345c2c48-79de-4698-9d8d-62de1d3d654f",
+      "id": "567f2572-282b-49e9-86eb-d7d0fe919302",
+      "rowId": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
       "name": "Альтернативні джерела енергії"
     }
   ],
-  "729e687d-f3fa-4726-9d51-fd60b45893ed": [
+  "8d4f3033-6a8e-417a-8e91-b27d6d98fde7": [
     {
-      "id": "8d43aaed-a0f2-4009-91a4-1235e92062dc",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "4a2d428d-f5c5-4ea9-94e7-5450c7a27014",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Фасадні роботи"
     },
     {
-      "id": "23e7833b-51ac-4c17-94de-82d6206a84ee",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "1d747153-efb5-4aea-b90a-6c7fe6aba91d",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Кладочні роботи"
     },
     {
-      "id": "cc984aa7-bbdc-40e5-885b-679aa83e0e39",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "25b6bb89-3823-4304-8275-cc95b01adf13",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Фундамент"
     },
     {
-      "id": "59e7bbfa-07ff-401b-819c-ca140978a7da",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "57ab06bd-af05-4892-9e7a-892e3a491a47",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Тротуарна плитка"
     },
     {
-      "id": "86ed4a4f-f4e3-4d21-94e8-2c64c4a6cedd",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "5dd3c3ea-11c3-4ef7-85e5-1bd4ddb2263a",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Монтажні роботи (плити, ФБС)"
     },
     {
-      "id": "df9808ed-64fb-4917-a08b-ccb62f47fbf5",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "a5621e5a-e3aa-49db-922c-5468713a105c",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Покрівельні роботи"
     },
     {
-      "id": "dab05a3b-a129-45a0-85e7-8898f2114590",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "ed670034-bc75-4fc2-98c2-308fce65fd3a",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Земляні роботи"
     },
     {
-      "id": "addca9d9-ce8c-4b8d-9cb5-1bf08599d414",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "42030f97-6826-40b4-86e7-51aef574e35d",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Септики і вигрібні ями"
     },
     {
-      "id": "b5f05918-6fed-4eed-a93c-1c2e687f6c28",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "e89f015f-5b28-47c1-a57b-b36d0ae658d0",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Сходи"
     },
     {
-      "id": "299422f3-d351-4b1c-8b33-2f7c37d0d568",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "3077e201-8ff5-40d2-ae0b-eaef0a72ab8d",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Алмазне різання та свердління"
     },
     {
-      "id": "edd27b28-314a-480b-b296-87f1f25184b2",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "0cbe4457-51a4-4c7f-b2f0-180649929f00",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Ізоляційні роботи"
     },
     {
-      "id": "0cf5fb1f-cd88-4427-9d2a-9f67b3f96ea2",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "8ddc61f4-cff0-41bf-b477-d2aa202adc53",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Гідроізоляція"
     },
     {
-      "id": "ce2b6f54-2aa8-453f-829a-6e26d78d3cf6",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "aa265fba-0a8e-4510-8b70-8ab7b346732b",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Теплоізоляція"
     },
     {
-      "id": "ce27dd3c-b643-46f9-bcdf-487a35a785a5",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "bc6634fa-d36a-43e2-8c01-aa2b4793fcbd",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Звукоізоляція"
     },
     {
-      "id": "3c59cc75-1ff2-4ee8-8a7f-fdcdba120bf1",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "29588b72-2ba2-49aa-b96e-dee441d492d3",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Промисловий альпінізм"
     },
     {
-      "id": "4e5f78cf-b4bb-4237-bf9a-1f199ae7992f",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "30869e3e-2759-439a-96ca-a412392ec1fa",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Бетонні роботи"
     },
     {
-      "id": "774b0dd8-85dd-4582-b67e-ab3c5dcff2c4",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "178a0c2d-a5de-4d71-a11b-ff464a0d814c",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Шляхове будівництво"
     },
     {
-      "id": "0513e24c-0de8-4328-9742-4f0e22bca198",
-      "rowId": "729e687d-f3fa-4726-9d51-fd60b45893ed",
+      "id": "31c3c0be-315a-4311-a98d-44c086aa5b5a",
+      "rowId": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
       "name": "Послуги різноробочих"
     }
   ],
-  "f77f9117-c805-4e1d-a0a4-0f529be4883d": [
+  "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f": [
     {
-      "id": "c4a78788-f088-4cd0-9825-df3566b1f656",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "caea2214-745b-451e-8c50-dd950f8dcb45",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Ремонт квартири або кімнати"
     },
     {
-      "id": "324880ad-4921-4b31-8c9b-28086844a9ba",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "33a67729-43a1-4ee1-87ef-90947e833d8d",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Ремонт офісу"
     },
     {
-      "id": "62a28de6-7a4d-4d62-a3ad-9dc0cee1f271",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "1629d337-be73-4792-9bf0-f81f457c54b9",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво будинку"
     },
     {
-      "id": "2bb46a35-d923-45c2-ba26-cf6c4f2879d7",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "96011f0d-ace2-4f4c-b81d-7f5cd82ff5c0",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво каркасного будинку"
     },
     {
-      "id": "ca173cf3-c1aa-42a9-8409-15a1172787b7",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "3d8bfc05-ef5f-4bea-a39f-51ebf4ae492c",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Ремонт балкона"
     },
     {
-      "id": "a84e9761-6225-4187-acf3-a4a39695573f",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "859aa043-2848-4dd7-b342-44baba7b42ee",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Ремонт кухні"
     },
     {
-      "id": "116abf51-defd-4d28-924a-35fc8cdefb9a",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "a0936d0c-4f19-4402-af19-4de77a663425",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Ремонт ванної або туалету"
     },
     {
-      "id": "9c86c56f-c03f-475d-b721-acca31b58f2a",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "9ddc43e1-4452-4987-902c-7ed26ad1d979",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво зрубу"
     },
     {
-      "id": "bd80b7e6-e178-4627-aa98-0034fd2e6f8e",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "650933d3-8f97-4e0a-9cc2-e2436ef7e5a1",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво лазні та сауни"
     },
     {
-      "id": "5d617070-a525-4cf0-b0a0-fcaa9d553bd9",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "59b8e7db-8389-4ebe-8f50-ab13a5775abe",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво басейну"
     },
     {
-      "id": "7dc8d91e-8995-4629-90ba-e28212154a09",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "ce6a0f84-2f4b-4ef6-9ca2-de785df56ddb",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Кладка печей і камінів"
     },
     {
-      "id": "e8c5b170-ea00-4fbe-b929-99f14dfe10fd",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "45d69fcf-80f0-46a6-b124-278d1ebed949",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Маркізи і навіси"
     },
     {
-      "id": "a3ff79d1-dd16-47ec-bc8a-a2b5368c9b88",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "6b46f0ab-927c-44c4-a3ec-d84390cbf99a",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво теплиці"
     },
     {
-      "id": "b00cec86-2943-428b-b17b-e0d2461e209f",
-      "rowId": "f77f9117-c805-4e1d-a0a4-0f529be4883d",
+      "id": "48046cc3-81a5-4b33-9b29-bd98f8dbf695",
+      "rowId": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
       "name": "Будівництво гаража"
     }
   ],
-  "b8a8f76a-6715-4d47-8e66-2eb2ca474a05": [
+  "b3ce29c5-1bd8-4159-a585-bc81a572cb05": [
     {
-      "id": "b0be44b9-11d4-4a0d-8e56-f6427cfefe02",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "db08e105-aba4-4919-b0f6-52b04e0ce6e2",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Автоматичні та гаражні ворота"
     },
     {
-      "id": "39da70bc-00f2-463c-986c-cd85942d3749",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "634d884a-ee54-408f-abc1-1c79eea9ad87",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з профнастилу"
     },
     {
-      "id": "5efbd1a0-159c-481a-a429-b890a6301a5b",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "ebc8fbc0-b46e-480a-9cee-8c169345e102",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з каменю"
     },
     {
-      "id": "654dc8e7-ed05-45ce-933d-f338e5d70669",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "9ec78ad6-b449-419a-9706-8cdb245c4848",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з цегли"
     },
     {
-      "id": "a71548cc-9a52-4bd7-8f41-b9f4e04cf517",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "bb7aa54c-1055-415b-95d2-f13c11d328f0",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з дерева"
     },
     {
-      "id": "bd188293-e74b-4b99-a8ef-8f4389d97a0c",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "db2e2c66-e318-4960-8faf-fe8c03088b0d",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з сітки"
     },
     {
-      "id": "d9051be3-2b81-4fba-8e2d-cf08cc0e9040",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "c75b3efc-b51f-4549-b643-9870be0c078c",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Кований паркан"
     },
     {
-      "id": "785c0d9a-17c4-480b-b4cf-1f67663fcd52",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "0f3e8d86-1ff1-447c-8e13-99c1038f5421",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Паркан з бетону"
     },
     {
-      "id": "10fcabce-1406-430b-a253-3bdaa368a9cf",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "c7389d03-6244-4390-b0f1-f95afa8ef30b",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Ворота і хвіртки"
     },
     {
-      "id": "4fad8e9a-e850-41b4-8e1c-ec7157d2bc83",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "800b12b5-772c-42fb-b2b7-c3cfc05a073e",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Фундамент під паркан"
     },
     {
-      "id": "8ed7be30-b3b3-45c8-88ea-6bee80ea7399",
-      "rowId": "b8a8f76a-6715-4d47-8e66-2eb2ca474a05",
+      "id": "a30fa02b-346e-4ea4-ae99-f40bc998a0eb",
+      "rowId": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
       "name": "Інші роботи та паркани"
     }
   ],
-  "ab1a7ed8-5814-456d-a2ed-d126e0d98427": [
+  "5e343181-2fcc-4eee-87ce-d0d67320bcc7": [
     {
-      "id": "b06001a7-fd25-42fb-92ea-a95a4578280b",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "699e1be0-9ecc-4f9f-9492-8f2af62864fa",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Демонтаж сантехніки"
     },
     {
-      "id": "49c6ab91-d824-4c5d-a225-09e74936137c",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "92140471-5809-405b-8d76-c6c7968c0183",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Демонтаж вікон і дверей"
     },
     {
-      "id": "6adf1091-66d7-4b8b-86aa-92154d037c30",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "f618effe-2d67-46da-903a-5f16b759cf0c",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Знесення стін і перегородок"
     },
     {
-      "id": "6b804d92-f271-4a89-b5d0-dc8a8b8aea77",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "0f3fc498-0466-4f0e-b49e-0400a1d8d1a0",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Отвори і штроби"
     },
     {
-      "id": "9675d79a-c2f3-47a0-9deb-0b45b958e010",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "5526dd9e-8c8e-4ff0-99c9-a752be608d6a",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Видалення фарби"
     },
     {
-      "id": "f74bd2dc-cb8f-43e0-812e-e9f0e2636c96",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "e51cbf96-5892-4b71-a252-0b1713538a40",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Демонтаж настінних покриттів"
     },
     {
-      "id": "619cb613-c193-4346-b136-fc7fdcc30612",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "4c6f80a5-8f25-4aaf-991f-16897cff0abb",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Демонтаж підлогових покриттів"
     },
     {
-      "id": "7c58344e-878a-4e1f-a2a6-394dcd0c3ce9",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "0bb86257-5801-46fc-a59b-5dc32312ea93",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Знесення будівель і будівель"
     },
     {
-      "id": "9e41c0ef-a585-4fc9-8c12-f054f76fd2ec",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "740eabe6-ea3d-4d4a-b18f-9d09990850c0",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Демонтаж металоконструкцій"
     },
     {
-      "id": "1b319395-226d-4775-ac40-88dfb303fe1b",
-      "rowId": "ab1a7ed8-5814-456d-a2ed-d126e0d98427",
+      "id": "d5fbea68-d1cf-44e4-b7d2-cce0222426f3",
+      "rowId": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
       "name": "Інший демонтаж"
     }
   ],
-  "1c35bb1c-46d3-48a8-b04e-dcaa016cfc6b": [
+  "ea51944e-54c1-4161-b64d-eb4e0c32ddd5": [
     {
-      "id": "82911255-b406-4fde-9343-d8365849ae2a",
-      "rowId": "1c35bb1c-46d3-48a8-b04e-dcaa016cfc6b",
+      "id": "3bfa84bd-61de-405a-a610-c8e1900af29d",
+      "rowId": "ea51944e-54c1-4161-b64d-eb4e0c32ddd5",
       "name": "Вікна та скління"
     },
     {
-      "id": "be56fca0-f325-47bf-ad83-f953807410ad",
-      "rowId": "1c35bb1c-46d3-48a8-b04e-dcaa016cfc6b",
+      "id": "764b2242-7f0a-4993-8115-90a5ff8c48ad",
+      "rowId": "ea51944e-54c1-4161-b64d-eb4e0c32ddd5",
       "name": "Двері"
     }
   ],
-  "d21db448-37db-4b38-b42a-dcef9928ba5c": [
+  "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc": [
     {
-      "id": "631926e6-b170-4b37-a26c-3514fca79c52",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "74bb592a-aba2-488d-a043-6932cc78b00e",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Проектування будівель і споруд"
     },
     {
-      "id": "ee654a60-66f7-47c0-8d83-6c718d21ecb6",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "89a6013c-fdb2-49c2-abe6-e3fb3cf10674",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Інженерне проектування"
     },
     {
-      "id": "b39bcf21-2e1d-4e6d-abf9-6a6be6d51096",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "9f8b9e57-b95b-4a8d-adca-d521ec29c32a",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Кошторисні роботи"
     },
     {
-      "id": "e221e689-c600-40ba-a356-f8cfbb37f2a6",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "1afac134-1353-4779-84a3-434372db1da9",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Геодезичні роботи"
     },
     {
-      "id": "4fe6d63a-a6d2-419b-b743-232a6859c65c",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "ad1eb816-cd83-4ffe-ae1b-6508725642f7",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Технічний нагляд"
     },
     {
-      "id": "767ae95d-5c78-46c2-8f87-8de9432c63ce",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "19a16cc3-192a-490a-8c19-5c0318db4c59",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Геологічна розвідка"
     },
     {
-      "id": "4b71ed1e-c05d-4c69-9bf0-c5718b2d39a1",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "528d5c42-0e04-40e0-8684-f83838512b53",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Межування і кадастр"
     },
     {
-      "id": "82747c98-133c-4335-9852-1da541d74595",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "fb054db1-ec74-4f20-b0dc-6820bcaf747b",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Узгодження перепланування"
     },
     {
-      "id": "d795573a-55b5-4ea0-825f-c8cbeca371c6",
-      "rowId": "d21db448-37db-4b38-b42a-dcef9928ba5c",
+      "id": "95858ebd-4974-4df8-9286-c7d94e3e58b5",
+      "rowId": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
       "name": "Інші проектні та архітектурні роботи"
     }
   ],
-  "702367af-525c-4a54-aab2-b66862102a62": [
+  "a12bce23-5f26-49ef-af69-f4ea17989673": [
     {
-      "id": "77bd505a-05f4-4f24-b67c-523ff00e4b36",
-      "rowId": "702367af-525c-4a54-aab2-b66862102a62",
+      "id": "54415255-61e3-4681-8877-43888177e96b",
+      "rowId": "a12bce23-5f26-49ef-af69-f4ea17989673",
       "name": "Буріння свердловин для води"
     },
     {
-      "id": "1dfa6341-b339-4fca-933d-662ea3751743",
-      "rowId": "702367af-525c-4a54-aab2-b66862102a62",
+      "id": "d8f2fd10-3999-43b9-910f-b085e406c32c",
+      "rowId": "a12bce23-5f26-49ef-af69-f4ea17989673",
       "name": "Бурові роботи під палі та комунікації"
     },
     {
-      "id": "10eb8353-5730-4889-b506-e2151493ce7b",
-      "rowId": "702367af-525c-4a54-aab2-b66862102a62",
+      "id": "40d6f9c8-cfaa-4d9f-aec2-28db479306d0",
+      "rowId": "a12bce23-5f26-49ef-af69-f4ea17989673",
       "name": "Інші бурові роботи"
     }
   ],
-  "98a383a7-fd12-4a5d-98cf-50dc0a863973": [
+  "e3c73445-30d9-43c1-a7aa-ef3bddb5722c": [
     {
-      "id": "641b9e26-6aa0-4a22-9981-272ea57062c6",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "bc45c5a7-da87-4daf-953f-7d45ff18759d",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Дизайн інтер'єру"
     },
     {
-      "id": "44050779-eb16-4b02-8c05-2aa0b711d722",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "01312e01-ff37-485f-bfc2-43b3d0dae93a",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Декорування інтер'єрів"
     },
     {
-      "id": "5156f95d-372f-411b-939e-1a8e31b65391",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "92ae65ab-441b-487f-8ff7-1818153777f3",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Штори і карнизи"
     },
     {
-      "id": "63a8b209-d3a8-41a0-95e3-22025ec1debf",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "9c322977-62b2-4f89-846a-3140ea0794e0",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Фітодизайн"
     },
     {
-      "id": "049917f9-0db6-4b63-8519-4a11537a9e5d",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "9ef7e128-d933-423c-8200-52cad8d9bbf5",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Жалюзі"
     },
     {
-      "id": "0344df53-0cab-4176-9669-d1ecaa09f784",
-      "rowId": "98a383a7-fd12-4a5d-98cf-50dc0a863973",
+      "id": "8beeee8b-37aa-40b4-9a58-31c73c15615c",
+      "rowId": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
       "name": "Інші роботи по інтер'єру"
     }
   ],
-  "1d8c92fc-8afb-493d-80ee-be3b85897c57": [
+  "afe0a2ee-f979-4b58-a4ee-4504b582f379": [
     {
-      "id": "270c27c1-63a1-45ff-b28b-a55a6ff131f9",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "959e488c-2c6f-4c85-b978-df6ced7c99ce",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Ландшафтний дизайн"
     },
     {
-      "id": "f0507c38-95d1-4daa-9405-b69192b18f35",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "93045dc0-97c9-4a4f-b93d-c82cff27023d",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Установка автополиву"
     },
     {
-      "id": "4cd214fb-d35b-4219-ab81-f05865ecd3c1",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "b47db3cd-10aa-4ec3-9e24-e32b50a6fd1f",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Озеленення та благоустрій"
     },
     {
-      "id": "5981b9a5-83c0-4b3e-a8c2-759caeba1b3b",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "975d79be-3a1c-45be-953e-68c89817256e",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Влаштування і створення газону"
     },
     {
-      "id": "22669786-041c-46fe-94ad-e06da1273ce3",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "f9e88b39-158a-4a5d-8268-5c35c91af064",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Дренажні роботи"
     },
     {
-      "id": "e46cf7e0-ebbf-4c5d-802d-7da0439738d2",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "0db8916a-b3f0-439b-9b0b-d6bfcba4c99a",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Інші ландшафтні роботи"
     },
     {
-      "id": "6dd2359f-27de-440e-9dc6-7f80b434aac8",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "243a83ad-0ebf-42eb-b19c-cf7bfc747d09",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Штучна водойма"
     },
     {
-      "id": "fa79d871-1374-4a55-9f40-7cb9b839be55",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "2e973d10-7e2e-49c0-b130-18efe7803c86",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Фонтани"
     },
     {
-      "id": "ffffdf2c-8f47-4925-afba-cc081fac8b54",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "5fc203e7-018e-4de2-84c5-04d6c2cafa07",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Вуличне освітлення"
     },
     {
-      "id": "69baa8db-a3c7-4aa0-9c5a-0fb8928fec33",
-      "rowId": "1d8c92fc-8afb-493d-80ee-be3b85897c57",
+      "id": "e1d99003-ea00-4884-a2ab-50b8b83b3982",
+      "rowId": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
       "name": "Інші роботи з благоустрою"
     }
   ],
-  "e827c69b-32d6-4fc9-abd2-9209aacdd476": [
+  "aeb5ca12-017a-4ee4-bf0c-3707712a952f": [
     {
-      "id": "3f4c0ba2-e96b-47e8-83ad-546700dd705e",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "6bfb4375-c3ad-4c8d-bdbc-cb85da92f02a",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Столярні та теслярські роботи"
     },
     {
-      "id": "53b64201-7e88-4ac2-8fa6-594bb0ae5bee",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "44e3d21a-f76e-4c20-a9f9-f3f2dcc53111",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Виготовлення меблів"
     },
     {
-      "id": "7d63f081-3767-4ed2-bd6b-a8dce3722e53",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "1a4ed0d1-1cf1-4284-81a6-fbc225ddb46c",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Ремонт меблів"
     },
     {
-      "id": "a5c319c1-288b-4849-b5ee-aac425a727d0",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "aaffca23-e0d9-47e2-9967-2a30d87874c8",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Збірка меблів"
     },
     {
-      "id": "b4bdff7a-9b51-4564-a0fd-4b50452f1269",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "b88307b9-19a8-441e-93aa-2f076085faa3",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Реставрація меблів"
     },
     {
-      "id": "3244cbf6-4afe-4cd6-8436-6fc4d8a00810",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "5e9edb56-22ca-4e92-9358-1ef3915e2f03",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Перетяжка меблів"
     },
     {
-      "id": "0bfddaf1-e7cb-4019-bab4-28a04e0e57ee",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "b279bd8b-77a6-472c-9c37-bb9dc3e32a18",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Пошиття м'яких меблів"
     },
     {
-      "id": "b6bb1737-0c45-4d4d-b11b-ebedbe1c418d",
-      "rowId": "e827c69b-32d6-4fc9-abd2-9209aacdd476",
+      "id": "6b8523b6-4918-4be0-a641-a71f24ee80de",
+      "rowId": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
       "name": "Інші меблеві роботи"
     }
   ],
-  "a83bf9b7-f558-42b9-b0b0-55fa40e298dc": [
+  "7914e9f9-b42e-43b1-8cf3-722997e6919d": [
     {
-      "id": "9c5c42cf-859f-4613-973a-067434828b15",
-      "rowId": "a83bf9b7-f558-42b9-b0b0-55fa40e298dc",
+      "id": "21728982-14ad-448d-920f-d7200aad0a8c",
+      "rowId": "7914e9f9-b42e-43b1-8cf3-722997e6919d",
       "name": "Чоловік на годину"
     },
     {
-      "id": "d1c6ac2d-1336-43f2-8599-aa692141c56f",
-      "rowId": "a83bf9b7-f558-42b9-b0b0-55fa40e298dc",
+      "id": "47b0c987-b38c-4c85-bba9-5fa3b0bb158d",
+      "rowId": "7914e9f9-b42e-43b1-8cf3-722997e6919d",
       "name": "Установка побутової техніки"
     },
     {
-      "id": "e8826fe4-357f-46bc-967d-42b042ffacf1",
-      "rowId": "a83bf9b7-f558-42b9-b0b0-55fa40e298dc",
+      "id": "12c342d9-d87c-4c64-9f77-a3c815cab20a",
+      "rowId": "7914e9f9-b42e-43b1-8cf3-722997e6919d",
       "name": "Установка і розтин замків"
     },
     {
-      "id": "b9ecb033-dd2e-49a0-9c4b-da264f3e878a",
-      "rowId": "a83bf9b7-f558-42b9-b0b0-55fa40e298dc",
+      "id": "1d5ee2eb-6d08-4cb6-820c-4a4faa40c2af",
+      "rowId": "7914e9f9-b42e-43b1-8cf3-722997e6919d",
       "name": "Відновлення ванн"
     }
   ],
-  "da481c8f-44bf-4525-8bd6-8ffbc5d70a14": [
+  "597cee10-9e25-415c-a9cd-a1352fe0ca3c": [
     {
-      "id": "9eee873d-deb4-4909-a599-9e2f48340472",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "79aba2d0-4fe6-4888-8503-ca34f05f4f7b",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Кування та лиття"
     },
     {
-      "id": "6cacce19-9afc-4317-91d2-504272758ade",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "293abcb3-7f2c-4825-84bc-e9190a3324d1",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Металоконструкція"
     },
     {
-      "id": "ed0597bd-06bf-4f33-a4f0-0a8f1e0be328",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "5e243d77-bd2d-4c42-b127-435dbd00e12e",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Зварювальні роботи"
     },
     {
-      "id": "ca55387a-0d66-4df8-b242-664c6004813e",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "866dade0-07a4-4f43-95f1-fab7976da823",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Лазерне різання"
     },
     {
-      "id": "87a1ff83-cfe6-411e-8b60-f50b9bd80985",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "1541feab-de85-432d-b056-991d2ef60bb4",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Токарні роботи"
     },
     {
-      "id": "4f587aec-7fea-4e55-9cd3-e7b13c5359f4",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "0856ae30-2939-4af5-b894-6f3d37975645",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Фрезерні роботи"
     },
     {
-      "id": "008d35b7-af9a-48ce-af3a-6f4c8818dfdc",
-      "rowId": "da481c8f-44bf-4525-8bd6-8ffbc5d70a14",
+      "id": "478706ee-78a7-49d2-9d60-a8eade7742f3",
+      "rowId": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
       "name": "Згинання металу"
     }
   ],
-  "e2c39805-372c-4553-aef8-0bb16f82380c": [
+  "8bd12fbf-8b0f-406b-b9d0-768ccbd5b383": [
     {
-      "id": "23311df6-5f84-4e1b-8a59-43f44eeb8fd6",
-      "rowId": "e2c39805-372c-4553-aef8-0bb16f82380c",
+      "id": "e360a13b-aeee-4367-a1a0-21e0f85d6761",
+      "rowId": "8bd12fbf-8b0f-406b-b9d0-768ccbd5b383",
       "name": "Оренда будівельного інструменту"
     },
     {
-      "id": "1ff8f8e6-da1a-45b2-a5b0-d05720b3c3b8",
-      "rowId": "e2c39805-372c-4553-aef8-0bb16f82380c",
+      "id": "79be0c3b-e803-4a4a-a03b-7c5e8c315126",
+      "rowId": "8bd12fbf-8b0f-406b-b9d0-768ccbd5b383",
       "name": "Оренда садової техніки"
     },
     {
-      "id": "313eb009-d0e5-41e3-af73-46bdd9e2bc45",
-      "rowId": "e2c39805-372c-4553-aef8-0bb16f82380c",
+      "id": "e7766ecf-d493-4ea1-8cda-33d667114a36",
+      "rowId": "8bd12fbf-8b0f-406b-b9d0-768ccbd5b383",
       "name": "Оренда будівельної техніки"
     }
   ],
-  "868d7338-9f18-4ac8-a168-9447fb0c169c": [
+  "98d1d968-2398-4492-b71b-b9b707227a52": [
     {
-      "id": "f89cde47-dc6b-43e8-a149-1d552ea57afe",
-      "rowId": "868d7338-9f18-4ac8-a168-9447fb0c169c",
+      "id": "0415d91a-c964-4f2d-9852-7698184db627",
+      "rowId": "98d1d968-2398-4492-b71b-b9b707227a52",
       "name": "Ремонт інструментів"
     },
     {
-      "id": "b566268f-3828-461c-8a67-a5e528ff01b9",
-      "rowId": "868d7338-9f18-4ac8-a168-9447fb0c169c",
+      "id": "05eb308c-3de6-4927-b06c-1620604f8a6c",
+      "rowId": "98d1d968-2398-4492-b71b-b9b707227a52",
       "name": "Ремонт садової техніки"
     },
     {
-      "id": "5d306fcf-4e64-4cea-a09d-be40db5dc833",
-      "rowId": "868d7338-9f18-4ac8-a168-9447fb0c169c",
+      "id": "b236bb88-01e9-45f8-9c3d-17f3c9156237",
+      "rowId": "98d1d968-2398-4492-b71b-b9b707227a52",
       "name": "Ремонт будівельної техніки"
     }
   ],
-  "64c8e871-f3f0-495c-8a70-065533d0d760": [
+  "b056689e-c491-4ce3-8439-67054082bc02": [
     {
-      "id": "a32a2f64-4497-4b36-a92a-37573cdda4b6",
-      "rowId": "64c8e871-f3f0-495c-8a70-065533d0d760",
+      "id": "8893d380-d683-448f-8840-a9a60f71c860",
+      "rowId": "b056689e-c491-4ce3-8439-67054082bc02",
       "name": "Вантажоперевезення"
     },
     {
-      "id": "e261e8a2-e5dc-4ede-82d6-a88eb0d14f1f",
-      "rowId": "64c8e871-f3f0-495c-8a70-065533d0d760",
+      "id": "62966144-4a28-4a11-9d27-e716c847c82c",
+      "rowId": "b056689e-c491-4ce3-8439-67054082bc02",
       "name": "Послуги вантажників"
     },
     {
-      "id": "d5270d84-4f3e-46fa-82a9-3280fd800ad5",
-      "rowId": "64c8e871-f3f0-495c-8a70-065533d0d760",
+      "id": "4aeaff7b-d06e-4e98-89f1-b643132f4925",
+      "rowId": "b056689e-c491-4ce3-8439-67054082bc02",
       "name": "Вивіз будівельного сміття"
     },
     {
-      "id": "71542612-c10a-4bcf-85ab-83d5ac4c585a",
-      "rowId": "64c8e871-f3f0-495c-8a70-065533d0d760",
+      "id": "fd3e7003-7deb-4c44-b8ec-cf1a42897c6d",
+      "rowId": "b056689e-c491-4ce3-8439-67054082bc02",
       "name": "Послуги асенізатора"
     }
   ],
-  "bc1a4a83-f184-43a8-9668-da63d00b4132": [
+  "cc3962d8-bf26-4fb8-9dc4-298756853b7f": [
     {
-      "id": "3674af3c-69c9-4243-b56c-15b56c0d6b74",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "a41440b2-ce91-4d7a-8bd7-4e7a5809c6c9",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Винос сміття"
     },
     {
-      "id": "d6568ebd-2d4e-43aa-ae4f-5eead5fd5465",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "50fe5dde-b956-4157-822c-a6cc8b5cdfe9",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Прибирання територій"
     },
     {
-      "id": "02bd5a95-5423-4662-9470-e92674b6322e",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "f9677846-dfb5-49f9-bb61-db9a904a1f5f",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Прибирання приміщень"
     },
     {
-      "id": "f61ab190-e69b-43c9-b187-6268d40794da",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "29dbdfbf-77e2-49c6-917f-058846c60973",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Прибирання після ремонту"
     },
     {
-      "id": "c40d1431-c670-4f53-a606-6c7634809c5f",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "a5becb8d-8c52-484d-8d21-00c11cb6e340",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Мийка вікон"
     },
     {
-      "id": "ca9b6991-eba6-4917-9888-7353cf57ba1d",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "57a3c7b0-81e0-4cb7-9fc9-f1c99f07291d",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Мийка фасадів"
     },
     {
-      "id": "cb7dd1c3-ac48-4931-8c17-f394552ab02e",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "80e4c346-9d13-4437-9638-1951021757b9",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Прибирання після потопів і пожеж"
     },
     {
-      "id": "42dc0507-c3f1-4d64-9c5e-e3c9c20b14de",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "8ced6ecd-e1ae-4f05-b76c-180005ae9c3c",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Хімчистка"
     },
     {
-      "id": "6b69af43-1430-4197-bae4-7e5e092dd4e1",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "f2492299-29cb-4528-b7b8-75da9eebb669",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Інше прибирання"
     },
     {
-      "id": "f8aca86f-365b-493a-b668-9d78a0eeeb03",
-      "rowId": "bc1a4a83-f184-43a8-9668-da63d00b4132",
+      "id": "a59080ab-72e8-44a8-a145-8b09d0021e20",
+      "rowId": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
       "name": "Прибирання та миття \"під ключ\""
     }
   ],
-  "da9f3edf-4330-4511-bd8c-f6023fc8653d": [
+  "593170b2-00e0-4696-b200-49439079b63e": [
     {
-      "id": "57264459-fab4-4dea-bd36-98b5c6090db9",
-      "rowId": "da9f3edf-4330-4511-bd8c-f6023fc8653d",
+      "id": "7e57ce58-15b1-4047-aa74-ade8bf15fee9",
+      "rowId": "593170b2-00e0-4696-b200-49439079b63e",
       "name": "Земельне право"
     },
     {
-      "id": "11692f1a-1d60-4400-9e46-df43cf2766a2",
-      "rowId": "da9f3edf-4330-4511-bd8c-f6023fc8653d",
+      "id": "f47502bb-7c15-4e3d-8920-9f11ff6420d0",
+      "rowId": "593170b2-00e0-4696-b200-49439079b63e",
       "name": "Будівельне право"
     },
     {
-      "id": "5a927f54-69c5-4b63-9cd8-a9a43a47eecb",
-      "rowId": "da9f3edf-4330-4511-bd8c-f6023fc8653d",
+      "id": "47979f07-4871-49fd-aea5-459f4bd99c5d",
+      "rowId": "593170b2-00e0-4696-b200-49439079b63e",
       "name": "Юридична консультація"
     },
     {
-      "id": "306d0025-7e27-474b-a005-20ca34909943",
-      "rowId": "da9f3edf-4330-4511-bd8c-f6023fc8653d",
+      "id": "b929cdf5-e9f6-41b0-8e61-b171f285badf",
+      "rowId": "593170b2-00e0-4696-b200-49439079b63e",
       "name": "Послуги адвоката"
     },
     {
-      "id": "bceae0ea-ce07-4a83-93db-2832d728b354",
-      "rowId": "da9f3edf-4330-4511-bd8c-f6023fc8653d",
+      "id": "e77ecce9-d18e-42eb-9e80-69d9eecb0d08",
+      "rowId": "593170b2-00e0-4696-b200-49439079b63e",
       "name": "Інші юридичні послуги"
     }
   ],
-  "23a7a6ed-8ccc-4ac4-9973-d15a9df3ec51": [
+  "e615292d-fd83-4f45-b6f5-b1622077a02b": [
     {
-      "id": "0b50118f-20c8-4acc-9295-824001d04c1a",
-      "rowId": "23a7a6ed-8ccc-4ac4-9973-d15a9df3ec51",
+      "id": "b52d7121-0e66-4c39-85b8-1cb845f59a9a",
+      "rowId": "e615292d-fd83-4f45-b6f5-b1622077a02b",
       "name": "Інші будівельні роботи"
     }
   ]
