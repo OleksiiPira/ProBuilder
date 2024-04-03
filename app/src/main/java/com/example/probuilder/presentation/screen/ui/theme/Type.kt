@@ -5,12 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-val montserratFontFamily = FontFamily(
-//    Font(R.font.montserrat_light), // Regular font style
-//    Font(R.font.montserrat_medium), style = FontStyle.Italic), // Italic font style
-//    Font(R.font.montserrat_bold),//, FontWeight.Bold), // Bold font style
-//    Font(R.font.montserrat_semi_bold)//, FontWeight.Bold, style = FontStyle.Italic) // Bold italic font style
-)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     //    Title
