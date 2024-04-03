@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -44,13 +46,29 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+}
+kapt {
+    correctErrorTypes true
 }
 
 dependencies {
+    implementation 'androidx.compose.material3:material3-android:1.2.1'
+
+    //Room
+    def room_version = "2.6.1"
+
+    implementation "androidx.room:room-runtime:$room_version"//remove???
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 
     def composeBom = platform('androidx.compose:compose-bom:2023.10.00')
     implementation composeBom
     androidTestImplementation composeBom
+
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Choose one of the following:
     // Material Design 3
@@ -81,19 +99,20 @@ dependencies {
     implementation 'androidx.compose.material3:material3-window-size-class'
 
     // Optional - Integration with activities
-    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation 'androidx.activity:activity-compose:1.8.2'
     // Optional - Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
     // Optional - Integration with LiveData
     implementation 'androidx.compose.runtime:runtime-livedata'
     // Optional - Integration with RxJava
     implementation 'androidx.compose.runtime:runtime-rxjava2'
     // DI
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
 
     def nav_version = "2.7.5"
-    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "androidx.navigation:navigation-compose:2.7.7"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'

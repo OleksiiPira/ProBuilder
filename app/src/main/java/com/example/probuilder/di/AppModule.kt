@@ -1,36 +1,66 @@
 package com.example.probuilder.di
 
-import androidx.compose.ui.unit.Constraints
-import com.example.probuilder.common.Constants
-import com.example.probuilder.data.remote.PriceListApi
-import com.example.probuilder.data.remote.dto.PriceListRepositoryImpl
-import com.example.probuilder.domain.remote.RetrofitClient
-import com.example.probuilder.domain.repository.PriceListRepository
+import android.content.Context
+import android.provider.SyncStateContract.Constants
+import androidx.room.Room
+import com.example.probuilder.data.local.AppDatabase
+import com.example.probuilder.data.local.CategoriesRepository
+import com.example.probuilder.data.local.InvoiceRepositoryImpl
+import com.example.probuilder.data.remote.AppApi
+import com.example.probuilder.data.remote.dto.AppRepositoryImpl
+import com.example.probuilder.domain.repository.AppRepository
+import com.example.probuilder.domain.repository.CategoriesDao
+import com.example.probuilder.domain.repository.InvoiceDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
-@InstallIn
+@InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
-    fun providePriceListApi(): PriceListApi {
+    fun provideAppApi(): AppApi {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(com.example.probuilder.common.Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(PriceListApi::class.java)
+            .create(AppApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun providePriceListRepository(api: PriceListApi): PriceListRepository {
-        return PriceListRepositoryImpl(api)
+    fun provideAppRepository(api: AppApi): AppRepository {
+        return AppRepositoryImpl(api)
     }
+
+    @Provides
+    fun provideYourDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return AppDatabase.getDatabase(context = appContext)
+    }
+
+    @Provides
+    fun provideInvoiceDao(database: AppDatabase): InvoiceDao {
+        return database.invoiceItemDao()
+    }
+    @Provides
+    @Singleton
+    fun provideInvoiceRepositoryImpl(dao: InvoiceDao): InvoiceRepositoryImpl {
+        return InvoiceRepositoryImpl(dao)
+    }
+
+    @Provides
+    fun provideCategoriesDao(database: AppDatabase): CategoriesDao {
+        return database.categoryDao()
+    }
+
+    fun provideCategoriesRepository(dao: CategoriesDao): CategoriesRepository {
+        return CategoriesRepository(dao)
+    }
+
 }
