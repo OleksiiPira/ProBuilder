@@ -7,11 +7,10 @@ import com.example.probuilder.common.Resource
 import com.example.probuilder.data.local.CategoriesRepository
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.use_case.GetCategoriesUseCase
+import com.example.probuilder.domain.use_case.GetSubCategories
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,24 +18,32 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getSubCategories: GetSubCategories,
     private val categoriesRepository: CategoriesRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _categories = categoriesRepository.getCategories()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private val _categories: MutableStateFlow<List<Category>> = MutableStateFlow(emptyList())
     val categories: StateFlow<List<Category>> = _categories
 
     val categoriesScreenState = MutableStateFlow(CategoriesScreenState())
 
 
     init {
-        viewModelScope.launch { loadRows() }
+        viewModelScope.launch {
+//            loadRows()
+//            loadSubCategories()
+        }
     }
 
     fun onEvent(event: CategoryScreenEvent) {
         when (event) {
             is CategoryScreenEvent.LoadAllCategories ->  TODO()
-            CategoryScreenEvent.ShowCreateCategory -> TODO()
+            is CategoryScreenEvent.ShowCreateCategory -> TODO()
+            is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
+                categoriesRepository.getCategoryByParentId(event.id).collect { categories ->
+                    _categories.value = categories
+                }
+            }
             is CategoryScreenEvent.CreateCategory -> viewModelScope.launch { categoriesRepository.upsertCategory(event.category) }
 
             is CategoryScreenEvent.UpdateCategorySelectedState -> { viewModelScope.launch {
@@ -111,7 +118,6 @@ class CategoriesViewModel @Inject constructor(
                 }
                 categoriesScreenState.value = CategoriesScreenState()
             }
-
             CategoryScreenEvent.FavoriteSelectedCategory -> viewModelScope.launch {
                 val newMap = categoriesScreenState.value.selectedItems.toMutableMap()
                 val selectedMode = newMap.values.first().state
@@ -124,7 +130,6 @@ class CategoriesViewModel @Inject constructor(
                 }
                 categoriesScreenState.value = CategoriesScreenState()
             }
-
             is CategoryScreenEvent.ShowError -> categoriesScreenState.update { it.copy(errorMessage = event.message) }
             CategoryScreenEvent.HideError -> categoriesScreenState.update { it.copy(errorMessage = "") }
         }
@@ -145,13 +150,42 @@ class CategoriesViewModel @Inject constructor(
                                 }
                             }
                     }
+                    is Resource.Error -> {
+//                        _rows.value = listOf(Row("Error", "Error", result.message.orEmpty()))
+                    }
+                    is Resource.Loading -> {
+//                        _rows.value = listOf(Row("Loading", "Loading", "Loading"))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadSubCategories() {
+        viewModelScope.launch {
+            getSubCategories.invoke().collect() { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        val subCategory = result.data.orEmpty().flatMap { it.value }
+
+                        subCategory.forEach { categoriesRepository
+                            .upsertCategory(
+                                Category(
+                                    id = it.id,
+                                    name = it.name,
+                                    parentId = it.parentId,
+                        )
+                            ) }
+                    }
 
                     is Resource.Error -> {
 //                        _rows.value = listOf(Row("Error", "Error", result.message.orEmpty()))
+
                     }
 
                     is Resource.Loading -> {
 //                        _rows.value = listOf(Row("Loading", "Loading", "Loading"))
+
                     }
                 }
             }

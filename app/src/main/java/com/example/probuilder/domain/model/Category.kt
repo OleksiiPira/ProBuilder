@@ -29,8 +29,7 @@ data class Category(
     val name: String = "",
     val state: ItemState = ItemState.DEFAULT,
     val parentId: String = "",
-    @PrimaryKey
-    val id: String = UUID.randomUUID().toString()
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
 )
 
 data class Feed(

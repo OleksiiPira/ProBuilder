@@ -24,5 +24,8 @@ class CategoriesRepository @Inject constructor(
     fun getCategoryById(id: String): Flow<Category>{
         return dao.getCategoryById(id)
     }
+    fun getCategoryByParentId(id: String): Flow<List<Category>>{
+        return dao.getCategoryByParentId(id)
+    }
 
 }

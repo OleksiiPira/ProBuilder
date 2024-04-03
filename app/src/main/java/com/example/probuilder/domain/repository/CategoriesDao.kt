@@ -21,4 +21,7 @@ interface CategoriesDao {
     @Query("SELECT * FROM categories WHERE id = :id")//"SELECT * FROM category_items WHERE id = :categoryId")
     fun getCategoryById(id: String): Flow<Category>
 
+    @Query("SELECT * FROM categories WHERE parentId = :id")
+    fun getCategoryByParentId(id: String): Flow<List<Category>>
+
 }

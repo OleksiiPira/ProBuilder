@@ -5,6 +5,7 @@ import com.example.probuilder.domain.model.Category
 sealed class CategoryScreenEvent {
     data object LoadAllCategories: CategoryScreenEvent()
     data object ShowCreateCategory: CategoryScreenEvent()
+    data class ShowCategory(val id: String): CategoryScreenEvent()
     data class CreateCategory(val category: Category): CategoryScreenEvent()
 
     data object SelectAll: CategoryScreenEvent()

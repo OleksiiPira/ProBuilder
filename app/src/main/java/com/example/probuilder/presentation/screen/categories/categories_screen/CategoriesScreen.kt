@@ -65,9 +65,12 @@ enum class InvoiceFormState { CATEGORIES_SCREEN, CREATE_CATEGORY_OVERLAY, ERROR_
 fun CategoryScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
+    categoryName: String = "Категорії",
+    categoryId: String = "",
     viewModel: CategoriesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
+    viewModel.onEvent(CategoryScreenEvent.ShowCategory(categoryId))
     val rows by viewModel.categories.collectAsState(emptyList())
     val categoriesState by viewModel.categoriesScreenState.collectAsState()
     if (rows.isEmpty()) return
@@ -98,7 +101,7 @@ fun CategoryScreen(
                         )
                     }
                 },
-                title = { Text(text = "Категорії") },
+                title = { Text(text = categoryName) },
                 actions = {
                     if (!categoriesState.isSelectingMode) {
                         IconButton(onClick = { /* do something */ }) {

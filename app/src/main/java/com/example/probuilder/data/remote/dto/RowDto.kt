@@ -25,7 +25,7 @@ fun JobDto.toJob(): Service {
 
 data class CategoryDto(
     val id: String,
-    val rowId: String,
+    val parentId: String,
     val name: String,
 )
 

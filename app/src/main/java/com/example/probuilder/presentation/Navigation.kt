@@ -14,7 +14,6 @@ import com.example.probuilder.presentation.screen.invoices.invoices_screen.Invoi
 import com.example.probuilder.presentation.screen.categories.services_screen.ServicesScreen
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreen
 import com.example.probuilder.presentation.screen.categories.categories_screen.CreateCategoryOverlay
-import com.example.probuilder.presentation.screen.categories.categories_sub.SubCategoryScreen
 import com.example.probuilder.presentation.screen.categories.create_service.CreateServiceScreen
 import com.example.probuilder.presentation.screen.categories.service_details.ServiceDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
@@ -42,14 +41,12 @@ fun HomeNavigation(
             startDestination = Route.CATEGORIES
         ) {
             composable(route = Route.CATEGORIES) {
-                setTopBarTitle("Тип роботи")
                 CategoryScreen(
                     nextScreen = navController::navigate,
                     bottomBar = bottomBar
                 )
             }
             composable(route = Route.CREATE_CATEGORY) {
-                setTopBarTitle("")
                 CreateCategoryOverlay(
                     onCancel = { navController.popBackStack() },
                     onSave = { navController.popBackStack() }
@@ -61,12 +58,19 @@ fun HomeNavigation(
                     navArgument("categoryId") {
                         type = NavType.StringType
                         defaultValue = ""
+                    },
+                    navArgument("categoryName") {
+                        type = NavType.StringType
+                        defaultValue = ""
                     }
                 )
             ) { backStackEntry ->
                 setTopBarTitle("Категорії робіт")
-                SubCategoryScreen(
+                val arguments = navController.previousBackStackEntry?.arguments
+                CategoryScreen(
                     nextScreen = navController::navigate,
+                    categoryName = arguments?.getString("categoryName").orEmpty(),
+                    categoryId = arguments?.getString("categoryId").orEmpty(),
                     bottomBar = bottomBar
                 )
             }
