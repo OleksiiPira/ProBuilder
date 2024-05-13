@@ -13,18 +13,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.UploadFile
-import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.RemoveRedEye
-import androidx.compose.material.icons.outlined.SelectAll
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,11 +40,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CATEGORIES_SCREEN
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CREATE_CATEGORY_OVERLAY
+import com.example.probuilder.presentation.screen.categories.categories_screen.drop_down_edit_menu.DropDownEditMenu
+import com.example.probuilder.presentation.screen.categories.categories_screen.overflow_menu.CategoryOverflowMenu
 import com.example.probuilder.presentation.screen.categories.categories_screen.services_section.ServicesSection
 import com.example.probuilder.presentation.screen.categories.component.CategoryListItem
-import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.google.gson.Gson
 
 enum class CategoriesScreenStep { CATEGORIES_SCREEN, CREATE_CATEGORY_OVERLAY, ERROR_OVERLAY }
@@ -61,42 +55,38 @@ enum class CategoriesScreenStep { CATEGORIES_SCREEN, CREATE_CATEGORY_OVERLAY, ER
 @Composable
 fun CategoryScreen(
     modifier: Modifier = Modifier,
-    nextScreen: (String)-> Unit,
+    nextScreen: (String) -> Unit,
     viewModel: CategoriesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit),
 ) {
     val screenState by viewModel.categoriesScreenState.collectAsState()
     var currentScreen by remember { mutableStateOf(CATEGORIES_SCREEN) }
+    val currCategory = screenState.currCategory
 
     Scaffold(
         bottomBar = bottomBar,
         floatingActionButton = {
             Row {
-                if (screenState.currCategory.id != "main")
-                    FloatingActionButton(
-                        modifier = modifier.padding(16.dp),
-                        containerColor = Color(0xFFF2F2F2),
-                        contentColor = MaterialTheme.colorScheme.primary,
-                        onClick = {
-                            nextScreen(Route.CREATE_SERVICE.replace("{category}", Gson().toJson(screenState.currCategory)))
-                                  },
-                    ) {
-                        Icon(Icons.Filled.UploadFile, "Floating action button.")
-                    }
-                FloatingActionButton(
-                    modifier = modifier.padding(16.dp),
-                    containerColor = Color(0xFFF2F2F2),
-                    contentColor = MaterialTheme.colorScheme.primary,
-                    onClick = { currentScreen = CREATE_CATEGORY_OVERLAY },
+                CustomFloatingButton(
+                    visible = screenState.hasParent,
+                    onClick = { currentScreen = CREATE_CATEGORY_OVERLAY }
                 ) {
-                    Icon(Icons.Filled.Add, "Floating action button.")
+                    Icon(Icons.Filled.UploadFile, null)
+                }
+
+                val currCategoryJson = Gson().toJson(currCategory)
+                CustomFloatingButton(
+                    onClick = {
+                        nextScreen(Route.CREATE_SERVICE.replace("{category}", currCategoryJson))
+                    }) {
+                    Icon(Icons.Filled.Add, null)
                 }
             }
         },
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray.copy(alpha = 0.2f),//MaterialTheme.colorScheme.surface,
+                    containerColor = Color.Gray.copy(alpha = 0.2f),
                     titleContentColor = MaterialTheme.colorScheme.onSurface,
                 ),
                 navigationIcon = {
@@ -107,9 +97,14 @@ fun CategoryScreen(
                         )
                     }
                 },
-                title = { Text(text = screenState.currCategory.name) }, // TODO
+                title = { Text(text = if (screenState.hasParent) currCategory.name else "Categories") },
                 actions = {
-                    if (!screenState.isSelectingMode) {
+                    if (screenState.isEditMode) {
+                        CategoryOverflowMenu(
+                            screenState = screenState,
+                            viewModel = viewModel
+                        )
+                    } else {
                         IconButton(onClick = { /* do something */ }) {
                             Icon(
                                 imageVector = Icons.Filled.Search,
@@ -117,57 +112,18 @@ fun CategoryScreen(
                                 contentDescription = "Search"
                             )
                         }
-                    } else {
-                        IconButton(onClick = { viewModel.onEvent(CategoryScreenEvent.SelectAll) }) {
-                            Icon(
-                                imageVector = Icons.Outlined.SelectAll,
-                                contentDescription = null
-                            )
-                        }
-                        DropDownButton() {
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = if (screenState.itemsMode == ItemState.FAVORITE) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
-                                        contentDescription = null
-                                    )
-                                },
-                                text = { Text(text = if (screenState.itemsMode == ItemState.FAVORITE) "Видалити з улюблених" else "Додати в улюблені") },
-                                onClick = { viewModel.onEvent(CategoryScreenEvent.FavoriteSelectedCategory) }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = if (screenState.itemsMode == ItemState.HIDED) Icons.Outlined.RemoveRedEye else Icons.Filled.RemoveRedEye,
-                                        contentDescription = null
-                                    )
-                                },
-                                text = { Text(text = if (screenState.itemsMode == ItemState.HIDED) "Показати" else "Приховати") },
-                                onClick = { viewModel.onEvent(CategoryScreenEvent.HideSelectedCategories) }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Delete,
-                                        contentDescription = null
-                                    )
-                                },
-                                text = { Text(text = "Видалити") },
-                                onClick = {}
-                            )
-                        }
-
                     }
                 },
             )
         }
     ) {
         CategoriesScreenContent(
-            modifier = Modifier.padding(it),
+            modifier = modifier.padding(it),
             viewModel = viewModel,
             currentScreen = currentScreen,
             nextScreen = nextScreen,
-            categoriesState = screenState)
+            screenState = screenState
+        )
     }
 }
 
@@ -177,7 +133,7 @@ private fun CategoriesScreenContent(
     viewModel: CategoriesViewModel,
     currentScreen: CategoriesScreenStep,
     nextScreen: (String) -> Unit,
-    categoriesState: CategoriesScreenState
+    screenState: CategoriesScreenState
 ) {
     var currentScreen1 = currentScreen
     Column(
@@ -189,7 +145,6 @@ private fun CategoriesScreenContent(
         LazyColumn(userScrollEnabled = currentScreen1 == CATEGORIES_SCREEN) {
             item {
 //                    CategoriesSection(viewModel = viewModel, categories = categories)
-
             }
 
             itemsIndexed(categories) { index, category ->
@@ -209,12 +164,12 @@ private fun CategoriesScreenContent(
                             )
                         )
                     },
-//                        isSelectMode = categoriesScreenState.isSelectingMode,
-//                        isSelected = categoriesScreenState.selectedItems.containsKey(category.id),
+                    isSelectMode = screenState.isEditMode,
+                    isSelected = screenState.selectedItems.containsKey(category.id),
                     actionButton = {
-//                            if (!categoriesScreenState.isSelectingMode) {
-//                                DropDownEditMenu(categoriesScreenState, viewModel, category)
-//                            }
+                        if (!screenState.isEditMode) {
+                            DropDownEditMenu(screenState, viewModel, category)
+                        }
                     }
                 )
             }
@@ -234,7 +189,7 @@ private fun CategoriesScreenContent(
         )
     }
 
-    if (categoriesState.errorMessage.isNotBlank()) {
+    if (screenState.errorMessage.isNotBlank()) {
         Dialog(
             onDismissRequest = { viewModel.onEvent(CategoryScreenEvent.HideError) }
         ) {
@@ -246,7 +201,7 @@ private fun CategoriesScreenContent(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.End
             ) {
-                Text(modifier = Modifier.fillMaxWidth(), text = categoriesState.errorMessage)
+                Text(modifier = Modifier.fillMaxWidth(), text = screenState.errorMessage)
                 TextButton(onClick = { viewModel.onEvent(CategoryScreenEvent.HideError) }) {
                     Text(text = "Продовжити")
                 }
@@ -254,7 +209,7 @@ private fun CategoriesScreenContent(
         }
     }
 
-    if (categoriesState.hasParent) {
+    if (screenState.hasParent) {
         BackHandler { viewModel.onEvent(CategoryScreenEvent.Back) }
     }
 }

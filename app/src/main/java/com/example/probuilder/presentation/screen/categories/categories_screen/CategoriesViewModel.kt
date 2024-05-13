@@ -84,7 +84,7 @@ class CategoriesViewModel @Inject constructor(
                         }
                         currentState.copy(
                             selectedItems = newMap,
-                            isSelectingMode = newMap.isNotEmpty(),
+                            isEditMode = newMap.isNotEmpty(),
                             itemsMode = category.state
                         )
                     }
@@ -120,7 +120,7 @@ class CategoriesViewModel @Inject constructor(
                     }
                 }
                 categoriesScreenState.value =
-                    CategoriesScreenState(isSelectingMode = true, selectedItems = newMap)
+                    CategoriesScreenState(isEditMode = true, selectedItems = newMap)
             }
 
             is CategoryScreenEvent.FavoriteCategory -> viewModelScope.launch {

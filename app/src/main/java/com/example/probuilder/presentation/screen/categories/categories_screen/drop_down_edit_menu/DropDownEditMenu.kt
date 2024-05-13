@@ -18,7 +18,7 @@ import com.example.probuilder.presentation.screen.categories.categories_screen.I
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 
 @Composable
-private fun DropDownEditMenu(
+fun DropDownEditMenu(
     categoriesState: CategoriesScreenState,
     viewModel: CategoriesViewModel,
     category: Category
