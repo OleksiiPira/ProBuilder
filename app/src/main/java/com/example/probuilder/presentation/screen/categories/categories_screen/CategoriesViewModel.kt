@@ -26,7 +26,7 @@ class CategoriesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val categoriesScreenState = MutableStateFlow(CategoriesScreenState())
+    val screenState = MutableStateFlow(CategoriesScreenState())
 
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories: StateFlow<List<Category>> = _categories.asStateFlow()
@@ -43,43 +43,34 @@ class CategoriesViewModel @Inject constructor(
         when (event) {
             is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
                 val category = event.category
+                screenState.update { it.copy(hasParent = category.id != "main", currCategory = category) }
+
+                categoriesRepository
+                    .getCategoryByParentId(category.id)
+                    .collect { categories -> _categories.value = categories }
+
                 updateServices(category.id)
-
-                categoriesScreenState.update { it.copy(
-                    hasParent = category.id != "main",
-                    currCategory = category
-                ) }
-
-                categoriesRepository.getCategoryByParentId(category.id).collect { categories ->
-                    _categories.value = categories
-                }
             }
 
             is CategoryScreenEvent.CreateCategory -> viewModelScope.launch {
-                categoriesRepository.upsertCategory(
-                    event.category
-                )
+                categoriesRepository.upsertCategory(event.category)
             }
 
             is CategoryScreenEvent.UpdateCategorySelectedState -> {
                 viewModelScope.launch {
                     val category = event.category
-                    val categoriesState = categoriesScreenState.value
-                    if (categoriesState.selectedItems.isNotEmpty() && categoriesState.itemsMode != category.state) {
-                        val mode = when (categoriesState.itemsMode) {
-                            ItemState.HIDED -> "прихованими"
-                            ItemState.FAVORITE -> "улюбленими"
-                            ItemState.DEFAULT -> "звичайними"
-                        }
+                    val state = screenState.value
+                    if (state.selectedItems.isNotEmpty() && state.itemsMode != category.state) {
+                        val mode = getCurrentMode(state.itemsMode)
                         onEvent(CategoryScreenEvent.ShowError("Закінчіть зміни з $mode, щоб перейти до інших."))
                         return@launch
                     }
-                    categoriesScreenState.update { currentState ->
+
+                    screenState.update { currentState ->
                         val newMap = currentState.selectedItems.toMutableMap().apply {
-                            if (!containsKey(category.id)) {
+                            val removedValue = remove(category.id)
+                            if (removedValue == null) {
                                 put(category.id, category)
-                            } else {
-                                remove(category.id)
                             }
                         }
                         currentState.copy(
@@ -101,26 +92,25 @@ class CategoriesViewModel @Inject constructor(
             }
 
             is CategoryScreenEvent.HideSelectedCategories -> viewModelScope.launch {
-                categoriesScreenState.value.selectedItems.values.forEach { category ->
+                screenState.value.selectedItems.values.forEach { category ->
                     if (category.state != ItemState.HIDED) {
                         categoriesRepository.upsertCategory(category.copy(state = ItemState.HIDED))
                     } else {
                         categoriesRepository.upsertCategory(category.copy(state = ItemState.DEFAULT))
                     }
                 }
-                categoriesScreenState.value = CategoriesScreenState()
+                screenState.value = CategoriesScreenState()
             }
 
             CategoryScreenEvent.SelectAll -> viewModelScope.launch {
-                val newMap = categoriesScreenState.value.selectedItems.toMutableMap()
-                val selectedMode = newMap.values.first().state
-                _categories.value.filter { it.state == selectedMode }.forEach { category ->
-                    if (!newMap.containsKey(category.id)) {
-                        newMap[category.id] = category
-                    }
-                }
-                categoriesScreenState.value =
-                    CategoriesScreenState(isEditMode = true, selectedItems = newMap)
+                val state = screenState.value
+                val selectedItems = mutableMapOf<String, Category>()
+                if(state.selectAll) { _categories.value.forEach { selectedItems[it.id] = it } }
+                screenState.update { it.copy(
+                    selectedItems = selectedItems,
+                    selectAll = !state.selectAll,
+                    isEditMode = selectedItems.isNotEmpty()
+                )}
             }
 
             is CategoryScreenEvent.FavoriteCategory -> viewModelScope.launch {
@@ -130,12 +120,12 @@ class CategoriesViewModel @Inject constructor(
                 } else {
                     categoriesRepository.upsertCategory(category.copy(state = ItemState.FAVORITE))
                 }
-                categoriesScreenState.value = CategoriesScreenState()
+                screenState.value = CategoriesScreenState()
             }
             CategoryScreenEvent.FavoriteSelectedCategory -> viewModelScope.launch {
-                val newMap = categoriesScreenState.value.selectedItems.toMutableMap()
+                val newMap = screenState.value.selectedItems.toMutableMap()
                 val selectedMode = newMap.values.first().state
-                categoriesScreenState.value.selectedItems.values.filter { it.state == selectedMode }
+                screenState.value.selectedItems.values.filter { it.state == selectedMode }
                     .forEach { category ->
                         if (category.state == ItemState.FAVORITE) {
                             categoriesRepository.upsertCategory(category.copy(state = ItemState.DEFAULT))
@@ -143,26 +133,33 @@ class CategoriesViewModel @Inject constructor(
                             categoriesRepository.upsertCategory(category.copy(state = ItemState.FAVORITE))
                         }
                     }
-                categoriesScreenState.value = CategoriesScreenState()
+                screenState.value = CategoriesScreenState()
             }
 
-            is CategoryScreenEvent.ShowError -> categoriesScreenState.update { it.copy(errorMessage = event.message) }
-            CategoryScreenEvent.HideError -> categoriesScreenState.update { it.copy(errorMessage = "") }
+            is CategoryScreenEvent.ShowError -> screenState.update { it.copy(errorMessage = event.message) }
+            CategoryScreenEvent.HideError -> screenState.update { it.copy(errorMessage = "") }
             is CategoryScreenEvent.Back -> viewModelScope.launch {
-                val parentId = categoriesScreenState.value.currCategory.parentId
+                val parentId = screenState.value.currCategory.parentId
                 categoriesRepository.getCategoryById(parentId).collectLatest { prevCategory ->
                     println("Prev cate = $prevCategory")
                     if (prevCategory != null) {
-                        categoriesScreenState.update { it.copy(currCategory = prevCategory) }
+                        screenState.update { it.copy(currCategory = prevCategory) }
                         onEvent(CategoryScreenEvent.ShowCategory(prevCategory))
                     } else {
-                        categoriesScreenState.update { it.copy(hasParent = false) }
+                        screenState.update { it.copy(hasParent = false) }
                         showMainCategories()
                     }
                 }
             }
         }
     }
+
+    private fun getCurrentMode(itemState: ItemState) =
+        when (itemState) {
+            ItemState.HIDED -> "прихованими"
+            ItemState.FAVORITE -> "улюбленими"
+            ItemState.DEFAULT -> "звичайними"
+        }
 
     private fun showMainCategories(){
         onEvent(CategoryScreenEvent.ShowCategory(Category(id="main")))

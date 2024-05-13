@@ -59,7 +59,7 @@ fun CategoryScreen(
     viewModel: CategoriesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit),
 ) {
-    val screenState by viewModel.categoriesScreenState.collectAsState()
+    val screenState by viewModel.screenState.collectAsState()
     var currentScreen by remember { mutableStateOf(CATEGORIES_SCREEN) }
     val currCategory = screenState.currCategory
 

@@ -35,7 +35,7 @@ fun ServicesSection(
     nextScreen: (String)-> Unit,
     services: State<List<Service>> = viewModel.services.collectAsState()
 ) {
-    val categoriesScreenState by viewModel.categoriesScreenState.collectAsState()
+    val categoriesScreenState by viewModel.screenState.collectAsState()
 
     val orderedServices = mapOf(
         ItemState.FAVORITE to services.value.filter { it.state == ItemState.FAVORITE },

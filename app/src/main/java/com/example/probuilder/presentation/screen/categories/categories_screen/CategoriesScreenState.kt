@@ -7,6 +7,7 @@ data class CategoriesScreenState(
     val isEditMode: Boolean = false,
     val itemsMode: ItemState = ItemState.DEFAULT,
     val selectedItems: Map<String, Category> = mapOf(),
+    val selectAll: Boolean = true,
     val errorMessage: String = "",
     val hasParent: Boolean = false
 )
