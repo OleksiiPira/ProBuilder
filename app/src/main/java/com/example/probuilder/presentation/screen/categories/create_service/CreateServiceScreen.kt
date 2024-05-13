@@ -83,11 +83,6 @@ fun CreateServiceScreen(
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetCategory(it))}
         )
         TextFieldWithTitle(
-            title = "Категорія",
-            value = createServiceState.subCategory,
-            onValueChange = { viewModel.onEvent(CreateServiceEvent.SetSubCategory(it))}
-        )
-        TextFieldWithTitle(
             title = "Одиниця виміру",
             value = createServiceState.unit,
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetUnit(it))}

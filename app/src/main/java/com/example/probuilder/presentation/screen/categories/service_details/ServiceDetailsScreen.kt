@@ -74,8 +74,7 @@ fun ServiceDetailsScreen(
                 text = service.name,
                 style = Typography.titleLarge
             )
-            ColumnListItem(title = "Тип робіт", value = service.categoryName)
-            ColumnListItem(title = "Категорія", value = service.subCategoryName)
+            ColumnListItem(title = "Категорія", value = service.categoryName)
             ColumnListItem(title = "Одиниця виміру", value = service.measure)
             ColumnListItem(title = "Ціна", value = service.price.toString())
             Spacer(modifier = Modifier.padding(bottom = 8.dp))

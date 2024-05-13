@@ -53,7 +53,6 @@ class CreateServiceViewModel @Inject constructor(
             is CreateServiceEvent.SetCategory -> createServiceState.update { it.copy(category = event.category) }
             is CreateServiceEvent.SetUnit -> createServiceState.update { it.copy(unit = event.unit) }
             is CreateServiceEvent.SetPricePerUnit -> createServiceState.update { it.copy(pricePerUnit = event.pricePreUnit) }
-            is CreateServiceEvent.SetSubCategory -> createServiceState.update { it.copy(category = event.subCategory) }
         }
     }
 }

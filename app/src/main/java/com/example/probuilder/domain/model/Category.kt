@@ -13,16 +13,8 @@ data class Service(
     val name: String = "Empty",
     val price: Int = 0,
     val measure: String = "null",
-    val isHaded: Boolean = false,
-    val isFavorite: Boolean = false
-)
-
-data class SubCategory(
-    val id: String,
-    val categoryId: String,
-    val categoryName: String = "",
-    val name: String = "",
-)
+    val state: ItemState = ItemState.DEFAULT,
+    )
 
 @Entity(tableName = "categories")
 data class Category(

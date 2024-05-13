@@ -9,13 +9,11 @@ import javax.inject.Singleton
 class AppRepositoryImpl @Inject constructor(
     private val api: AppApi
 ) : AppRepository {
-    override suspend fun getRows(): List<RowDto> {
-        return api.getRows()["rows"].orEmpty()
-    }
+
     override suspend fun getCategories(): Map<String, List<CategoryDto>> {
-        return api.getCategories().orEmpty()
+        return api.getCategories()
     }
     override suspend fun getJobs(): Map<String, List<JobDto>> {
-        return api.getJobs().orEmpty()
+        return api.getJobs()
     }
 }

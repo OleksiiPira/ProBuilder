@@ -6,9 +6,6 @@ import com.example.probuilder.data.remote.dto.RowDto
 import retrofit2.http.GET
 
 interface AppApi {
-    @GET("rows.json")
-    suspend fun getRows(): Map<String, List<RowDto>>
-
     @GET("categories.json")
     suspend fun getCategories(): Map<String, List<CategoryDto>>
 

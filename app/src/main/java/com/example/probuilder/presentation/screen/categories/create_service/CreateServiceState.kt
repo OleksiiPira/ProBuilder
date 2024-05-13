@@ -6,7 +6,6 @@ import java.util.UUID
 data class CreateServiceState(
     val name: String = "",
     val category: String = "",
-    val subCategory: String = "",
     val unit: String = "м.2",
     val pricePerUnit: String = "0.0",
 )

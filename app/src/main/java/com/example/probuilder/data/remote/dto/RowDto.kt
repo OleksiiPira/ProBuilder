@@ -1,9 +1,8 @@
 package com.example.probuilder.data.remote.dto
 
+import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Feed
 import com.example.probuilder.domain.model.Service
-import com.example.probuilder.domain.model.SubCategory
-import com.example.probuilder.domain.model.Category
 
 data class JobDto(
     val id: String,
@@ -29,10 +28,10 @@ data class CategoryDto(
     val name: String,
 )
 
-fun CategoryDto.toCategory(): SubCategory {
-    return SubCategory(
+fun CategoryDto.toCategory(): Category {
+    return Category(
         id = this.id,
-        categoryId = this.rowId,
+        parentId = this.parentId,
         name = this.name
     )
 }
