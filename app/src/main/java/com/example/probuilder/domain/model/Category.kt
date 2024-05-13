@@ -9,7 +9,6 @@ data class Service(
     val id: String = "null",
     val categoryId: String = "null",
     val categoryName: String = "Empty",
-    val subCategoryName: String = "Empty",
     val name: String = "Empty",
     val price: Int = 0,
     val measure: String = "null",

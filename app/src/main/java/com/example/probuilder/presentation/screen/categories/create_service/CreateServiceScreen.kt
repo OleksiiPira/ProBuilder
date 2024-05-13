@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
+import com.example.probuilder.domain.model.Category
 import com.example.probuilder.presentation.common.PrimaryButton
 import com.example.probuilder.presentation.common.SecondaryButton
 import com.example.probuilder.presentation.common.TextFieldWithTitle
@@ -34,9 +35,11 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 fun CreateServiceScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
+    parentCategory: Category,
     viewModel: CreateServiceViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
+    viewModel.onEvent(CreateServiceEvent.SetCategory(category = parentCategory.name))
     Scaffold(
         bottomBar = bottomBar,
         topBar = {
@@ -78,7 +81,7 @@ fun CreateServiceScreen(
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetName(it))}
         )
         TextFieldWithTitle(
-            title = "Тип роботи",
+            title = "Категорія",
             value = createServiceState.category,
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetCategory(it))}
         )

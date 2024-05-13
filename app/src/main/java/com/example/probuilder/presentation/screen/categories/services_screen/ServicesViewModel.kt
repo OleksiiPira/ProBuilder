@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.probuilder.common.Resource
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.domain.use_case.GetServices
+import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,6 @@ class ServicesViewModel @Inject constructor(
     private val _currJobs = MutableLiveData<List<Service>>(emptyList())
     val currJobs: LiveData<List<Service>> = _currJobs
     val categoryName = savedStateHandle.get<String>("categoryName") ?: "Prices view model categoryName not found"
-    val subCategoryName = savedStateHandle.get<String>("subCategoryName") ?: "Prices view model subCategoryName not found"
 
     private val _hidedServices = MutableLiveData<List<Service>>(emptyList())
     val hidedServices: LiveData<List<Service>> = _hidedServices
@@ -35,8 +35,7 @@ class ServicesViewModel @Inject constructor(
             currCatId.value = categoryId
             _jobs.value?.get(currCatId.value)?.let { services ->
                 services.map { it.copy(
-                    categoryName = categoryName,
-                    subCategoryName = subCategoryName
+                    categoryName = categoryName
                 ) }
                 _currJobs.value = services
             }
@@ -50,8 +49,12 @@ class ServicesViewModel @Inject constructor(
                     .map {
                         (if (it.id == event.jobId) {
                             _hidedServices.value = (_hidedServices.value ?: emptyList()) + it
-                            it.copy(isHaded = !it.isHaded)
-                        } else it) as Service
+                            it.copy(state = when(it.state){
+                                ItemState.HIDED -> ItemState.DEFAULT
+                                ItemState.FAVORITE -> ItemState.HIDED
+                                ItemState.DEFAULT -> ItemState.HIDED
+                            })
+                        } else it)
                     }
             }
             is ServicesScreenEvent.OpenDetails -> TODO()
@@ -67,7 +70,6 @@ class ServicesViewModel @Inject constructor(
                         val data = result.data.orEmpty()
                         _jobs.value = data
                         _currJobs.value = _jobs.value?.get(currCatId.value).orEmpty()
-                        println()
                     }
 
                     is Resource.Error -> {}

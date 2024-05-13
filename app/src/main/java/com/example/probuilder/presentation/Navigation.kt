@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.example.probuilder.domain.model.Category
 import com.example.probuilder.presentation.screen.home.HomeScreen
 import com.example.probuilder.presentation.screen.invoices.invoices_screen.InvoicesScreen
 import com.example.probuilder.presentation.screen.categories.services_screen.ServicesScreen
@@ -19,6 +20,7 @@ import com.example.probuilder.presentation.screen.categories.service_details.Ser
 import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
+import com.google.gson.Gson
 
 @Composable
 fun HomeNavigation(
@@ -36,42 +38,35 @@ fun HomeNavigation(
                 bottomBar = bottomBar
             )
         }
+        composable(
+            route = Route.CATEGORIES,
+//            arguments = listOf(
+//                navArgument("category") {
+//                    type = NavType.StringType
+//                    defaultValue = ""
+//                },
+//            )
+        ) { backStackEntry ->
+
+//            val categoryJson = navController.previousBackStackEntry?.arguments?.getString("category").orEmpty()
+//            println("categoryJson = ${categoryJson}")
+//
+//            val category = if (categoryJson.isNotBlank()) Gson().fromJson(categoryJson, Category::class.java) else Category(id="", name = "Category1", parentId = "" )
+            CategoryScreen(
+                nextScreen = navController::navigate,
+                bottomBar = bottomBar,
+            )
+        }
         navigation(
             route = Route.CATEGORIES_SECTION,
-            startDestination = Route.CATEGORIES
+            startDestination = Route.SERVICES
         ) {
-            composable(route = Route.CATEGORIES) {
-                CategoryScreen(
-                    nextScreen = navController::navigate,
-                    bottomBar = bottomBar
-                )
-            }
+
+
             composable(route = Route.CREATE_CATEGORY) {
                 CreateCategoryOverlay(
                     onCancel = { navController.popBackStack() },
                     onSave = { navController.popBackStack() }
-                )
-            }
-            composable(
-                route = Route.SUB_CATEGORY,
-                arguments = listOf(
-                    navArgument("categoryId") {
-                        type = NavType.StringType
-                        defaultValue = ""
-                    },
-                    navArgument("categoryName") {
-                        type = NavType.StringType
-                        defaultValue = ""
-                    }
-                )
-            ) { backStackEntry ->
-                setTopBarTitle("Категорії робіт")
-                val arguments = navController.previousBackStackEntry?.arguments
-                CategoryScreen(
-                    nextScreen = navController::navigate,
-                    categoryName = arguments?.getString("categoryName").orEmpty(),
-                    categoryId = arguments?.getString("categoryId").orEmpty(),
-                    bottomBar = bottomBar
                 )
             }
             composable(
@@ -88,11 +83,21 @@ fun HomeNavigation(
                     bottomBar = bottomBar
                 )
             }
-            composable(route = Route.CREATE_SERVICE) {
-                setTopBarTitle("Нова послуга")
+            composable(
+                route = Route.CREATE_SERVICE,
+                arguments = listOf(
+                    navArgument("category") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    })
+            ) {
+                it.arguments?.let { it1 -> setTopBarTitle(it1.getString("category", "")) }
+                val categoryStr = it.arguments?.getString("category")
+
                 CreateServiceScreen(
                     nextScreen = navController::navigate,
-                    bottomBar = bottomBar
+                    bottomBar = bottomBar,
+                    parentCategory = Gson().fromJson(categoryStr, Category::class.java)
                 )
             }
             composable(route = Route.SERVICE_DETAILS, arguments = listOf(

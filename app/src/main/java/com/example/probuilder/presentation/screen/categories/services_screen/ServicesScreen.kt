@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
@@ -91,9 +92,9 @@ fun ServicesScreen(
             val hidedServices by viewModel.hidedServices.observeAsState(emptyList())
             LazyColumn(modifier = modifier) {
                 items(prices) {
-                    if (!it.isHaded) {
+                    if (it.state == ItemState.DEFAULT) {
                         ServiceListItem(
-                            service = it.copy(categoryName = viewModel.categoryName, subCategoryName = viewModel.subCategoryName),
+                            service = it.copy(categoryName = viewModel.categoryName),
                             onSelected = nextScreen,
                             onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
                         )
@@ -108,11 +109,10 @@ fun ServicesScreen(
                     )
                 }
                 items(hidedServices) {
-                    if (it.isHaded) {
+                    if (it.state == ItemState.HIDED) {
                         ServiceListItem(
                             modifier = modifier.alpha(0.5f),
-                            service = it.copy(categoryName = viewModel.categoryName, subCategoryName = viewModel.subCategoryName
-                            ),
+                            service = it.copy(categoryName = viewModel.categoryName),
                             onSelected = nextScreen,
                             onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
                         )

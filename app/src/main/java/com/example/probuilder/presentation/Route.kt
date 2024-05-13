@@ -5,11 +5,10 @@ object Route {
     const val HOME = "home"
 
     const val CATEGORIES_SECTION = "categories_section"
-    const val CATEGORIES = "categories"
+    const val CATEGORIES = "categories?category={category}"
     const val CREATE_CATEGORY = "create_category"
-    const val SUB_CATEGORY = "sub_categories?categoryId={categoryId}&categoryName={categoryName}"
-    const val SERVICES = "prices?categoryId={categoryId}&categoryName={categoryName}&subCategoryName={subCategoryName}"
-    const val CREATE_SERVICE = "create_category"
+    const val SERVICES = "prices?categoryId={categoryId}&categoryName={categoryName}"
+    const val CREATE_SERVICE = "create_service?category={category}"
     const val SERVICE_DETAILS = "price?item={item}"
 
 
