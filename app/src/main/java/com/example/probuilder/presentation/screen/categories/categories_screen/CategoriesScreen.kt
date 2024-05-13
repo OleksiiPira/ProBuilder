@@ -19,8 +19,6 @@ import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.RemoveRedEye
 import androidx.compose.material.icons.outlined.SelectAll
@@ -49,7 +47,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.domain.model.Category
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CATEGORIES_SCREEN
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CREATE_CATEGORY_OVERLAY
@@ -68,24 +65,24 @@ fun CategoryScreen(
     viewModel: CategoriesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit),
 ) {
-    val categoriesState by viewModel.categoriesScreenState.collectAsState()
+    val screenState by viewModel.categoriesScreenState.collectAsState()
     var currentScreen by remember { mutableStateOf(CATEGORIES_SCREEN) }
 
     Scaffold(
         bottomBar = bottomBar,
         floatingActionButton = {
             Row {
-
-                FloatingActionButton(
-                    modifier = modifier.padding(16.dp),
-                    containerColor = Color(0xFFF2F2F2),
-                    contentColor = MaterialTheme.colorScheme.primary,
-                    onClick = {
-                        nextScreen(Route.CREATE_SERVICE.replace("{category}", Gson().toJson(categoriesState.currCategory)))
-                              },
-                ) {
-                    Icon(Icons.Filled.UploadFile, "Floating action button.")
-                }
+                if (screenState.currCategory.id != "main")
+                    FloatingActionButton(
+                        modifier = modifier.padding(16.dp),
+                        containerColor = Color(0xFFF2F2F2),
+                        contentColor = MaterialTheme.colorScheme.primary,
+                        onClick = {
+                            nextScreen(Route.CREATE_SERVICE.replace("{category}", Gson().toJson(screenState.currCategory)))
+                                  },
+                    ) {
+                        Icon(Icons.Filled.UploadFile, "Floating action button.")
+                    }
                 FloatingActionButton(
                     modifier = modifier.padding(16.dp),
                     containerColor = Color(0xFFF2F2F2),
@@ -110,9 +107,9 @@ fun CategoryScreen(
                         )
                     }
                 },
-                title = { Text(text = categoriesState.currCategory.name) }, // TODO
+                title = { Text(text = screenState.currCategory.name) }, // TODO
                 actions = {
-                    if (!categoriesState.isSelectingMode) {
+                    if (!screenState.isSelectingMode) {
                         IconButton(onClick = { /* do something */ }) {
                             Icon(
                                 imageVector = Icons.Filled.Search,
@@ -131,21 +128,21 @@ fun CategoryScreen(
                             DropdownMenuItem(
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = if (categoriesState.itemsMode == ItemState.FAVORITE) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
+                                        imageVector = if (screenState.itemsMode == ItemState.FAVORITE) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
                                         contentDescription = null
                                     )
                                 },
-                                text = { Text(text = if (categoriesState.itemsMode == ItemState.FAVORITE) "Видалити з улюблених" else "Додати в улюблені") },
+                                text = { Text(text = if (screenState.itemsMode == ItemState.FAVORITE) "Видалити з улюблених" else "Додати в улюблені") },
                                 onClick = { viewModel.onEvent(CategoryScreenEvent.FavoriteSelectedCategory) }
                             )
                             DropdownMenuItem(
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = if (categoriesState.itemsMode == ItemState.HIDED) Icons.Outlined.RemoveRedEye else Icons.Filled.RemoveRedEye,
+                                        imageVector = if (screenState.itemsMode == ItemState.HIDED) Icons.Outlined.RemoveRedEye else Icons.Filled.RemoveRedEye,
                                         contentDescription = null
                                     )
                                 },
-                                text = { Text(text = if (categoriesState.itemsMode == ItemState.HIDED) "Показати" else "Приховати") },
+                                text = { Text(text = if (screenState.itemsMode == ItemState.HIDED) "Показати" else "Приховати") },
                                 onClick = { viewModel.onEvent(CategoryScreenEvent.HideSelectedCategories) }
                             )
                             DropdownMenuItem(
@@ -170,7 +167,7 @@ fun CategoryScreen(
             viewModel = viewModel,
             currentScreen = currentScreen,
             nextScreen = nextScreen,
-            categoriesState = categoriesState)
+            categoriesState = screenState)
     }
 }
 

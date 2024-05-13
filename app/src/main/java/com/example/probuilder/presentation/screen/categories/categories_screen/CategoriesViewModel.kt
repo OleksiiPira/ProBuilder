@@ -7,6 +7,7 @@ import com.example.probuilder.common.Resource
 import com.example.probuilder.data.local.CategoriesRepository
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.use_case.CategoriesUseCase
 import com.example.probuilder.domain.use_case.GetServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,14 +21,14 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val getServices: GetServices,
+    private val categoriesUseCase: CategoriesUseCase,
     private val categoriesRepository: CategoriesRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val categoriesScreenState = MutableStateFlow(CategoriesScreenState())
 
-    private val _categories =
-        MutableStateFlow<List<Category>>(emptyList())  // Correct type initialization
+    private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories: StateFlow<List<Category>> = _categories.asStateFlow()
 
     private val _services: MutableStateFlow<List<Service>> = MutableStateFlow(emptyList())
@@ -35,15 +36,14 @@ class CategoriesViewModel @Inject constructor(
 
     init {
         showMainCategories()
+        categories.value.ifEmpty { httpGetCategories() }
     }
 
     fun onEvent(event: CategoryScreenEvent) {
         when (event) {
-            is CategoryScreenEvent.LoadAllCategories -> TODO()
-            is CategoryScreenEvent.ShowCreateCategory -> TODO()
             is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
                 val category = event.category
-                loadAllJobs(category.id)
+                updateServices(category.id)
 
                 categoriesScreenState.update { it.copy(
                     hasParent = category.id != "main",
@@ -168,16 +168,31 @@ class CategoriesViewModel @Inject constructor(
         onEvent(CategoryScreenEvent.ShowCategory(Category(id="main")))
     }
 
-    private fun loadAllJobs(categoryId: String) {
+    private fun httpGetCategories() {
+        viewModelScope.launch {
+            categoriesUseCase.invoke().collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.orEmpty()
+                            .flatMap { it.value }
+                            .forEach { categoriesRepository.upsertCategory(it) }
+                        showMainCategories()
+                    }
+
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {}
+                }
+            }
+        }
+    }
+
+    private fun updateServices(categoryId: String) {
         viewModelScope.launch {
             getServices.invoke().collect { result ->
                 when (result) {
                     is Resource.Success -> {
                         val data = result.data.orEmpty()
-                        val services1 = data[categoryId] ?: emptyList()
-                        if (services1.isNotEmpty()) {
-                            _services.value = services1
-                        }
+                        _services.value = data[categoryId] ?: emptyList()
                     }
                     is Resource.Error -> {}
                     is Resource.Loading -> {}
