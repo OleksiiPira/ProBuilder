@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
 import com.example.probuilder.domain.model.Category
-import com.example.probuilder.presentation.common.PrimaryButton
-import com.example.probuilder.presentation.common.SecondaryButton
-import com.example.probuilder.presentation.common.TextFieldWithTitle
+import com.example.probuilder.presentation.components.PrimaryButton
+import com.example.probuilder.presentation.components.SecondaryButton
+import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)

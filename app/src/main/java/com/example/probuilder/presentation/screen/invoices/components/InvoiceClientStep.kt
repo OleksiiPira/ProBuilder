@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.probuilder.presentation.common.TextFieldWithTitle
+import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.screen.invoices.create_invoice.InvoiceFormEvent
 import com.example.probuilder.presentation.screen.invoices.create_invoice.InvoiceFormData
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceViewModel

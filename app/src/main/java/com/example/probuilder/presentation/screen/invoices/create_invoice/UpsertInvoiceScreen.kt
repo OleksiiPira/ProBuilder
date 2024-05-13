@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants.HORIZONTAL_PADDING
 import com.example.probuilder.presentation.Route
-import com.example.probuilder.presentation.common.PrimaryButton
-import com.example.probuilder.presentation.common.SecondaryButton
+import com.example.probuilder.presentation.components.PrimaryButton
+import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.screen.home.TabButton
 import com.example.probuilder.presentation.screen.invoices.components.InvoiceClientStep
 import com.example.probuilder.presentation.screen.invoices.components.InvoiceInfoStep

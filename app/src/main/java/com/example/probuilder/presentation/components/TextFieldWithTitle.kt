@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.common
+package com.example.probuilder.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
