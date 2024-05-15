@@ -44,16 +44,16 @@ class CategoriesViewModel @Inject constructor(
             is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
                 val category = event.category
                 screenState.update { it.copy(hasParent = category.id != "main", currCategory = category) }
-
+                updateServices(category.id)
                 categoriesRepository
                     .getCategoryByParentId(category.id)
                     .collect { categories -> _categories.value = categories }
 
-                updateServices(category.id)
             }
 
             is CategoryScreenEvent.CreateCategory -> viewModelScope.launch {
                 categoriesRepository.upsertCategory(event.category)
+                screenState.value.hideOverlays()
             }
 
             is CategoryScreenEvent.UpdateCategorySelectedState -> {
@@ -62,7 +62,7 @@ class CategoriesViewModel @Inject constructor(
                     val state = screenState.value
                     if (state.selectedItems.isNotEmpty() && state.itemsMode != category.state) {
                         val mode = getCurrentMode(state.itemsMode)
-                        onEvent(CategoryScreenEvent.ShowError("Закінчіть зміни з $mode, щоб перейти до інших."))
+                        state.showError("Закінчіть зміни з $mode, щоб перейти до інших.")
                         return@launch
                     }
 
@@ -136,8 +136,6 @@ class CategoriesViewModel @Inject constructor(
                 screenState.value = CategoriesScreenState()
             }
 
-            is CategoryScreenEvent.ShowError -> screenState.update { it.copy(errorMessage = event.message) }
-            CategoryScreenEvent.HideError -> screenState.update { it.copy(errorMessage = "") }
             is CategoryScreenEvent.Back -> viewModelScope.launch {
                 val parentId = screenState.value.currCategory.parentId
                 categoriesRepository.getCategoryById(parentId).collectLatest { prevCategory ->
@@ -154,12 +152,11 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
-    private fun getCurrentMode(itemState: ItemState) =
-        when (itemState) {
-            ItemState.HIDED -> "прихованими"
-            ItemState.FAVORITE -> "улюбленими"
-            ItemState.DEFAULT -> "звичайними"
-        }
+    private fun getCurrentMode(itemState: ItemState) = mapOf(
+        ItemState.HIDED to "прихованими",
+        ItemState.FAVORITE to "улюбленими",
+        ItemState.DEFAULT to "звичайними"
+    )[itemState]
 
     private fun showMainCategories(){
         onEvent(CategoryScreenEvent.ShowCategory(Category(id="main")))

@@ -17,7 +17,5 @@ sealed class CategoryScreenEvent {
     data class HideService(val service: Service): CategoryScreenEvent()
 
     // Other
-    data class ShowError(val message: String): CategoryScreenEvent()
-    data object HideError: CategoryScreenEvent()
     data object Back: CategoryScreenEvent()
 }

@@ -13,9 +13,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.domain.model.Service
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesViewModel
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent
 import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
@@ -31,16 +28,15 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun ServicesSection(
-    viewModel: CategoriesViewModel,
-    nextScreen: (String)-> Unit,
-    services: State<List<Service>> = viewModel.services.collectAsState()
+    services: List<Service>,
+    screenState: CategoriesScreenState,
+    onEvent: (CategoryScreenEvent) -> Unit,
+    nextScreen: (String) -> Unit,
 ) {
-    val categoriesScreenState by viewModel.screenState.collectAsState()
-
     val orderedServices = mapOf(
-        ItemState.FAVORITE to services.value.filter { it.state == ItemState.FAVORITE },
-        ItemState.DEFAULT to services.value.filter { it.state == ItemState.DEFAULT },
-        ItemState.HIDED to services.value.filter { it.state == ItemState.HIDED }
+        ItemState.FAVORITE to services.filter { it.state == ItemState.FAVORITE },
+        ItemState.DEFAULT to services.filter { it.state == ItemState.DEFAULT },
+        ItemState.HIDED to services.filter { it.state == ItemState.HIDED }
     )
 
     orderedServices.forEach { (state, services) ->
@@ -84,9 +80,9 @@ fun ServicesSection(
             services.forEach {
                 ServiceListItem(
                     modifier = Modifier,
-                    service = it.copy(categoryName = categoriesScreenState.currCategory.name),
+                    service = it.copy(categoryName = screenState.currCategory.name),
                     onSelected = nextScreen,
-                    onHided = { viewModel.onEvent(CategoryScreenEvent.HideService(it)) }
+                    onHided = { onEvent(CategoryScreenEvent.HideService(it)) }
                 )
                 HorizontalDivider(modifier = Modifier, color = Color.Gray)
             }

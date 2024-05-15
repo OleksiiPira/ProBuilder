@@ -29,9 +29,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,177 +36,171 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.domain.model.Category
+import com.example.probuilder.domain.model.Service
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CATEGORIES_SCREEN
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenStep.CREATE_CATEGORY_OVERLAY
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.CreateCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.ShowCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.UpdateCategorySelectedState
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenMode.SHOW_CREATE_CATEGORY
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenMode.SHOW_ERROR
 import com.example.probuilder.presentation.screen.categories.categories_screen.drop_down_edit_menu.DropDownEditMenu
 import com.example.probuilder.presentation.screen.categories.categories_screen.overflow_menu.CategoryOverflowMenu
 import com.example.probuilder.presentation.screen.categories.categories_screen.services_section.ServicesSection
 import com.example.probuilder.presentation.screen.categories.component.CategoryListItem
 import com.google.gson.Gson
 
-enum class CategoriesScreenStep { CATEGORIES_SCREEN, CREATE_CATEGORY_OVERLAY, ERROR_OVERLAY }
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
     viewModel: CategoriesViewModel = hiltViewModel(),
-    bottomBar: @Composable() (() -> Unit),
+    bottomBar: @Composable (() -> Unit),
 ) {
     val screenState by viewModel.screenState.collectAsState()
-    var currentScreen by remember { mutableStateOf(CATEGORIES_SCREEN) }
-    val currCategory = screenState.currCategory
+    val services by viewModel.services.collectAsState(emptyList())
+    val categories by viewModel.categories.collectAsState(emptyList())
 
     Scaffold(
-        bottomBar = bottomBar,
-        floatingActionButton = {
-            Row {
-                CustomFloatingButton(
-                    visible = screenState.hasParent,
-                    onClick = { currentScreen = CREATE_CATEGORY_OVERLAY }
-                ) {
-                    Icon(Icons.Filled.UploadFile, null)
-                }
-
-                val currCategoryJson = Gson().toJson(currCategory)
-                CustomFloatingButton(
-                    onClick = {
-                        nextScreen(Route.CREATE_SERVICE.replace("{category}", currCategoryJson))
-                    }) {
-                    Icon(Icons.Filled.Add, null)
-                }
-            }
-        },
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray.copy(alpha = 0.2f),
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Main manu"
-                        )
-                    }
-                },
-                title = { Text(text = if (screenState.hasParent) currCategory.name else "Categories") },
-                actions = {
-                    if (screenState.isEditMode) {
-                        CategoryOverflowMenu(
-                            screenState = screenState,
-                            viewModel = viewModel
-                        )
-                    } else {
-                        IconButton(onClick = { /* do something */ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Search,
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                contentDescription = "Search"
-                            )
-                        }
-                    }
-                },
-            )
-        }
+        topBar = { TopBar(screenState, viewModel) },
+        floatingActionButton = { FloatingActionButtons(screenState, nextScreen) },
+        bottomBar = bottomBar
     ) {
         CategoriesScreenContent(
             modifier = modifier.padding(it),
-            viewModel = viewModel,
-            currentScreen = currentScreen,
+            categories = categories,
+            services = services,
             nextScreen = nextScreen,
+            onEvent = { event: CategoryScreenEvent -> viewModel.onEvent(event) },
             screenState = screenState
         )
     }
 }
 
+
+
 @Composable
 private fun CategoriesScreenContent(
     modifier: Modifier,
-    viewModel: CategoriesViewModel,
-    currentScreen: CategoriesScreenStep,
+    categories: List<Category>,
+    services: List<Service>,
     nextScreen: (String) -> Unit,
+    screenState: CategoriesScreenState,
+    onEvent: (CategoryScreenEvent) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        userScrollEnabled = !screenState.isOverlayShown
+    ) {
+        item { HorizontalDivider(color = Color.Gray) }
+        itemsIndexed(categories) { index, category ->
+            CategoryListItem(
+                text = category.name,
+                onClick = { onEvent(ShowCategory(categories[index])) },
+                handleSelect = { onEvent(UpdateCategorySelectedState(category)) },
+                isSelectMode = screenState.isEditMode,
+                isSelected = screenState.selectedItems.containsKey(category.id),
+                actionButton = { if (!screenState.isEditMode) DropDownEditMenu(onEvent, category) }
+            )
+        }
+        item {
+            ServicesSection(
+                services = services,
+                nextScreen = nextScreen,
+                onEvent = onEvent,
+                screenState = screenState
+            )
+        }
+    }
+
+    if (screenState.screenMode == SHOW_CREATE_CATEGORY) CreateCategoryOverlay(
+        onCancel = screenState::hideOverlays,
+        onSave = { onEvent(CreateCategory(it)) }
+    )
+
+    if (screenState.screenMode == SHOW_ERROR) ShowError(screenState)
+
+    if (screenState.hasParent) BackHandler { onEvent(CategoryScreenEvent.Back) }
+}
+
+@Composable
+private fun ShowError(
     screenState: CategoriesScreenState
 ) {
-    var currentScreen1 = currentScreen
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        HorizontalDivider(color = Color.Gray)
-        val categories by viewModel.categories.collectAsState(emptyList())
-
-        LazyColumn(userScrollEnabled = currentScreen1 == CATEGORIES_SCREEN) {
-            item {
-//                    CategoriesSection(viewModel = viewModel, categories = categories)
+    Dialog(onDismissRequest = screenState::hideOverlays) {
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.White)
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(modifier = Modifier.fillMaxWidth(), text = screenState.errorMessage)
+            TextButton(onClick = screenState::hideOverlays) {
+                Text(text = "Продовжити")
             }
+        }
+    }
+}
 
-            itemsIndexed(categories) { index, category ->
-
-                CategoryListItem(
-                    text = category.name,
-                    onClick = {
-                        println("Click on $category")
-                        viewModel.onEvent(
-                            CategoryScreenEvent.ShowCategory(categories[index])
-                        )
-                    },
-                    handleSelect = {
-                        viewModel.onEvent(
-                            CategoryScreenEvent.UpdateCategorySelectedState(
-                                category
-                            )
-                        )
-                    },
-                    isSelectMode = screenState.isEditMode,
-                    isSelected = screenState.selectedItems.containsKey(category.id),
-                    actionButton = {
-                        if (!screenState.isEditMode) {
-                            DropDownEditMenu(screenState, viewModel, category)
-                        }
-                    }
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun TopBar(
+    screenState: CategoriesScreenState,
+    viewModel: CategoriesViewModel
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Gray.copy(alpha = 0.2f),
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+        navigationIcon = {
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Main manu"
                 )
             }
-            item {
-                ServicesSection(viewModel = viewModel, nextScreen = nextScreen)
-            }
-        }
-    }
-
-    if (currentScreen1 == CREATE_CATEGORY_OVERLAY) {
-        CreateCategoryOverlay(
-            onCancel = { currentScreen1 = CATEGORIES_SCREEN },
-            onSave = { category ->
-                viewModel.onEvent(CategoryScreenEvent.CreateCategory(category))
-                currentScreen1 = CATEGORIES_SCREEN
-            }
-        )
-    }
-
-    if (screenState.errorMessage.isNotBlank()) {
-        Dialog(
-            onDismissRequest = { viewModel.onEvent(CategoryScreenEvent.HideError) }
-        ) {
-            Column(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalAlignment = Alignment.End
-            ) {
-                Text(modifier = Modifier.fillMaxWidth(), text = screenState.errorMessage)
-                TextButton(onClick = { viewModel.onEvent(CategoryScreenEvent.HideError) }) {
-                    Text(text = "Продовжити")
+        },
+        title = { Text(text = if (screenState.hasParent) screenState.currCategory.name else "Categories") },
+        actions = {
+            if (screenState.isEditMode) {
+                CategoryOverflowMenu(
+                    screenState = screenState,
+                    viewModel = viewModel
+                )
+            } else {
+                IconButton(onClick = { /* do something */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        contentDescription = "Search"
+                    )
                 }
             }
-        }
-    }
+        },
+    )
+}
 
-    if (screenState.hasParent) {
-        BackHandler { viewModel.onEvent(CategoryScreenEvent.Back) }
+@Composable
+private fun FloatingActionButtons(screenState: CategoriesScreenState, nextScreen: (String) -> Unit) {
+    Row {
+        CustomFloatingButton(
+            visible = screenState.hasParent,
+            onClick = screenState::showCreateCategory
+        ) {
+            Icon(Icons.Filled.UploadFile, null)
+        }
+
+        val currCategoryJson = Gson().toJson(screenState.currCategory)
+        CustomFloatingButton({
+            nextScreen(
+                Route.CREATE_SERVICE.replace("{category}", currCategoryJson)
+            )
+        }) {
+            Icon(Icons.Filled.Add, null)
+        }
     }
 }

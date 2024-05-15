@@ -11,61 +11,38 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.example.probuilder.domain.model.Category
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesViewModel
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.FavoriteCategory
 import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 
 @Composable
 fun DropDownEditMenu(
-    categoriesState: CategoriesScreenState,
-    viewModel: CategoriesViewModel,
+    onEvent: (CategoryScreenEvent) -> Unit,
     category: Category
 ) {
-    DropDownButton() {
+    DropDownButton {
         DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Edit,
-                    contentDescription = null
-                )
-            },
+            leadingIcon = { Icon(Icons.Outlined.Edit,null) },
             text = { Text(text = "Edit") },
             onClick = {})
         DropdownMenuItem(
             leadingIcon = {
-                Icon(
-                    imageVector = if (category.state == ItemState.FAVORITE) Icons.Outlined.Favorite else Icons.Filled.Favorite,
-                    contentDescription = null
-                )
+                val icon = if (category.state == ItemState.FAVORITE) Icons.Outlined.Favorite else Icons.Filled.Favorite
+                Icon(icon, contentDescription = null)
             },
             text = { Text(text = "Edit") },
-            onClick = {
-                viewModel.onEvent(
-                    CategoryScreenEvent.FavoriteCategory(
-                        category
-                    )
-                )
-            })
+            onClick = { onEvent(FavoriteCategory(category)) })
+
         DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.RemoveRedEye,
-                    contentDescription = null
-                )
-            },
+            leadingIcon = { Icon(Icons.Outlined.RemoveRedEye,null) },
             text = { Text(text = "Hide") },
             onClick = {
-//                viewModel.onEvent(CategoryScreenEvent.Hide(category))
+//                onEvent(CategoryScreenEvent.Hide(category))
             })
+
         DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = null
-                )
-            },
+            leadingIcon = { Icon(Icons.Outlined.Delete,null) },
             text = { Text(text = "Delete") },
             onClick = { })
     }
