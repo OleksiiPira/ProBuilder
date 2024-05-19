@@ -54,14 +54,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScene() {
-    var topBarTitle by remember { mutableStateOf("") }
     val navController = rememberNavController()
-    var actionButtonRoute by rememberSaveable { mutableStateOf("") }
 
     HomeNavigation(
         navController = navController,
-        showActionButton = { actionButtonRoute = it },
-        setTopBarTitle = { topBarTitle = it },
         bottomBar = {
             var selectedIndex by remember { mutableStateOf(0) }
             BottomAppBar(
