@@ -7,14 +7,18 @@ import androidx.room.RoomDatabase
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Invoice
 import com.example.probuilder.domain.model.InvoiceItem
+import com.example.probuilder.domain.model.Service
 import com.example.probuilder.domain.repository.CategoriesDao
 import com.example.probuilder.domain.repository.InvoiceDao
+import com.example.probuilder.domain.repository.ServiceDao
 
-@Database(entities = [InvoiceItem::class, Invoice::class, Category::class], version = 1)
+@Database(entities = [InvoiceItem::class, Invoice::class, Category::class, Service::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun invoiceItemDao(): InvoiceDao
 
     abstract fun categoryDao(): CategoriesDao
+
+    abstract fun serviceDao(): ServiceDao
     companion object {
         // Volatile means writes to this field are immediately made visible to other threads.
         @Volatile
