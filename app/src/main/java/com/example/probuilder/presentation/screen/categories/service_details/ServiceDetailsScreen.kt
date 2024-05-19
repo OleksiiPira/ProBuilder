@@ -76,7 +76,7 @@ fun ServiceDetailsScreen(
             )
             ColumnListItem(title = "Категорія", value = service.categoryName)
             ColumnListItem(title = "Одиниця виміру", value = service.measure)
-            ColumnListItem(title = "Ціна", value = service.price.toString())
+            ColumnListItem(title = "Ціна", value = service.pricePerUnit.toString())
             Spacer(modifier = Modifier.padding(bottom = 8.dp))
             PrimaryButton(onClick = { /*TODO*/ }) {
                 Text(

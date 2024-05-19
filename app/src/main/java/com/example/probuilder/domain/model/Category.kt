@@ -5,14 +5,15 @@ import androidx.room.PrimaryKey
 import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import java.util.UUID
 
+@Entity(tableName = "services")
 data class Service(
-    val id: String = "null",
-    val categoryId: String = "null",
-    val categoryName: String = "Empty",
     val name: String = "Empty",
-    val price: Int = 0,
+    val pricePerUnit: Int = 0,
     val measure: String = "null",
     val state: ItemState = ItemState.DEFAULT,
+    val categoryName: String = "null",
+    val categoryId: String = "null",
+    @PrimaryKey val id: String = "null",
     )
 
 @Entity(tableName = "categories")

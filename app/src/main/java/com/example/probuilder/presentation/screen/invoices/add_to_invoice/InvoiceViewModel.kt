@@ -41,7 +41,7 @@ class InvoiceViewModel @Inject constructor(
                         id = service.id,
                         name = service.name,
                         unit = service.measure,
-                        pricePerUnit = service.price.toString()
+                        pricePerUnit = service.pricePerUnit.toString()
                     )
                 }
             }

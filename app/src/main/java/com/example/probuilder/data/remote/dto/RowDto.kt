@@ -17,7 +17,7 @@ fun JobDto.toJob(): Service {
         id = this.id,
         categoryId = this.categoryId,
         name = this.name,
-        price = this.price,
+        pricePerUnit = this.price,
         measure = this.measure
     )
 }
@@ -35,24 +35,7 @@ fun CategoryDto.toCategory(): Category {
         name = this.name
     )
 }
-
-data class FeedDto(
-    val feed: List<Category>
-)
-
-fun FeedDto.toFeed(): Feed {
-    return Feed(
-        feed = this.feed
-    )
-}
 data class RowDto(
     val id: String,
     val name: String,
 )
-
-fun RowDto.toRow(): Category {
-    return Category(
-        id = this.id,
-        name = this.name,
-    )
-}

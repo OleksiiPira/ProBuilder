@@ -73,7 +73,7 @@ fun ServiceListItem(
             ) {
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = service.price.toString() + " грн"
+                    text = service.pricePerUnit.toString() + " грн"
                 )
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
@@ -150,7 +150,7 @@ fun GreetingPreview() {
                 id = "",
                 categoryId = "",
                 name = "Painting and Decorating",
-                price = 90,
+                pricePerUnit = 90,
                 measure = "м2"
             ),
             onSelected = System.out::println,
