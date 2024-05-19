@@ -27,7 +27,7 @@ import com.example.probuilder.domain.model.Category
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
-fun CreateCategoryOverlay(
+fun CreateCategoryScreen(
     modifier: Modifier = Modifier,
     onCancel: () -> Unit,
     onSave: (Category) -> Unit

@@ -40,10 +40,7 @@ import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.CreateCategory
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.ShowCategory
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.UpdateCategorySelectedState
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenMode.SHOW_CREATE_CATEGORY
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenMode.SHOW_ERROR
 import com.example.probuilder.presentation.screen.categories.categories_screen.drop_down_edit_menu.DropDownEditMenu
 import com.example.probuilder.presentation.screen.categories.categories_screen.overflow_menu.CategoryOverflowMenu
@@ -64,7 +61,7 @@ fun CategoryScreen(
 
     Scaffold(
         topBar = { TopBar(screenState, viewModel) },
-        floatingActionButton = { FloatingActionButtons(screenState, nextScreen) },
+        floatingActionButton = { FloatingActionButtons(nextScreen, screenState) },
         bottomBar = bottomBar
     ) {
         CategoriesScreenContent(
@@ -73,7 +70,8 @@ fun CategoryScreen(
             services = services,
             nextScreen = nextScreen,
             onEvent = { event: CategoryScreenEvent -> viewModel.onEvent(event) },
-            screenState = screenState
+            screenState = screenState,
+            screenMode = screenState.screenMode
         )
     }
 }
@@ -87,7 +85,8 @@ private fun CategoriesScreenContent(
     services: List<Service>,
     nextScreen: (String) -> Unit,
     screenState: CategoriesScreenState,
-    onEvent: (CategoryScreenEvent) -> Unit
+    onEvent: (CategoryScreenEvent) -> Unit,
+    screenMode: CategoryScreenMode,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -97,9 +96,7 @@ private fun CategoriesScreenContent(
         items(categories) { category ->
             CategoryListItem(
                 text = category.name,
-                onClick = {
-                    nextScreen(Route.CATEGORIES.replace("{category}", Gson().toJson(category)))
-                          },
+                onClick = { nextScreen(Route.CATEGORIES.replace("{category}", Gson().toJson(category))) },
                 handleSelect = { onEvent(UpdateCategorySelectedState(category)) },
                 isSelectMode = screenState.isEditMode,
                 isSelected = screenState.selectedItems.containsKey(category.id),
@@ -116,12 +113,7 @@ private fun CategoriesScreenContent(
         }
     }
 
-    if (screenState.screenMode == SHOW_CREATE_CATEGORY) CreateCategoryOverlay(
-        onCancel = screenState::hideOverlays,
-        onSave = { onEvent(CreateCategory(it)) }
-    )
-
-    if (screenState.screenMode == SHOW_ERROR) ShowError(screenState)
+    if (screenMode == SHOW_ERROR) ShowError(screenState)
 
     if (screenState.hasParent) BackHandler { onEvent(CategoryScreenEvent.Back) }
 }
@@ -187,20 +179,23 @@ private fun TopBar(
 }
 
 @Composable
-private fun FloatingActionButtons(screenState: CategoriesScreenState, nextScreen: (String) -> Unit) {
+private fun FloatingActionButtons(
+    nextScreen: (String) -> Unit,
+    screenState: CategoriesScreenState
+    ) {
     Row {
         CustomFloatingButton(
             visible = screenState.hasParent,
-            onClick = screenState::showCreateCategory
+            onClick = {
+                val currCategoryJson = Gson().toJson(screenState.currCategory)
+                nextScreen(Route.CREATE_SERVICE.replace("{category}", currCategoryJson))
+            }
         ) {
             Icon(Icons.Filled.UploadFile, null)
         }
-
-        val currCategoryJson = Gson().toJson(screenState.currCategory)
         CustomFloatingButton({
-            nextScreen(
-                Route.CREATE_SERVICE.replace("{category}", currCategoryJson)
-            )
+            val currCategoryJson = Gson().toJson(screenState.currCategory)
+            nextScreen(Route.CREATE_CATEGORY.replace("{category}", currCategoryJson))
         }) {
             Icon(Icons.Filled.Add, null)
         }

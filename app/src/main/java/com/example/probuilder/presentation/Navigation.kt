@@ -41,11 +41,11 @@ fun HomeNavigation(
             )
         }
         navigation(
-            route = Route.CATEGORIES_SECTION,
+            route = Route.SERVICES_SECTION,
             startDestination = Route.SERVICES
         ) {
-            composable(route = Route.CREATE_CATEGORY) {
-                CreateCategoryOverlay(
+            composable(route = Route.CREATE_SERVICE) {
+                CreateCategoryScreen(
                     onCancel = { navController.popBackStack() },
                     onSave = { navController.popBackStack() }
                 )
@@ -72,7 +72,6 @@ fun HomeNavigation(
                     })
             ) {
                 CreateServiceScreen(
-                    nextScreen = navController::navigate,
                     bottomBar = bottomBar,
                     onBack = { navController.popBackStack() }
                 )

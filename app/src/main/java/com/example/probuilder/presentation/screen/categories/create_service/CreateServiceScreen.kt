@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
-import com.example.probuilder.domain.model.Category
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
@@ -34,12 +33,10 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 @Composable
 fun CreateServiceScreen(
     modifier: Modifier = Modifier,
-    nextScreen: (String) -> Unit,
-    parentCategory: Category,
     viewModel: CreateServiceViewModel = hiltViewModel(),
-    bottomBar: @Composable() (() -> Unit)
+    bottomBar: @Composable() (() -> Unit),
+    onBack: () -> Unit
 ) {
-    viewModel.onEvent(CreateServiceEvent.SetCategory(category = parentCategory.name))
     Scaffold(
         bottomBar = bottomBar,
         topBar = {
@@ -71,7 +68,7 @@ fun CreateServiceScreen(
     ) {
 
     Column(
-        Modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
+        modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         ) {
         val createServiceState by viewModel.serviceState.collectAsState()
@@ -82,7 +79,7 @@ fun CreateServiceScreen(
         )
         TextFieldWithTitle(
             title = "Категорія",
-            value = createServiceState.category,
+            value = createServiceState.categoryName,
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetCategory(it))}
         )
         TextFieldWithTitle(
@@ -91,15 +88,18 @@ fun CreateServiceScreen(
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetUnit(it))}
         )
         TextFieldWithTitle(
-            title = "Одиниця виміру",
+            title = "Ціна за одиницю",
             value = createServiceState.pricePerUnit,
             onValueChange = { viewModel.onEvent(CreateServiceEvent.SetPricePerUnit(it))}
         )
         Spacer(modifier = Modifier.height(16.dp))
-        PrimaryButton(onClick = { /*TODO*/ }) {
+        PrimaryButton(onClick = {
+            viewModel.onEvent(CreateServiceEvent.SaveItem)
+            onBack()
+        }) {
             Text(text = "Зберегти", style = Typography.labelLarge)
         }
-        SecondaryButton(onClick = { /*TODO*/ }) {
+        SecondaryButton(onClick = onBack) {
             Text(text = "Відмінити", style = Typography.labelLarge)
         }
     }

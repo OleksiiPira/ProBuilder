@@ -2,57 +2,52 @@
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.probuilder.data.local.InvoiceRepositoryImpl
+import androidx.lifecycle.viewModelScope
+import com.example.probuilder.data.local.ServiceRepository
+import com.example.probuilder.domain.model.Category
+import com.example.probuilder.domain.model.Service
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateServiceViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val repository: InvoiceRepositoryImpl
+    private val repository: ServiceRepository
 ) : ViewModel() {
-    private var createServiceState = MutableStateFlow(CreateServiceState())
-    val serviceState: StateFlow<CreateServiceState> = createServiceState
+    private var state = MutableStateFlow(CreateServiceState())
+    val serviceState: StateFlow<CreateServiceState> = state
 
     init {
-//        savedStateHandle.get<String>("item")?.let {
-//            val service = Gson().fromJson(it, Service::class.java)
-//            createServiceState.value = service
-//        }
+        savedStateHandle.get<String>("category")?.let { categoryStr ->
+            val category = Gson().fromJson(categoryStr, Category::class.java)
+            state.update { it.copy(currCategory = category, categoryName = category.name) }
+        }
     }
 
     fun onEvent(event: CreateServiceEvent) {
         when(event) {
-            CreateServiceEvent.SaveItem -> TODO()
-            //                val state = invoiceItemState.value
-//                val name = state.name
-//                val quantity = state.quantity.toIntOrNull() ?: 0
-//                val pricePerUnit = state.pricePerUnit.toDoubleOrNull() ?: 0.0
-//                val unit = state.unit
-//                val invoiceId = state.invoice.id
-//                val id = state.id
-//                if (name.isBlank() || quantity < 0 || pricePerUnit < 1 || unit.isEmpty() || invoiceId.isBlank()) {
-//                    return
-//                }
-//
-//                val item = InvoiceItem(
-//                    id = id,
-//                    name = name,
-//                    invoiceId = invoiceId,
-//                    quantity = quantity,
-//                    unit = unit,
-//                    pricePerUnit = pricePerUnit,
-//                    totalPrice = quantity * pricePerUnit
-//                )
-//                viewModelScope.launch { repository.upsertInvoiceItem(item) }
-//            }
-            is CreateServiceEvent.SetName -> createServiceState.update { it.copy(name = event.name) }
-            is CreateServiceEvent.SetCategory -> createServiceState.update { it.copy(category = event.category) }
-            is CreateServiceEvent.SetUnit -> createServiceState.update { it.copy(unit = event.unit) }
-            is CreateServiceEvent.SetPricePerUnit -> createServiceState.update { it.copy(pricePerUnit = event.pricePreUnit) }
+            CreateServiceEvent.SaveItem -> {
+                val state = state.value
+                val item = Service(
+                    id = UUID.randomUUID().toString(),
+                    name = state.name,
+                    categoryId = state.currCategory.id,
+                    categoryName = state.categoryName,
+                    pricePerUnit = state.pricePerUnit.toIntOrNull() ?: 0,
+                    measure = state.unit
+                )
+                viewModelScope.launch { repository.upsert(item) }
+            }
+            is CreateServiceEvent.SetName -> state.update { it.copy(name = event.name) }
+            is CreateServiceEvent.SetCategory -> state.update { it.copy(categoryName = event.category) }
+            is CreateServiceEvent.SetUnit -> state.update { it.copy(unit = event.unit) }
+            is CreateServiceEvent.SetPricePerUnit -> state.update { it.copy(pricePerUnit = event.pricePreUnit) }
         }
     }
 }
