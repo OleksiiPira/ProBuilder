@@ -1,4 +1,106 @@
 {
+  "main": [
+    {
+      "id": "7113068a-66e8-4ccf-94b4-aa999e6c0e0d",
+      "name": "Оздоблювальні роботи",
+      "parentId": "main"
+    },
+    {
+      "id": "94b0e5c3-267a-41ee-a391-cf4a7a2fea27",
+      "name": "Інженерні системи та комунікації",
+      "parentId": "main"
+    },
+    {
+      "id": "8d4f3033-6a8e-417a-8e91-b27d6d98fde7",
+      "name": "Загальнобудівельні та монтажні роботи",
+      "parentId": "main"
+    },
+    {
+      "id": "9e2cd0c2-2cdd-47d5-a6fe-7ead954fbd5f",
+      "name": "Комплексні роботи",
+      "parentId": "main"
+    },
+    {
+      "id": "b3ce29c5-1bd8-4159-a585-bc81a572cb05",
+      "name": "Паркани і ворота",
+      "parentId": "main"
+    },
+    {
+      "id": "5e343181-2fcc-4eee-87ce-d0d67320bcc7",
+      "name": "Знесення і демонтаж",
+      "parentId": "main"
+    },
+    {
+      "id": "ea51944e-54c1-4161-b64d-eb4e0c32ddd5",
+      "name": "Вікна та двері",
+      "parentId": "main"
+    },
+    {
+      "id": "c7b21c29-4b2b-49b4-b4f3-9fc7e80f7fbc",
+      "name": "Проектування та архітектура",
+      "parentId": "main"
+    },
+    {
+      "id": "a12bce23-5f26-49ef-af69-f4ea17989673",
+      "name": "Бурові роботи",
+      "parentId": "main"
+    },
+    {
+      "id": "e3c73445-30d9-43c1-a7aa-ef3bddb5722c",
+      "name": "Дизайн та інтер'єр",
+      "parentId": "main"
+    },
+    {
+      "id": "afe0a2ee-f979-4b58-a4ee-4504b582f379",
+      "name": "Благоустрій територій",
+      "parentId": "main"
+    },
+    {
+      "id": "aeb5ca12-017a-4ee4-bf0c-3707712a952f",
+      "name": "Меблеві та столярні роботи",
+      "parentId": "main"
+    },
+    {
+      "id": "7914e9f9-b42e-43b1-8cf3-722997e6919d",
+      "name": "Дрібні побутові послуги",
+      "parentId": "main"
+    },
+    {
+      "id": "597cee10-9e25-415c-a9cd-a1352fe0ca3c",
+      "name": "Робота з металом",
+      "parentId": "main"
+    },
+    {
+      "id": "8bd12fbf-8b0f-406b-b9d0-768ccbd5b383",
+      "name": "Оренда інструменту і техніки",
+      "parentId": "main"
+    },
+    {
+      "id": "98d1d968-2398-4492-b71b-b9b707227a52",
+      "name": "Ремонт інструменту і техніки",
+      "parentId": "main"
+    },
+    {
+      "id": "b056689e-c491-4ce3-8439-67054082bc02",
+      "name": "Перевезення вантажів і доставка",
+      "parentId": "main"
+    },
+    {
+      "id": "cc3962d8-bf26-4fb8-9dc4-298756853b7f",
+      "name": "Прибирання та хімчистка",
+      "parentId": "main"
+    },
+    {
+      "id": "593170b2-00e0-4696-b200-49439079b63e",
+      "name": "Юридичні послуги",
+      "parentId": "main"
+    },
+    {
+      "id": "e615292d-fd83-4f45-b6f5-b1622077a02b",
+      "name": "Інші роботи",
+      "parentId": "main"
+    }
+  ],
   "7113068a-66e8-4ccf-94b4-aa999e6c0e0d": [
     {
       "id": "135feaad-3565-4868-9f96-49f7a865a795",
