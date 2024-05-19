@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.probuilder.common.Resource
 import com.example.probuilder.data.local.CategoriesRepository
+import com.example.probuilder.data.local.ServiceRepository
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.domain.use_case.CategoriesUseCase
 import com.example.probuilder.domain.use_case.GetServices
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +25,7 @@ class CategoriesViewModel @Inject constructor(
     private val getServices: GetServices,
     private val categoriesUseCase: CategoriesUseCase,
     private val categoriesRepository: CategoriesRepository,
+    private val servicesRepository: ServiceRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -35,20 +38,27 @@ class CategoriesViewModel @Inject constructor(
     val services: StateFlow<List<Service>> = _services
 
     init {
-        showMainCategories()
-        categories.value.ifEmpty { httpGetCategories() }
+        val categoryStr = savedStateHandle.get<String>("category")
+        if (categoryStr.isNullOrBlank()) {
+            showMainCategories()
+            categories.value.ifEmpty { httpGetCategories() }
+//            httpPopulateServices() if servicesDb.empty
+        } else {
+            val category = Gson().fromJson(categoryStr, Category::class.java)
+            onEvent(CategoryScreenEvent.ShowCategory(category))
+        }
     }
 
     fun onEvent(event: CategoryScreenEvent) {
         when (event) {
             is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
                 val category = event.category
-                screenState.update { it.copy(hasParent = category.id != "main", currCategory = category) }
+
                 updateServices(category.id)
+                screenState.update { it.copy(hasParent = category.id != "main", currCategory = category) }
                 categoriesRepository
                     .getCategoryByParentId(category.id)
                     .collect { categories -> _categories.value = categories }
-
             }
 
             is CategoryScreenEvent.CreateCategory -> viewModelScope.launch {
@@ -180,17 +190,27 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
+    private fun httpPopulateServices() {
+        viewModelScope.launch {
+            getServices.invoke().collect() { result ->
+                when(result) {
+                    is Resource.Error -> TODO()
+                    is Resource.Loading -> TODO()
+                    is Resource.Success -> {
+                        val servicesLists = result.data.orEmpty()
+                        servicesLists.values.flatten().forEach { service ->
+                            servicesRepository.upsert(service)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun updateServices(categoryId: String) {
         viewModelScope.launch {
-            getServices.invoke().collect { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        val data = result.data.orEmpty()
-                        _services.value = data[categoryId] ?: emptyList()
-                    }
-                    is Resource.Error -> {}
-                    is Resource.Loading -> {}
-                }
+            servicesRepository.getAllByCategoryId(categoryId).collect { services ->
+                _services.value = services
             }
         }
     }

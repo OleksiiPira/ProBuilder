@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -94,10 +94,12 @@ private fun CategoriesScreenContent(
         userScrollEnabled = !screenState.isOverlayShown
     ) {
         item { HorizontalDivider(color = Color.Gray) }
-        itemsIndexed(categories) { index, category ->
+        items(categories) { category ->
             CategoryListItem(
                 text = category.name,
-                onClick = { onEvent(ShowCategory(categories[index])) },
+                onClick = {
+                    nextScreen(Route.CATEGORIES.replace("{category}", Gson().toJson(category)))
+                          },
                 handleSelect = { onEvent(UpdateCategorySelectedState(category)) },
                 isSelectMode = screenState.isEditMode,
                 isSelected = screenState.selectedItems.containsKey(category.id),

@@ -77,10 +77,10 @@ fun MainScene() {
                             enabled = true,
                             onClick = {
                                 selectedIndex = index
-                                navController.navigate(it.route) {//Route.INVOICES){
+                                navController.navigate(it.route) {
                                     popUpTo(Route.HOME) { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
+                                    if (selectedIndex != 1) launchSingleTop = true
+//                                    restoreState = true
                                 }
                             },
                             label = { Text(text = it.title) },
