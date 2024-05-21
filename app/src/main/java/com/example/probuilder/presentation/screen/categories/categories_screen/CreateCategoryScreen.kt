@@ -33,42 +33,39 @@ fun CreateCategoryScreen(
     onSave: (Category) -> Unit
 ) {
     var categoryName by rememberSaveable { mutableStateOf("") }
-    Dialog(onDismissRequest = onCancel) {
-        Column(
-            modifier = modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White)
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Text(
+            text = "Створити тип роботи",
+            style = Typography.titleLarge
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = categoryName,
+            onValueChange = { categoryName = it },
+            shape = RoundedCornerShape(8.dp),
+            trailingIcon = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
         ) {
-            Text(
-                text = "Створити тип роботи",
-                style = Typography.titleLarge
-            )
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = categoryName,
-                onValueChange = { categoryName = it },
-                shape = RoundedCornerShape(8.dp),
-                trailingIcon = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(onClick = { onCancel() }) {
-                    Text(
-                        text = "Відмінити",
-                        style = Typography.labelLarge
-                    )
-                }
-                TextButton(onClick = { onSave(Category(name = categoryName)) }) {
-                    Text(
-                        text = "Зберегти",
-                        style = Typography.labelLarge
-                    )
-                }
+            TextButton(onClick = onCancel) {
+                Text(
+                    text = "Відмінити",
+                    style = Typography.labelLarge
+                )
+            }
+            TextButton(onClick = { onSave(Category(name = categoryName)) }) {
+                Text(
+                    text = "Зберегти",
+                    style = Typography.labelLarge
+                )
             }
         }
     }
