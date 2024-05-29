@@ -92,15 +92,6 @@ class CategoriesViewModel @Inject constructor(
                 }
             }
 
-            is CategoryScreenEvent.HideService -> viewModelScope.launch {
-                val service = event.service
-                if (service.state == ItemState.HIDED) {
-                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.DEFAULT) else it }
-                } else {
-                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.HIDED) else it }
-                }
-            }
-
             is CategoryScreenEvent.HideSelectedCategories -> viewModelScope.launch {
                 screenState.value.selectedItems.values.forEach { category ->
                     if (category.state != ItemState.HIDED) {
@@ -145,6 +136,17 @@ class CategoriesViewModel @Inject constructor(
                     }
                 screenState.value = CategoriesScreenState()
             }
+
+            is CategoryScreenEvent.HideService -> viewModelScope.launch {
+                val service = event.service
+                if (service.state == ItemState.HIDED) {
+                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.DEFAULT) else it }
+                } else {
+                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.HIDED) else it }
+                }
+            }
+
+            is CategoryScreenEvent.DeleteService -> viewModelScope.launch { servicesRepository.delete(event.service) }
 
             is CategoryScreenEvent.Back -> viewModelScope.launch {
                 val parentId = screenState.value.currCategory.parentId

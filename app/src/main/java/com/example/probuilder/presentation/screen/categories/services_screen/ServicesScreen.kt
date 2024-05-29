@@ -94,8 +94,9 @@ fun ServicesScreen(
                 items(prices) {
                     if (it.state == ItemState.DEFAULT) {
                         ServiceListItem(
+                            onEvent = {},
                             service = it.copy(categoryName = viewModel.categoryName),
-                            onSelected = nextScreen,
+                            nextScreen = nextScreen,
                             onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
                         )
                         HorizontalDivider(color = Color.Gray)
@@ -113,7 +114,8 @@ fun ServicesScreen(
                         ServiceListItem(
                             modifier = modifier.alpha(0.5f),
                             service = it.copy(categoryName = viewModel.categoryName),
-                            onSelected = nextScreen,
+                            nextScreen = nextScreen,
+                            onEvent = {},
                             onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
                         )
                         HorizontalDivider(modifier = modifier.alpha(0.5f), color = Color.Gray)

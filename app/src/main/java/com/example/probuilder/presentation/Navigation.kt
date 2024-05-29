@@ -44,7 +44,7 @@ fun HomeNavigation(
             route = Route.SERVICES_SECTION,
             startDestination = Route.SERVICES
         ) {
-            composable(route = Route.CREATE_SERVICE) {
+            composable(route = Route.CREATE_CATEGORY) {
                 CreateCategoryScreen(
                     onCancel = { navController.popBackStack() },
                     onSave = { navController.popBackStack() }
@@ -67,6 +67,10 @@ fun HomeNavigation(
                 route = Route.CREATE_SERVICE,
                 arguments = listOf(
                     navArgument("category") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument("service") {
                         type = NavType.StringType
                         defaultValue = ""
                     })

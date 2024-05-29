@@ -1,6 +1,5 @@
 package com.example.probuilder.data.local
 
-import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.domain.repository.ServiceDao
 import kotlinx.coroutines.flow.Flow
@@ -11,5 +10,5 @@ class ServiceRepository @Inject constructor(
 ) {
     fun getAllByCategoryId(id: String): Flow<List<Service>> { return dao.getAllByCategoryId(id) }
     suspend fun upsert(service: Service) { dao.upsert(service) }
-    suspend fun delete(category: Category) { dao.delete(category) }
+    suspend fun delete(service: Service) { dao.delete(service) }
 }

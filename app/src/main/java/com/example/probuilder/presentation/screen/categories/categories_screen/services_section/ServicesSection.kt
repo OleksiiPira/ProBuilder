@@ -81,8 +81,9 @@ fun ServicesSection(
                 ServiceListItem(
                     modifier = Modifier,
                     service = it.copy(categoryName = screenState.currCategory.name),
-                    onSelected = nextScreen,
-                    onHided = { onEvent(CategoryScreenEvent.HideService(it)) }
+                    onHided = { onEvent(CategoryScreenEvent.HideService(it)) },
+                    onEvent = onEvent,
+                    nextScreen = nextScreen
                 )
                 HorizontalDivider(modifier = Modifier, color = Color.Gray)
             }

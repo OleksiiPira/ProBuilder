@@ -28,6 +28,16 @@ class CreateServiceViewModel @Inject constructor(
             val category = Gson().fromJson(categoryStr, Category::class.java)
             state.update { it.copy(currCategory = category, categoryName = category.name) }
         }
+
+        savedStateHandle.get<String>("service").let { serviceStr ->
+            val service = Gson().fromJson(serviceStr, Service::class.java)
+            state.update { it.copy(
+                name = service.name,
+                unit = service.measure,
+                pricePerUnit = service.pricePerUnit.toString(),
+                categoryName = service.categoryName
+            ) }
+        }
     }
 
     fun onEvent(event: CreateServiceEvent) {

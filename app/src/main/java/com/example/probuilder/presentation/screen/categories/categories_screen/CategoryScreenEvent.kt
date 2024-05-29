@@ -15,6 +15,7 @@ sealed class CategoryScreenEvent {
 
     // Service
     data class HideService(val service: Service): CategoryScreenEvent()
+    data class DeleteService(val service: Service): CategoryScreenEvent()
 
     // Other
     data object Back: CategoryScreenEvent()

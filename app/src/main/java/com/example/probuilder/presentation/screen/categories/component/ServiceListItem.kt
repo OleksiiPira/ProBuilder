@@ -37,22 +37,24 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent
 import com.google.gson.Gson
 
 @Composable
 fun ServiceListItem(
     modifier: Modifier = Modifier,
     service: Service,
-    onSelected: (String) -> Unit,
-    onHided: () -> Unit
+    onEvent: (CategoryScreenEvent) -> Unit,
+    onHided: () -> Unit,
+    nextScreen: (String) -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
             .clickable {
-                val jsonJob = Gson().toJson(service)
-                onSelected(Route.SERVICE_DETAILS.replace("{item}", jsonJob))
+                nextScreen(Route.SERVICE_DETAILS.replace(
+                    "{item}", Gson().toJson(service)))
             },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
     ) {
@@ -85,34 +87,17 @@ fun ServiceListItem(
                 modifier = Modifier.weight(0.5f),
             ) {
                 DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Edit,
-                            contentDescription = null
-                        )
-                    },
+                    leadingIcon = { Icon(Icons.Outlined.Edit,null) },
                     text = { Text(text = "Edit") },
-                    onClick = {})
+                    onClick = { nextScreen(Route.CREATE_SERVICE.replace("{service}", Gson().toJson(service)))})
                 DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.RemoveRedEye,
-                            contentDescription = null
-                        )
-                    },
+                    leadingIcon = { Icon(Icons.Outlined.RemoveRedEye,null) },
                     text = { Text(text = "Hide") },
-                    onClick = {
-                        onHided()
-                    })
+                    onClick = onHided)
                 DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Delete,
-                            contentDescription = null
-                        )
-                    },
+                    leadingIcon = { Icon(Icons.Outlined.Delete,null) },
                     text = { Text(text = "Delete") },
-                    onClick = {  })
+                    onClick = { onEvent(CategoryScreenEvent.DeleteService(service)) })
             }
         }
     }
@@ -153,7 +138,9 @@ fun GreetingPreview() {
                 pricePerUnit = 90,
                 measure = "м2"
             ),
-            onSelected = System.out::println,
-            onHided = {})
+            nextScreen = System.out::println,
+            onHided = {},
+            onEvent= {}
+        )
     }
 }
