@@ -137,6 +137,13 @@ class CategoriesViewModel @Inject constructor(
                 screenState.value = CategoriesScreenState()
             }
 
+            is CategoryScreenEvent.UpdateExpandServices -> screenState.update {
+                it.copy(expendedServices = it.expendedServices.toMutableList().apply {
+                    var isRemoved = remove(event.servicesState)
+                    if (!isRemoved) add(event.servicesState)
+                })
+            }
+
             is CategoryScreenEvent.HideService -> viewModelScope.launch {
                 val service = event.service
                 if (service.state == ItemState.HIDED) {

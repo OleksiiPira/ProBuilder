@@ -14,6 +14,7 @@ sealed class CategoryScreenEvent {
     data object FavoriteSelectedCategory: CategoryScreenEvent()
 
     // Service
+    data class UpdateExpandServices(val servicesState: ItemState): CategoryScreenEvent()
     data class HideService(val service: Service): CategoryScreenEvent()
     data class DeleteService(val service: Service): CategoryScreenEvent()
 

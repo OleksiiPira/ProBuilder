@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
 import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
 import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
@@ -97,6 +98,7 @@ fun ServicesScreen(
                             onEvent = {},
                             service = it.copy(categoryName = viewModel.categoryName),
                             nextScreen = nextScreen,
+                            screenState = CategoriesScreenState(),
                             onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
                         )
                         HorizontalDivider(color = Color.Gray)
@@ -116,7 +118,8 @@ fun ServicesScreen(
                             service = it.copy(categoryName = viewModel.categoryName),
                             nextScreen = nextScreen,
                             onEvent = {},
-                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
+                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) },
+                            screenState = CategoriesScreenState()
                         )
                         HorizontalDivider(modifier = modifier.alpha(0.5f), color = Color.Gray)
                     }

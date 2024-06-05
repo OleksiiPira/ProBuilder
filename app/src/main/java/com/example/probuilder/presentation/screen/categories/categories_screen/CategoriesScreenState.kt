@@ -13,7 +13,8 @@ data class CategoriesScreenState(
     val selectedItems: Map<String, Category> = mapOf(),
     val selectAll: Boolean = true,
     val errorMessage: String = "",
-    val hasParent: Boolean = false
+    val hasParent: Boolean = false,
+    val expendedServices: List<ItemState> = listOf(ItemState.FAVORITE, ItemState.DEFAULT)
 ) {
     fun showError(errorMessage: String): CategoriesScreenState {
         return this.copy(screenMode = CategoryScreenMode.SHOW_ERROR, isOverlayShown = true, errorMessage = errorMessage)

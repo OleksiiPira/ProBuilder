@@ -42,10 +42,11 @@ import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.UpdateCategorySelectedState
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenMode.SHOW_ERROR
+import com.example.probuilder.presentation.screen.categories.categories_screen.component.ServicesTitleRow
 import com.example.probuilder.presentation.screen.categories.categories_screen.drop_down_edit_menu.DropDownEditMenu
 import com.example.probuilder.presentation.screen.categories.categories_screen.overflow_menu.CategoryOverflowMenu
-import com.example.probuilder.presentation.screen.categories.categories_screen.services_section.ServicesSection
 import com.example.probuilder.presentation.screen.categories.component.CategoryListItem
+import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
 import com.google.gson.Gson
 
 @Composable
@@ -88,6 +89,7 @@ private fun CategoriesScreenContent(
     onEvent: (CategoryScreenEvent) -> Unit,
     screenMode: CategoryScreenMode,
 ) {
+    val orderedServices = services.groupBy { it.state }
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         userScrollEnabled = !screenState.isOverlayShown
@@ -104,12 +106,22 @@ private fun CategoriesScreenContent(
             )
         }
         item {
-            ServicesSection(
-                services = services,
-                nextScreen = nextScreen,
-                onEvent = onEvent,
-                screenState = screenState
-            )
+            orderedServices.forEach { (state, services) ->
+                var isExpanded = screenState.expendedServices.contains(state)
+                ServicesTitleRow(expanded = isExpanded, onPress = { rowState -> onEvent(CategoryScreenEvent.UpdateExpandServices(rowState)) }, state = state)
+
+                services.takeIf { !isExpanded }?.forEach {
+                    ServiceListItem(
+                        modifier = Modifier,
+                        screenState = screenState,
+                        service = it.copy(categoryName = screenState.currCategory.name),
+                        onHided = { onEvent(CategoryScreenEvent.HideService(it)) },
+                        onEvent = onEvent,
+                        nextScreen = nextScreen
+                    )
+                    HorizontalDivider(modifier = Modifier, color = Color.Gray)
+                }
+            }
         }
     }
 
