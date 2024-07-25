@@ -37,12 +37,14 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
 import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent
 import com.google.gson.Gson
 
 @Composable
 fun ServiceListItem(
     modifier: Modifier = Modifier,
+    screenState: CategoriesScreenState,
     service: Service,
     onEvent: (CategoryScreenEvent) -> Unit,
     onHided: () -> Unit,
@@ -79,7 +81,7 @@ fun ServiceListItem(
                 )
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = service.measure
+                    text = service.measureUnit
                 )
             }
 
@@ -89,7 +91,9 @@ fun ServiceListItem(
                 DropdownMenuItem(
                     leadingIcon = { Icon(Icons.Outlined.Edit,null) },
                     text = { Text(text = "Edit") },
-                    onClick = { nextScreen(Route.CREATE_SERVICE.replace("{service}", Gson().toJson(service)))})
+                    onClick = { nextScreen(Route.CREATE_SERVICE
+                        .replace("{categories}", Gson().toJson(screenState.currCategory))
+                        .replace("{service}", Gson().toJson(service)))})
                 DropdownMenuItem(
                     leadingIcon = { Icon(Icons.Outlined.RemoveRedEye,null) },
                     text = { Text(text = "Hide") },
@@ -136,11 +140,12 @@ fun GreetingPreview() {
                 categoryId = "",
                 name = "Painting and Decorating",
                 pricePerUnit = 90,
-                measure = "м2"
+                measureUnit = "м2"
             ),
             nextScreen = System.out::println,
             onHided = {},
-            onEvent= {}
+            onEvent= {},
+            screenState = CategoriesScreenState()
         )
     }
 }

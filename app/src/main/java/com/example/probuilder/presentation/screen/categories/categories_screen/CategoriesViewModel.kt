@@ -10,6 +10,15 @@ import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.domain.use_case.CategoriesUseCase
 import com.example.probuilder.domain.use_case.GetServices
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.CreateCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.FavoriteCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.FavoriteSelectedCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.HideSelectedCategories
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.HideService
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.SelectAll
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.ShowCategory
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.UpdateCategorySelectedState
+import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent.UpdateExpandServices
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,13 +54,13 @@ class CategoriesViewModel @Inject constructor(
 //            httpPopulateServices() if servicesDb.empty
         } else {
             val category = Gson().fromJson(categoryStr, Category::class.java)
-            onEvent(CategoryScreenEvent.ShowCategory(category))
+            onEvent(ShowCategory(category))
         }
     }
 
     fun onEvent(event: CategoryScreenEvent) {
         when (event) {
-            is CategoryScreenEvent.ShowCategory -> viewModelScope.launch {
+            is ShowCategory -> viewModelScope.launch {
                 val category = event.category
 
                 updateServices(category.id)
@@ -61,12 +70,12 @@ class CategoriesViewModel @Inject constructor(
                     .collect { categories -> _categories.value = categories }
             }
 
-            is CategoryScreenEvent.CreateCategory -> viewModelScope.launch {
+            is CreateCategory -> viewModelScope.launch {
                 categoriesRepository.upsertCategory(event.category)
                 screenState.value.hideOverlays()
             }
 
-            is CategoryScreenEvent.UpdateCategorySelectedState -> {
+            is UpdateCategorySelectedState -> {
                 viewModelScope.launch {
                     val category = event.category
                     val state = screenState.value
@@ -92,7 +101,7 @@ class CategoriesViewModel @Inject constructor(
                 }
             }
 
-            is CategoryScreenEvent.HideSelectedCategories -> viewModelScope.launch {
+            is HideSelectedCategories -> viewModelScope.launch {
                 screenState.value.selectedItems.values.forEach { category ->
                     if (category.state != ItemState.HIDED) {
                         categoriesRepository.upsertCategory(category.copy(state = ItemState.HIDED))
@@ -103,7 +112,7 @@ class CategoriesViewModel @Inject constructor(
                 screenState.value = CategoriesScreenState()
             }
 
-            CategoryScreenEvent.SelectAll -> viewModelScope.launch {
+            SelectAll -> viewModelScope.launch {
                 val state = screenState.value
                 val selectedItems = mutableMapOf<String, Category>()
                 if(state.selectAll) { _categories.value.forEach { selectedItems[it.id] = it } }
@@ -114,7 +123,7 @@ class CategoriesViewModel @Inject constructor(
                 )}
             }
 
-            is CategoryScreenEvent.FavoriteCategory -> viewModelScope.launch {
+            is FavoriteCategory -> viewModelScope.launch {
                 val category = event.category
                 if (category.state == ItemState.FAVORITE) {
                     categoriesRepository.upsertCategory(category.copy(state = ItemState.DEFAULT))
@@ -123,7 +132,7 @@ class CategoriesViewModel @Inject constructor(
                 }
                 screenState.value = CategoriesScreenState()
             }
-            CategoryScreenEvent.FavoriteSelectedCategory -> viewModelScope.launch {
+            FavoriteSelectedCategory -> viewModelScope.launch {
                 val newMap = screenState.value.selectedItems.toMutableMap()
                 val selectedMode = newMap.values.first().state
                 screenState.value.selectedItems.values.filter { it.state == selectedMode }
@@ -137,20 +146,30 @@ class CategoriesViewModel @Inject constructor(
                 screenState.value = CategoriesScreenState()
             }
 
-            is CategoryScreenEvent.UpdateExpandServices -> screenState.update {
+            is UpdateExpandServices -> screenState.update {
                 it.copy(expendedServices = it.expendedServices.toMutableList().apply {
                     var isRemoved = remove(event.servicesState)
                     if (!isRemoved) add(event.servicesState)
                 })
             }
 
-            is CategoryScreenEvent.HideService -> viewModelScope.launch {
-                val service = event.service
-                if (service.state == ItemState.HIDED) {
-                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.DEFAULT) else it }
-                } else {
-                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.HIDED) else it }
+            is HideService -> viewModelScope.launch {
+                var service = event.service
+                _services.update {
+                    _services.value.toMutableList().map {
+                        var newState = service.state
+                        if (service.id == it.id) {
+                            val newState = if (it.state == ItemState.DEFAULT) ItemState.HIDED else ItemState.DEFAULT
+                        }
+                        it.copy(state = newState)
+                    }
                 }
+
+//                if (service.state == ItemState.HIDED) {
+//                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.DEFAULT) else it }
+//                } else {
+//                    _services.value.map { if (it.id == service.id) it.copy(state = ItemState.HIDED) else it }
+//                }
             }
 
             is CategoryScreenEvent.DeleteService -> viewModelScope.launch { servicesRepository.delete(event.service) }
@@ -161,7 +180,7 @@ class CategoriesViewModel @Inject constructor(
                     println("Prev cate = $prevCategory")
                     if (prevCategory != null) {
                         screenState.update { it.copy(currCategory = prevCategory) }
-                        onEvent(CategoryScreenEvent.ShowCategory(prevCategory))
+                        onEvent(ShowCategory(prevCategory))
                     } else {
                         screenState.update { it.copy(hasParent = false) }
                         showMainCategories()
@@ -178,7 +197,7 @@ class CategoriesViewModel @Inject constructor(
     )[itemState]
 
     private fun showMainCategories(){
-        onEvent(CategoryScreenEvent.ShowCategory(Category(id="main")))
+        onEvent(ShowCategory(Category(id="main")))
     }
 
     private fun httpGetCategories() {

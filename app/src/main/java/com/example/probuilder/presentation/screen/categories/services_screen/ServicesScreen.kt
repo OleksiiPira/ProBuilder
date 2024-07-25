@@ -92,14 +92,14 @@ fun ServicesScreen(
             .fillMaxSize()) {
             val hidedServices by viewModel.hidedServices.observeAsState(emptyList())
             LazyColumn(modifier = modifier) {
-                items(prices) {
-                    if (it.state == ItemState.DEFAULT) {
+                items(prices) { service ->
+                    if (service.state == ItemState.DEFAULT) {
                         ServiceListItem(
                             onEvent = {},
-                            service = it.copy(categoryName = viewModel.categoryName),
+                            service = service,
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
-                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) }
+                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(service.id)) }
                         )
                         HorizontalDivider(color = Color.Gray)
                     }
@@ -111,14 +111,14 @@ fun ServicesScreen(
                         style = Typography.titleMedium
                     )
                 }
-                items(hidedServices) {
-                    if (it.state == ItemState.HIDED) {
+                items(hidedServices) { service ->
+                    if (service.state == ItemState.HIDED) {
                         ServiceListItem(
                             modifier = modifier.alpha(0.5f),
-                            service = it.copy(categoryName = viewModel.categoryName),
+                            service = service,
                             nextScreen = nextScreen,
                             onEvent = {},
-                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(it.id)) },
+                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(service.id)) },
                             screenState = CategoriesScreenState()
                         )
                         HorizontalDivider(modifier = modifier.alpha(0.5f), color = Color.Gray)

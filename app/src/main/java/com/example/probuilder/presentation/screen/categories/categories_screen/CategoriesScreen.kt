@@ -110,12 +110,12 @@ private fun CategoriesScreenContent(
                 var isExpanded = screenState.expendedServices.contains(state)
                 ServicesTitleRow(expanded = isExpanded, onPress = { rowState -> onEvent(CategoryScreenEvent.UpdateExpandServices(rowState)) }, state = state)
 
-                services.takeIf { !isExpanded }?.forEach {
+                services.takeIf { !isExpanded }?.forEach { service ->
                     ServiceListItem(
                         modifier = Modifier,
                         screenState = screenState,
-                        service = it.copy(categoryName = screenState.currCategory.name),
-                        onHided = { onEvent(CategoryScreenEvent.HideService(it)) },
+                        service = service,
+                        onHided = { onEvent(CategoryScreenEvent.HideService(service)) },
                         onEvent = onEvent,
                         nextScreen = nextScreen
                     )

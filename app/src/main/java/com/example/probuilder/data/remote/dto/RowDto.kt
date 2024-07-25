@@ -1,7 +1,6 @@
 package com.example.probuilder.data.remote.dto
 
 import com.example.probuilder.domain.model.Category
-import com.example.probuilder.domain.model.Feed
 import com.example.probuilder.domain.model.Service
 
 data class JobDto(
@@ -18,7 +17,7 @@ fun JobDto.toJob(): Service {
         categoryId = this.categoryId,
         name = this.name,
         pricePerUnit = this.price,
-        measure = this.measure
+        measureUnit = this.measure
     )
 }
 

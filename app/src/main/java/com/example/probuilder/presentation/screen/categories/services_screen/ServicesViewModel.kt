@@ -34,9 +34,6 @@ class ServicesViewModel @Inject constructor(
         savedStateHandle.get<String>("categoryId")?.let { categoryId ->
             currCatId.value = categoryId
             _jobs.value?.get(currCatId.value)?.let { services ->
-                services.map { it.copy(
-                    categoryName = categoryName
-                ) }
                 _currJobs.value = services
             }
         }
