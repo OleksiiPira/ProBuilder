@@ -21,12 +21,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.R
 import com.example.probuilder.common.Constants
+import com.example.probuilder.domain.model.Category
+import com.example.probuilder.domain.model.SearchItem
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
+import com.example.probuilder.presentation.screen.categories.categories_screen.component.DropDownSearch
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +58,7 @@ fun CreateServiceScreen(
                         )
                     }
                 },
-                title = { Text(text = "Категорії") },
+                title = { Text(text = stringResource(R.string.CATEGORY_PAGE_TITLE)) },
                 actions = {
                     IconButton(onClick = { /* do something */ }) {
                         Icon(
@@ -66,42 +71,47 @@ fun CreateServiceScreen(
             )
         }
     ) {
-
-    Column(
-        modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+        Column(
+            modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         ) {
-        val createServiceState by viewModel.serviceState.collectAsState()
-        TextFieldWithTitle(
-            title = "Назва послуги",
-            value = createServiceState.name,
-            onValueChange = { viewModel.onEvent(CreateServiceEvent.SetName(it))}
-        )
-        TextFieldWithTitle(
-            title = "Категорія",
-            value = createServiceState.categoryName,
-            onValueChange = { viewModel.onEvent(CreateServiceEvent.SetCategory(it))}
-        )
-        TextFieldWithTitle(
-            title = "Одиниця виміру",
-            value = createServiceState.unit,
-            onValueChange = { viewModel.onEvent(CreateServiceEvent.SetUnit(it))}
-        )
-        TextFieldWithTitle(
-            title = "Ціна за одиницю",
-            value = createServiceState.pricePerUnit,
-            onValueChange = { viewModel.onEvent(CreateServiceEvent.SetPricePerUnit(it))}
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        PrimaryButton(onClick = {
-            viewModel.onEvent(CreateServiceEvent.SaveItem)
-            onBack()
-        }) {
-            Text(text = "Зберегти", style = Typography.labelLarge)
+            val newService by viewModel.newService
+            val screenState by viewModel.screenState.collectAsState()
+            val categories by viewModel.allCategories.collectAsState(emptyList())
+            val selectedCategory by viewModel.selectedCategory
+            TextFieldWithTitle(
+                title = "Назва послуги",
+                value = newService.name,
+                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetServiceName(it)) }
+            )
+            DropDownSearch(
+                searchTitle = "Категорія",
+                currentItem = SearchItem(selectedCategory.name, selectedCategory),
+                searchItems = categories.map { SearchItem(it.name, it) },
+                selectItem = { searchItem -> viewModel.onEvent(CreateServiceEvent
+                    .UpdateCurrentCategory(searchItem.item as Category))
+                }
+            )
+            TextFieldWithTitle(
+                title = "Одиниця виміру",
+                value = newService.measureUnit,
+                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetMeasureUnit(it)) }
+            )
+            TextFieldWithTitle(
+                title = "Ціна за одиницю",
+                value = screenState.pricePerUnit,
+                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetPricePerUnit(it)) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            PrimaryButton(onClick = {
+                viewModel.onEvent(CreateServiceEvent.SaveService)
+                onBack()
+            }) {
+                Text(text = "Зберегти", style = Typography.labelLarge)
+            }
+            SecondaryButton(onClick = onBack) {
+                Text(text = "Відмінити", style = Typography.labelLarge)
+            }
         }
-        SecondaryButton(onClick = onBack) {
-            Text(text = "Відмінити", style = Typography.labelLarge)
-        }
-    }
     }
 }
