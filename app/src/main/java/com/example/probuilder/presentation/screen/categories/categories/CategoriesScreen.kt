@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.ActionItems
@@ -97,11 +96,11 @@ fun TopBar(
     isEditMode: Boolean
 ) {
     val barColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = Color(0xFF2A3C48),
-        titleContentColor = Color.White)
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface)
     TopAppBar(
         colors = barColors,
-        navigationIcon = { IconButton(onClick = { /* do something */ }) { Icons.Menu } },
+        navigationIcon = { IconButton(onClick = { /* do something */ }) { Icons.ArrowBack } },
         title = { Text(text = title) },
         actions = {
             if (!isEditMode) IconButton(onSearch) { Icons.Search }

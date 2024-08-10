@@ -14,6 +14,11 @@ object Icons {
             painter = painterResource(id = icons.menu),
             contentDescription = stringResource(text.icon_menu)
         )
+    val ArrowBack: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.arrow_back),
+            contentDescription = stringResource(text.icon_back)
+        )
     val Search: Unit
         @Composable get() = Icon(
             painter = painterResource(id = icons.search),
