@@ -13,6 +13,18 @@
     <string name="try_again">Try again</string>
     <string name="ok">OK</string>
 
+    <!--  Icons  -->
+    <string name="icon_edit">Рудагувати</string>
+    <string name="icon_delete">Видалити</string>
+    <string name="icon_save">Зберегти</string>
+    <string name="icon_more_vert">Більш дій</string>
+    <string name="icon_select_all">Вибрати усі</string>
+    <string name="icon_add">Create</string>
+    <string name="icon_menu">Меню</string>
+    <string name="icon_search">Пошук</string>
+    <string name="icon_clear">Очистити текст</string>
+    <string name="icon_arrow_right">Стрілка вправо</string>
+
     <!-- LoginScreen -->
     <string name="sign_in">Sign in</string>
     <string name="login_details">Enter your login details</string>
