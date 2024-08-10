@@ -12,8 +12,8 @@ import androidx.navigation.navArgument
 import com.example.probuilder.presentation.screen.home.HomeScreen
 import com.example.probuilder.presentation.screen.invoices.invoices_screen.InvoicesScreen
 import com.example.probuilder.presentation.screen.categories.services_screen.ServicesScreen
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreen
-import com.example.probuilder.presentation.screen.categories.categories_screen.CreateCategoryScreen
+import com.example.probuilder.presentation.screen.categories.categories.CategoryScreen
+import com.example.probuilder.presentation.screen.categories.categories.create.CreateCategoryScreen
 import com.example.probuilder.presentation.screen.categories.create_service.CreateServiceScreen
 import com.example.probuilder.presentation.screen.categories.service_details.ServiceDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
@@ -45,10 +45,7 @@ fun HomeNavigation(
             startDestination = Route.SERVICES
         ) {
             composable(route = Route.CREATE_CATEGORY) {
-                CreateCategoryScreen(
-                    onCancel = { navController.popBackStack() },
-                    onSave = { navController.popBackStack() }
-                )
+                CreateCategoryScreen(onBack =  navController::popBackStack)
             }
             composable(
                 route = Route.SERVICES,

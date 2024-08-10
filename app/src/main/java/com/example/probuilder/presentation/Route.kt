@@ -6,7 +6,7 @@ object Route {
 
     const val CATEGORIES_SECTION = "categories_section"
     const val CATEGORIES = "categories?category={category}"
-    const val CREATE_CATEGORY = "create_category"
+    const val CREATE_CATEGORY = "create_category?parentId={parentId}"
 
     const val SERVICES_SECTION = "services"
     const val SERVICES = "prices?categoryId={categoryId}&categoryName={categoryName}"

@@ -3,18 +3,19 @@ package com.example.probuilder.di
 import android.content.Context
 import androidx.credentials.CredentialManager
 import com.example.probuilder.data.local.AppDatabase
-import com.example.probuilder.data.local.CategoriesRepository
 import com.example.probuilder.data.local.InvoiceRepositoryImpl
-import com.example.probuilder.data.local.ServiceRepository
 import com.example.probuilder.data.remote.AppApi
 import com.example.probuilder.data.remote.dto.AppRepositoryImpl
 import com.example.probuilder.domain.repository.AppRepository
-import com.example.probuilder.domain.repository.CategoriesDao
 import com.example.probuilder.domain.repository.InvoiceDao
-import com.example.probuilder.domain.repository.ServiceDao
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.example.probuilder.domain.use_case.auth.GoogleAuthService
+import com.example.probuilder.data.remote.CategoryService
+import com.example.probuilder.data.remote.JobService
+import com.example.probuilder.data.remote.impl.CategoryServiceImpl
+import com.example.probuilder.data.remote.impl.JobServiceImpl
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,26 +60,6 @@ object AppModule {
     }
 
     @Provides
-    fun provideCategoriesDao(database: AppDatabase): CategoriesDao {
-        return database.categoryDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideServiceRepositoryImpl(dao: ServiceDao): ServiceRepository {
-        return ServiceRepository(dao)
-    }
-
-    @Provides
-    fun provideServiceDao(database: AppDatabase): ServiceDao {
-        return database.serviceDao()
-    }
-
-    fun provideCategoriesRepository(dao: CategoriesDao): CategoriesRepository {
-        return CategoriesRepository(dao)
-    }
-
-    @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
@@ -104,6 +85,24 @@ object AppModule {
     @Singleton
     fun provideGoogleAuthService(@ApplicationContext appContext: Context): GoogleAuthService {
         return GoogleAuthService(appContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryService(firestore: FirebaseFirestore, accountService: AccountService): CategoryService {
+        return CategoryServiceImpl(firestore, accountService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideJobService(firestore: FirebaseFirestore, accountService: AccountService): JobService {
+        return JobServiceImpl(firestore, accountService)
     }
 
 }
