@@ -22,10 +22,11 @@ import com.example.probuilder.presentation.screen.profile.ProfileScreen
 
 @Composable
 fun HomeNavigation(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     bottomBar: @Composable() (() -> Unit)
 ) {
-    NavHost(modifier = Modifier, navController = navController, startDestination = Route.HOME) {
+    NavHost(modifier = modifier, navController = navController, startDestination = Route.HOME) {
         composable(route = Route.HOME) {
             HomeScreen(
                 nextScreen = navController::navigate,

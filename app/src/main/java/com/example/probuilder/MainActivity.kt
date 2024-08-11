@@ -5,13 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,17 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.AppTheme
 import com.example.probuilder.presentation.HomeNavigation
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.Icons
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,52 +52,52 @@ fun MainScene() {
     HomeNavigation(
         navController = navController,
         bottomBar = {
-            var selectedIndex by remember { mutableStateOf(0) }
+            var selectedRoute by remember { mutableStateOf("") }
+            val goToRoute = { route: String ->
+                selectedRoute = route
+                navController.navigate(route) {
+                    popUpTo(Route.HOME) { saveState = true }
+                    if (route != Route.HOME) launchSingleTop = true
+                }
+            }
             BottomAppBar(
-                containerColor = Color.LightGray.copy(alpha = 0.2f),
+                containerColor = Color(0xFF2A3C48),
+                contentColor = Color(0xFFFFFFFF),
                 actions = {
-                    listOf(
-                        BottomBarItem("Головна", Icons.Outlined.Home, Route.HOME),
-                        BottomBarItem("Розцінки", Icons.Outlined.List, Route.CATEGORIES),
-                        BottomBarItem("Фактура", Icons.Outlined.ReceiptLong, Route.INVOICES_SECTION),
-                        BottomBarItem("Профіль", Icons.Outlined.Person, Route.PROFILE)
-                    ).forEachIndexed { index, it ->
-                        BottomNavigationItem(
-                            enabled = true,
-                            onClick = {
-                                selectedIndex = index
-                                navController.navigate(it.route) {
-                                    popUpTo(Route.HOME) { saveState = true }
-                                    if (selectedIndex != 1) launchSingleTop = true
-//                                    restoreState = true
-                                }
-                            },
-                            label = { Text(text = it.title) },
-                            icon = {
-                                Icon(
-                                    imageVector = it.icon,
-                                    contentDescription = it.title
-                                )
-                            },
-                            selected = selectedIndex == index,
-                        )
-                    }
+                    BottomNavigationItem(
+                        onClick = { goToRoute(Route.HOME) },
+                        label = { Text(text = "Головна", maxLines = 1) },
+                        icon = { Icons.Home },
+                        selected = selectedRoute == Route.HOME,
+                    )
+                    BottomNavigationItem(
+                        onClick = { goToRoute(Route.CATEGORIES) },
+                        label = { Text(text = "Розцінки", maxLines = 1) },
+                        icon = { Icons.Prices },
+                        selected = selectedRoute == Route.CATEGORIES,
+                    )
+                    BottomNavigationItem(
+                        onClick = { goToRoute(Route.INVOICES) },
+                        label = { Text(text = "Проекти", maxLines = 1) },
+                        icon = { Icons.Projects },
+                        selected = selectedRoute == Route.INVOICES,
+                    )
+                    BottomNavigationItem(
+                        onClick = { goToRoute(Route.PROFILE) },
+                        label = { Text(text = "Профіль", maxLines = 1) },
+                        icon = { Icons.Profile },
+                        selected = selectedRoute == Route.PROFILE,
+                    )
                 }
             )
         }
     )
 }
 
-data class BottomBarItem(
-    val title: String,
-    val icon: ImageVector,
-    val route: String
-)
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AppTheme {
-//        Greeting("Android")
+        MainScene()
     }
 }

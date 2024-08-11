@@ -3,6 +3,8 @@
     <string name="web_client_id">68166897434-kk3i9fkbna8hjaahhaa5dhuiubgikv0r.apps.googleusercontent.com</string>
     <string name="CATEGORY_PAGE_TITLE">CreateCategoryCategory<!--Категорії--></string>
 
+    <string name="create_service">Створити послугу</string>
+
     <!-- Common -->
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -25,6 +27,11 @@
     <string name="icon_search">Пошук</string>
     <string name="icon_clear">Очистити текст</string>
     <string name="icon_arrow_right">Стрілка вправо</string>
+    <string name="icon_home">Головна</string>
+    <string name="icon_prices">Розцінки</string>
+    <string name="icon_projects">Проекти</string>
+    <string name="icon_profile">Мій профіль</string>
+
 
     <!-- LoginScreen -->
     <string name="sign_in">Sign in</string>

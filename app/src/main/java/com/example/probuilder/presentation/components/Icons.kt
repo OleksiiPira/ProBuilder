@@ -24,6 +24,30 @@ object Icons {
             painter = painterResource(id = icons.search),
             contentDescription = stringResource(text.icon_search)
         )
+
+    // Bottom navigation
+    val Home: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.home),
+            contentDescription = stringResource(text.icon_home)
+        )
+    val Prices: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.prices),
+            contentDescription = stringResource(text.icon_prices)
+        )
+    val Projects: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.projects),
+            contentDescription = stringResource(text.icon_projects)
+        )
+    val Profile: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.profile),
+            contentDescription = stringResource(text.icon_search)
+        )
+
+
     // More actions
     val MoreVert: Unit
         @Composable get() = Icon(
