@@ -5,33 +5,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.R
 import com.example.probuilder.common.Constants
+import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.SearchItem
+import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
-import com.example.probuilder.presentation.screen.categories.categories_screen.component.DropDownSearch
+import com.example.probuilder.presentation.screen.categories.categories.TopBar
+import com.example.probuilder.presentation.screen.categories.categories.component.DropDownSearch
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,43 +35,27 @@ fun CreateServiceScreen(
     bottomBar: @Composable() (() -> Unit),
     onBack: () -> Unit
 ) {
+    val newService by viewModel.newService
+    val state by viewModel.state.collectAsState()
+    val categories by viewModel.allCategories.collectAsState(emptyList())
+    val selectedCategory by viewModel.selectedCategory
+    val currCategory = selectedCategory
     Scaffold(
         bottomBar = bottomBar,
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Main manu"
-                        )
-                    }
-                },
-                title = { Text(text = stringResource(R.string.CATEGORY_PAGE_TITLE)) },
-                actions = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = "Search"
-                        )
-                    }
-                },
-            )
-        }
+            TopBar(
+                title = currCategory.name,
+                moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
+                onSelectAll = {  },
+                onSearch = {},
+                isEditMode = state.isEditMode) }
     ) {
         Column(
             modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         ) {
-            val newService by viewModel.newService
-            val screenState by viewModel.screenState.collectAsState()
-            val categories by viewModel.allCategories.collectAsState(emptyList())
-            val selectedCategory by viewModel.selectedCategory
+
+
             TextFieldWithTitle(
                 title = "Назва послуги",
                 value = newService.name,
@@ -86,10 +63,9 @@ fun CreateServiceScreen(
             )
             DropDownSearch(
                 searchTitle = "Категорія",
-                currentItem = SearchItem(selectedCategory.name, selectedCategory),
-                searchItems = categories.map { SearchItem(it.name, it) },
-                selectItem = { searchItem -> viewModel.onEvent(CreateServiceEvent
-                    .UpdateCurrentCategory(searchItem.item as Category))
+                currentItem = SearchItem(currCategory.name, currCategory),
+                searchItems = categories.map { category ->  SearchItem(category.name, category) },
+                selectItem = { searchItem -> viewModel.updateCurrentCategory(searchItem.item as Category)
                 }
             )
             TextFieldWithTitle(
@@ -99,12 +75,12 @@ fun CreateServiceScreen(
             )
             TextFieldWithTitle(
                 title = "Ціна за одиницю",
-                value = screenState.pricePerUnit,
+                value = state.pricePerUnit,
                 onValueChange = { viewModel.onEvent(CreateServiceEvent.SetPricePerUnit(it)) }
             )
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(onClick = {
-                viewModel.onEvent(CreateServiceEvent.SaveService)
+                viewModel.saveService()
                 onBack()
             }) {
                 Text(text = "Зберегти", style = Typography.labelLarge)

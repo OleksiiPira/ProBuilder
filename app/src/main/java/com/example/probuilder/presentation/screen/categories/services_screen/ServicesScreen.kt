@@ -1,18 +1,15 @@
 package com.example.probuilder.presentation.screen.categories.services_screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,21 +17,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants
+import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.presentation.Route
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
-import com.example.probuilder.presentation.screen.categories.categories_screen.ItemState
+import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
+import com.example.probuilder.presentation.screen.categories.categories.overflow_menu.MoreActionsButton
 import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
-import com.example.probuilder.presentation.screen.ui.theme.Typography
+import com.google.gson.Gson
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServicesScreen(
     modifier: Modifier = Modifier,
@@ -42,11 +39,8 @@ fun ServicesScreen(
     viewModel: ServicesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
-    val prices by viewModel.currJobs.observeAsState(listOf())
-    if (prices.isEmpty()) {
-        viewModel.updatePrices()
-        return
-    }
+    val jobs by viewModel.jobs.collectAsState(listOf())
+    val state by viewModel.state.collectAsState(ServicesScreenState())
     Scaffold(
         bottomBar = bottomBar,
         floatingActionButton = {
@@ -54,77 +48,73 @@ fun ServicesScreen(
                 modifier = modifier.padding(16.dp),
                 containerColor = Color(0xFFF2F2F2),
                 contentColor = MaterialTheme.colorScheme.primary,
-                onClick = {nextScreen(Route.CREATE_SERVICE)},
-            ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
-            }
+                onClick = {
+                    val currCategoryJson = Gson().toJson(state.currCategory)
+                    nextScreen(Route.CREATE_SERVICE.replace("{category}", currCategoryJson))
+                          },
+            ) { Icons.Add }
         },
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Main manu"
-                        )
-                    }
-                },
-                title = { Text(text = "Категорії") },
-                actions = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = "Search"
-                        )
-                    }
-                },
-            )
+            TopBar(
+                title = state.currCategory.name,
+                actionItems = listOf(),
+                onSelectAll = { /*TODO*/ },
+                isEditMode = state.isEditMode)
         }
     ) { paddings ->
         Box(modifier = modifier
             .padding(paddings)
             .padding(Constants.HORIZONTAL_PADDING)
             .fillMaxSize()) {
-            val hidedServices by viewModel.hidedServices.observeAsState(emptyList())
             LazyColumn(modifier = modifier) {
-                items(prices) { service ->
-                    if (service.state == ItemState.DEFAULT) {
-                        ServiceListItem(
-                            onEvent = {},
-                            service = service,
+                item {
+                    Row {
+                        Button(onClick = { /*TODO*/ }) { Text(text = "Всі") }
+                        Button(onClick = { /*TODO*/ }) { Text(text = "Стіна") }
+                        Button(onClick = { /*TODO*/ }) { Text(text = "Стеля") }
+                        Button(onClick = { /*TODO*/ }) { Text(text = "Пілога") }
+                    }
+                }
+                items(jobs) { job ->
+                    HorizontalDivider(color = Color.Gray)
+                    ServiceListItem(
+                            service = job,
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
-                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(service.id)) }
+                            removeJob = { viewModel.removeJobs(listOf(job)) }
                         )
                         HorizontalDivider(color = Color.Gray)
-                    }
-                }
-                item {
-                    Text(
-                        modifier = Modifier.padding(top = 14.dp),
-                        text = "Hided",
-                        style = Typography.titleMedium
-                    )
-                }
-                items(hidedServices) { service ->
-                    if (service.state == ItemState.HIDED) {
-                        ServiceListItem(
-                            modifier = modifier.alpha(0.5f),
-                            service = service,
-                            nextScreen = nextScreen,
-                            onEvent = {},
-                            onHided = { viewModel.onEvent(ServicesScreenEvent.Hide(service.id)) },
-                            screenState = CategoriesScreenState()
-                        )
-                        HorizontalDivider(modifier = modifier.alpha(0.5f), color = Color.Gray)
-                    }
                 }
             }
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun TopBar(
+    title: String,
+    actionItems: List<ActionItems>,
+    onSelectAll: () -> Unit,
+    isEditMode: Boolean
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+        navigationIcon = {
+            IconButton(onClick = { /* do something */ }) { Icons.ArrowBack }
+        },
+        title = { Text(text = title) },
+        actions = {
+            if (isEditMode) {
+                MoreActionsButton(selectAll = onSelectAll, actionItems = actionItems)
+            } else {
+                IconButton(onClick = { /* do something */ }) {
+                    Icons.Search
+                }
+            }
+        },
+    )
 }

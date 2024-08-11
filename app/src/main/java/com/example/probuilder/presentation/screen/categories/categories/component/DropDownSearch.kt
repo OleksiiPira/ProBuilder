@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.categories_screen.component
+package com.example.probuilder.presentation.screen.categories.categories.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures

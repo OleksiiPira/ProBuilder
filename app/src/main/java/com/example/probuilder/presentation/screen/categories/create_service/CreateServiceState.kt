@@ -5,5 +5,5 @@ import com.example.probuilder.domain.model.Service
 
 data class CreateServiceState(
     val pricePerUnit: String = "",
-    val inputCategoryName: String = ""
+    var isEditMode: Boolean = false
 )

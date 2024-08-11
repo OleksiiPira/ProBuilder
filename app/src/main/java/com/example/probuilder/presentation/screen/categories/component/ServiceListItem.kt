@@ -1,5 +1,6 @@
 package com.example.probuilder.presentation.screen.categories.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,17 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.MoreVert
-import androidx.compose.material.icons.outlined.RemoveRedEye
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,14 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
+import com.example.probuilder.R
+import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.domain.model.Service
 import com.example.probuilder.presentation.Route
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoriesScreenState
-import com.example.probuilder.presentation.screen.categories.categories_screen.CategoryScreenEvent
+import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
 import com.google.gson.Gson
 
 @Composable
@@ -46,18 +41,14 @@ fun ServiceListItem(
     modifier: Modifier = Modifier,
     screenState: CategoriesScreenState,
     service: Service,
-    onEvent: (CategoryScreenEvent) -> Unit,
-    onHided: () -> Unit,
+    removeJob: () -> Unit,
     nextScreen: (String) -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
-            .clickable {
-                nextScreen(Route.SERVICE_DETAILS.replace(
-                    "{item}", Gson().toJson(service)))
-            },
+            .clickable { nextScreen(Route.SERVICE_DETAILS.replace("{item}", Gson().toJson(service))) },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
     ) {
         Row(
@@ -89,19 +80,15 @@ fun ServiceListItem(
                 modifier = Modifier.weight(0.5f),
             ) {
                 DropdownMenuItem(
-                    leadingIcon = { Icon(Icons.Outlined.Edit,null) },
+                    leadingIcon = { Icons.MoreVert },
                     text = { Text(text = "Edit") },
                     onClick = { nextScreen(Route.CREATE_SERVICE
                         .replace("{categories}", Gson().toJson(screenState.currCategory))
                         .replace("{service}", Gson().toJson(service)))})
                 DropdownMenuItem(
-                    leadingIcon = { Icon(Icons.Outlined.RemoveRedEye,null) },
-                    text = { Text(text = "Hide") },
-                    onClick = onHided)
-                DropdownMenuItem(
-                    leadingIcon = { Icon(Icons.Outlined.Delete,null) },
+                    leadingIcon = { Icons.Delete },
                     text = { Text(text = "Delete") },
-                    onClick = { onEvent(CategoryScreenEvent.DeleteService(service)) })
+                    onClick = removeJob)
             }
         }
     }
@@ -110,20 +97,16 @@ fun ServiceListItem(
 @Composable
 fun DropDownButton(
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Outlined.MoreVert,
     content: @Composable() (ColumnScope.() -> Unit)
 ) {
-    var editMode by remember { mutableStateOf(false) }
-    Box(
-        modifier = modifier.wrapContentSize(Alignment.TopEnd)
-    ) {
-        IconButton(onClick = { editMode = !editMode }) {
-            Icon(imageVector = icon, contentDescription = null)
-        }
+    var expend by remember { mutableStateOf(false) }
+    val onMoreClicked = { expend = !expend }
+    Box(modifier = modifier.wrapContentSize(Alignment.TopEnd)) {
+        IconButton(onMoreClicked) { Icons.MoreVert }
         DropdownMenu(
             modifier = Modifier.widthIn(min = 160.dp).padding(end = 8.dp),
-            expanded = editMode,
-            onDismissRequest = { editMode = false }
+            expanded = expend,
+            onDismissRequest = { expend = false }
         ) {
             content()
         }
@@ -135,17 +118,10 @@ fun DropDownButton(
 fun GreetingPreview() {
     AppTheme {
         ServiceListItem(
-            service = Service(
-                id = "",
-                categoryId = "",
-                name = "Painting and Decorating",
-                pricePerUnit = 90,
-                measureUnit = "м2"
-            ),
+            screenState = CategoriesScreenState(),
+            service = Service(name = "Painting and Decorating", pricePerUnit = 90, measureUnit = "м2"),
+            removeJob = {},
             nextScreen = System.out::println,
-            onHided = {},
-            onEvent= {},
-            screenState = CategoriesScreenState()
         )
     }
 }

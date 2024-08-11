@@ -67,7 +67,7 @@ val Typography = Typography(
     //    Label
     labelLarge = TextStyle(
         fontFamily = nunitoFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.sp
