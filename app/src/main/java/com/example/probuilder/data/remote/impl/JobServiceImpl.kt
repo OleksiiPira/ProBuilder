@@ -2,7 +2,7 @@ package com.example.probuilder.data.remote.impl
 
 import androidx.compose.ui.util.trace
 import com.example.probuilder.data.remote.JobService
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,7 +33,6 @@ class JobServiceImpl @Inject constructor(
                 } catch (e: Exception) {
                     close(e)
                 }
-            }
         }
 
         awaitClose { listenerRegistration.remove() }
@@ -61,7 +60,27 @@ class JobServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun delete(job: Service) {
+    override suspend fun fetchJobs(
+        categoryId: String,
+        onSuccess: (List<Job>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        categoriesCollection.document(categoryId)
+            .collection("jobs")
+            .addSnapshotListener { snapshot, exception ->
+                if (exception != null) {
+                    onFailure(exception)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val jobsList = snapshot.toObjects(Job::class.java)
+                    onSuccess(jobsList)
+                }
+            }
+    }
+
+    override suspend fun delete(job: Job) {
         val categoryRef = categoriesCollection.document(job.categoryId)
         categoryRef.update("jobsCount", FieldValue.increment(-1))
         jobsCollection.document(job.id).delete().await()

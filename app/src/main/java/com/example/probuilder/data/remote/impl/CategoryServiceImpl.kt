@@ -4,6 +4,7 @@ import androidx.compose.ui.util.trace
 import com.example.probuilder.data.remote.CategoryService
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.use_case.auth.AccountService
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -21,23 +22,36 @@ class CategoryServiceImpl @Inject constructor(
 
 
     override val categories: Flow<List<Category>> = callbackFlow {
-    val listenerRegistration = firestoreCategories.addSnapshotListener { snapshot, error ->
+        val listenerRegistration = firestoreCategories.addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
             }
-            if (snapshot != null) {
-                try {
-                    val categoriesList = snapshot.toObjects(Category::class.java)
-                    trySend(categoriesList)
-                } catch (e: Exception) {
-                    close(e)
+
+            snapshot?.let {
+                val categoriesList = it.toObjects(Category::class.java)
+
+                val jobsFetches = categoriesList.map { category ->
+                    firestoreCategories.document(category.id).collection("jobs").get()
+                        .continueWith { task ->
+                            if (task.isSuccessful) category.copy(jobsCount = task.result?.size() ?: 0)
+                            else category
+                        }
+                }
+
+                Tasks.whenAllComplete(jobsFetches).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val updatedCategoriesList = jobsFetches.mapNotNull { it.result }
+                        trySend(updatedCategoriesList).isSuccess
+                    } else {
+                        task.exception?.let { close(it) }
+                    }
                 }
             }
         }
 
-    awaitClose { listenerRegistration.remove() }
-}
+        awaitClose { listenerRegistration.remove() }
+    }
     override suspend fun save(category: Category): String = trace(SAVE_CATEGORY_TRACE) {
         val categoryWithUserId = category.copy(userId = auth.currentUserId)
         firestoreCategories.add(categoryWithUserId).await().id
@@ -45,7 +59,7 @@ class CategoryServiceImpl @Inject constructor(
 
     override suspend fun getCategory(categoryId: String): Category? {
         return try {
-            val documentSnapshot = firestore.collection("categories").document(categoryId).get().await()
+            val documentSnapshot = firestoreCategories.document(categoryId).get().await()
             if (documentSnapshot.exists()) {
                 documentSnapshot.toObject(Category::class.java)?.copy(id = categoryId)
             } else {

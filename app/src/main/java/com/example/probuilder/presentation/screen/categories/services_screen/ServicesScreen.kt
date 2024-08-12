@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -39,7 +40,7 @@ fun ServicesScreen(
     viewModel: ServicesViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
-    val jobs by viewModel.jobs.collectAsState(listOf())
+    val jobs by viewModel.jobs.observeAsState(emptyList())
     val state by viewModel.state.collectAsState(ServicesScreenState())
     Scaffold(
         bottomBar = bottomBar,
