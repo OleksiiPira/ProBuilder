@@ -77,10 +77,10 @@ fun MainScene() {
                         selected = selectedRoute == Route.CATEGORIES,
                     )
                     BottomNavigationItem(
-                        onClick = { goToRoute(Route.INVOICES) },
+                        onClick = { goToRoute(Route.PROJECTS_SECTION) },
                         label = { Text(text = "Проекти", maxLines = 1) },
                         icon = { Icons.Projects },
-                        selected = selectedRoute == Route.INVOICES,
+                        selected = selectedRoute == Route.PROJECTS_SECTION,
                     )
                     BottomNavigationItem(
                         onClick = { goToRoute(Route.PROFILE) },

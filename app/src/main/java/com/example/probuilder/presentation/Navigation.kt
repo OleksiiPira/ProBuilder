@@ -19,6 +19,7 @@ import com.example.probuilder.presentation.screen.categories.service_details.Ser
 import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
+import com.example.probuilder.presentation.screen.project.list.ProjectList
 
 @Composable
 fun HomeNavigation(
@@ -142,6 +143,15 @@ fun HomeNavigation(
             startDestination = Route.PROFILE
         ) {
 
+        }
+        navigation(
+            route = Route.PROJECTS_SECTION,
+            startDestination = Route.PROJECTS
+        ) {
+            composable(route = Route.PROJECTS) {
+                ProjectList(bottomBar = bottomBar, nextScreen = navController::navigate)
+
+            }
         }
 
     }

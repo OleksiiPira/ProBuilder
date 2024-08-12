@@ -13,6 +13,8 @@ object Route {
     const val CREATE_SERVICE = "create_service?category={category}&service={job}"
     const val SERVICE_DETAILS = "price?item={item}"
 
+    const val PROJECTS_SECTION = "projects_section"
+    const val PROJECTS = "projects"
 
     const val INVOICES_SECTION = "invoices_section"
     const val INVOICES = "invoices"
