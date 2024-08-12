@@ -35,7 +35,7 @@ fun CreateServiceScreen(
     bottomBar: @Composable() (() -> Unit),
     onBack: () -> Unit
 ) {
-    val newService by viewModel.newService
+    val newService by viewModel.newJob
     val state by viewModel.state.collectAsState()
     val categories by viewModel.allCategories.collectAsState(emptyList())
     val selectedCategory by viewModel.selectedCategory

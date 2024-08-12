@@ -22,27 +22,34 @@ class ServicesViewModel @Inject constructor(
     private val _state = MutableStateFlow(ServicesScreenState())
     val state: Flow<ServicesScreenState> = _state
 
-    private val _jobs = jobService.jobs
-    val jobs: Flow<List<Service>> = _jobs.map { list -> list.filter { it.categoryId == _state.value.currCategory.id } }
+    private var _jobs = MutableLiveData(emptyList<Job>())
+    val jobs: LiveData<List<Job>> = _jobs
 
     init {
-        savedStateHandle.get<String>("categoryId")?.let { id -> _state.value.currCategory.id = id }
+        savedStateHandle.get<String>("categoryId")?.let { id ->
+            _state.value.currCategory.id = id
+            viewModelScope.launch {
+                jobService.fetchJobs(id, {jobsList ->
+                    _jobs.value = jobsList.filter { it.categoryId == id }
+                }, {})
+            }
+        }
         savedStateHandle.get<String>("categoryName")?.let { name -> _state.value.currCategory.name = name }
     }
 
-    fun selectJob(service: Service) = _state.update { state ->
+    fun selectJob(job: Job) = _state.update { state ->
         state.copy(
-            selectedServices = state.selectedServices.toMutableList().apply { if (!remove(service)) { add(service) } },
+            selectedJobs = state.selectedJobs.toMutableList().apply { if (!remove(job)) { add(job) } },
             isEditMode = true
         )
     }
-    fun selectServices(services: List<Service>) = _state.update { state ->
-        state.copy(selectedServices = services.toMutableList()
-            .apply { if (services.size == state.selectedServices.size) { clear() }
+    fun selectServices(jobs: List<Job>) = _state.update { state ->
+        state.copy(selectedJobs = jobs.toMutableList()
+            .apply { if (jobs.size == state.selectedJobs.size) { clear() }
         })
     }
 
-    fun removeJobs(jobs: List<Service>) = viewModelScope.launch {
+    fun removeJobs(jobs: List<Job>) = viewModelScope.launch {
         jobs.forEach { jobService.delete(it) }
     }
 

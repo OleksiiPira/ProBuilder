@@ -2,9 +2,10 @@ package com.example.probuilder.domain.model
 
 import com.example.probuilder.presentation.screen.categories.categories.ItemState
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.Exclude
 import java.util.UUID
 
-data class Service(
+data class Job(
     @DocumentId val id: String = UUID.randomUUID().toString(),
     val categoryId: String = "",
     val userId: String = "",
@@ -18,6 +19,7 @@ data class Service(
 data class Category(
     @DocumentId var id: String = "",
     var name: String = "",
+    @Exclude var jobs: List<Job> = emptyList(),
     var jobsCount: Int = 0,
     val state: ItemState = ItemState.DEFAULT,
     val parentId: String = "",

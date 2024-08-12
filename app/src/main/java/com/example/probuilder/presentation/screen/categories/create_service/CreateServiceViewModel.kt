@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.probuilder.data.remote.CategoryService
 import com.example.probuilder.data.remote.JobService
 import com.example.probuilder.domain.model.Category
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -31,20 +31,20 @@ class CreateServiceViewModel @Inject constructor(
     val selectedCategory: State<Category> = _selectedCategory
 
     private val _newService = mutableStateOf(getSelectedJob())
-    val newService: State<Service> = _newService
+    val newJob: State<Job> = _newService
 
     private val _allCategories = categoryService.categories
     val allCategories: Flow<List<Category>> = _allCategories
 
     fun saveService() = viewModelScope.launch {
-        jobService.save(newService.value.copy(categoryId = selectedCategory.value.id))
+        jobService.save(newJob.value.copy(categoryId = selectedCategory.value.id))
     }
 
     fun updateCurrentCategory(category: Category) = viewModelScope.launch {
         _selectedCategory.value.id = category.id
     }
 
-    fun removeJob(job: Service) = viewModelScope.launch {
+    fun removeJob(job: Job) = viewModelScope.launch {
         jobService.delete(job)
     }
 
@@ -72,9 +72,9 @@ class CreateServiceViewModel @Inject constructor(
         return category
     }
 
-    private fun getSelectedJob(): Service  {
+    private fun getSelectedJob(): Job  {
         val service = savedStateHandle.get<String>("service")
-        if (service.isNullOrEmpty()) return Service()
-        return Gson().fromJson(service, Service::class.java)
+        if (service.isNullOrEmpty()) return Job()
+        return Gson().fromJson(service, Job::class.java)
     }
 }

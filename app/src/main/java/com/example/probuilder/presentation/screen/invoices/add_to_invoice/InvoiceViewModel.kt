@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.probuilder.data.local.InvoiceRepositoryImpl
 import com.example.probuilder.domain.model.Invoice
 import com.example.probuilder.domain.model.InvoiceItem
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -34,14 +34,14 @@ class InvoiceViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("item")?.let {
-            val service = Gson().fromJson(it, Service::class.java)
+            val job = Gson().fromJson(it, Job::class.java)
             _invoiceItemState.value.let {
                 _invoiceItemState.update {
                     it.copy(
-                        id = service.id,
-                        name = service.name,
-                        unit = service.measureUnit,
-                        pricePerUnit = service.pricePerUnit.toString()
+                        id = job.id,
+                        name = job.name,
+                        unit = job.measureUnit,
+                        pricePerUnit = job.pricePerUnit.toString()
                     )
                 }
             }

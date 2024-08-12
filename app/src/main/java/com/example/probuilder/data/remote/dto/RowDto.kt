@@ -1,7 +1,7 @@
 package com.example.probuilder.data.remote.dto
 
 import com.example.probuilder.domain.model.Category
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 
 data class JobDto(
     val id: String,
@@ -11,8 +11,8 @@ data class JobDto(
     val measure: String
 )
 
-fun JobDto.toJob(): Service {
-    return Service(
+fun JobDto.toJob(): Job {
+    return Job(
         id = this.id,
         categoryId = this.categoryId,
         name = this.name,

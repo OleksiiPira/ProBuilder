@@ -10,7 +10,7 @@ object Route {
 
     const val SERVICES_SECTION = "services"
     const val SERVICES = "prices?categoryId={categoryId}&categoryName={categoryName}"
-    const val CREATE_SERVICE = "create_service?category={category}&service={service}"
+    const val CREATE_SERVICE = "create_service?category={category}&service={job}"
     const val SERVICE_DETAILS = "price?item={item}"
 
 

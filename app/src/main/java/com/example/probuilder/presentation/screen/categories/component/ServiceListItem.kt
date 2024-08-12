@@ -1,6 +1,5 @@
 package com.example.probuilder.presentation.screen.categories.component
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,9 +28,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
-import com.example.probuilder.R
 import com.example.probuilder.presentation.components.Icons
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
 import com.google.gson.Gson
@@ -40,7 +38,7 @@ import com.google.gson.Gson
 fun ServiceListItem(
     modifier: Modifier = Modifier,
     screenState: CategoriesScreenState,
-    service: Service,
+    job: Job,
     removeJob: () -> Unit,
     nextScreen: (String) -> Unit
 ) {
@@ -48,7 +46,7 @@ fun ServiceListItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
-            .clickable { nextScreen(Route.SERVICE_DETAILS.replace("{item}", Gson().toJson(service))) },
+            .clickable { nextScreen(Route.SERVICE_DETAILS.replace("{item}", Gson().toJson(job))) },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
     ) {
         Row(
@@ -59,7 +57,7 @@ fun ServiceListItem(
         ) {
             Text(
                 modifier = Modifier.weight(3f),
-                text = service.name,
+                text = job.name,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Column(
@@ -68,11 +66,11 @@ fun ServiceListItem(
             ) {
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = service.pricePerUnit.toString() + " грн"
+                    text = job.pricePerUnit.toString() + " грн"
                 )
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = service.measureUnit
+                    text = job.measureUnit
                 )
             }
 
@@ -84,7 +82,7 @@ fun ServiceListItem(
                     text = { Text(text = "Edit") },
                     onClick = { nextScreen(Route.CREATE_SERVICE
                         .replace("{categories}", Gson().toJson(screenState.currCategory))
-                        .replace("{service}", Gson().toJson(service)))})
+                        .replace("{job}", Gson().toJson(job)))})
                 DropdownMenuItem(
                     leadingIcon = { Icons.Delete },
                     text = { Text(text = "Delete") },
@@ -119,7 +117,7 @@ fun GreetingPreview() {
     AppTheme {
         ServiceListItem(
             screenState = CategoriesScreenState(),
-            service = Service(name = "Painting and Decorating", pricePerUnit = 90, measureUnit = "м2"),
+            job = Job(name = "Painting and Decorating", pricePerUnit = 90, measureUnit = "м2"),
             removeJob = {},
             nextScreen = System.out::println,
         )

@@ -18,18 +18,17 @@ class JobServiceImpl @Inject constructor(
     private val auth: AccountService
 ) : JobService {
 
-    private val jobsCollection = firestore.collection("services")
+    private val jobsCollection = firestore.collection(JOB_COLLECTION)
     private val categoriesCollection = firestore.collection(CATEGORY_COLLECTION)
 
-    override val jobs: Flow<List<Service>> = callbackFlow {
-    val listenerRegistration = jobsCollection.addSnapshotListener { snapshot, error ->
+    override val jobs: Flow<List<Job>> = callbackFlow {
+        val listenerRegistration = jobsCollection.addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
             }
-            if (snapshot != null) {
-                try {
-                    val categoriesList = snapshot.toObjects(Service::class.java)
+            if (snapshot != null) try {
+                    val categoriesList = snapshot.toObjects(Job::class.java)
                     trySend(categoriesList)
                 } catch (e: Exception) {
                     close(e)
@@ -37,26 +36,25 @@ class JobServiceImpl @Inject constructor(
             }
         }
 
-    awaitClose { listenerRegistration.remove() }
-}
-
-    override suspend fun save(job: Service): String = trace(SAVE_CATEGORY_TRACE) {
-        val categoryRef = categoriesCollection.document(job.categoryId)
-        categoryRef.update("jobsCount", FieldValue.increment(1))
-
-        val serviceWithUserId = job.copy(userId = auth.currentUserId)
-        jobsCollection.add(serviceWithUserId).await().id
+        awaitClose { listenerRegistration.remove() }
     }
-    
 
-    override suspend fun getJobById(jobId: String): Service? {
+    override suspend fun save(job: Job): Boolean = trace(SAVE_JOB_TRACE) {
+        return try {
+            val jobDocRef = categoriesCollection.document(job.categoryId).collection("jobs").document(job.id)
+
+            jobDocRef.set(job).await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun getJobById(jobId: String): Job? {
         return try {
             val documentSnapshot = firestore.collection("categories").document(jobId).get().await()
-            if (documentSnapshot.exists()) {
-                documentSnapshot.toObject(Service::class.java)?.copy(id = jobId)
-            } else {
-                null
-            }
+            if (documentSnapshot.exists()) documentSnapshot.toObject(Job::class.java)?.copy(id = jobId)
+            else null
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -71,8 +69,9 @@ class JobServiceImpl @Inject constructor(
 
     companion object {
         private const val USER_ID_FIELD = "userId"
+        private const val JOB_COLLECTION = "jobs"
         private const val CATEGORY_COLLECTION = "categories"
-        private const val SAVE_CATEGORY_TRACE = "saveService"
-        private const val UPDATE_CATEGORY_TRACE = "updateService"
+        private const val SAVE_JOB_TRACE = "saveJob"
+        private const val UPDATE_JOB_TRACE = "updateJob"
     }
 }

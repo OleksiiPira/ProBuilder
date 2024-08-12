@@ -35,7 +35,7 @@ fun ServiceDetailsScreen(
     viewModel: ServiceDetailsViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
-    val service by viewModel.serviceState.collectAsState()
+    val service by viewModel.jobState.collectAsState()
     Scaffold(
         bottomBar = bottomBar,
         topBar = {

@@ -78,7 +78,7 @@ fun ServicesScreen(
                 items(jobs) { job ->
                     HorizontalDivider(color = Color.Gray)
                     ServiceListItem(
-                            service = job,
+                            job = job,
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
                             removeJob = { viewModel.removeJobs(listOf(job)) }

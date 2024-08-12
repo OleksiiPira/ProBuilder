@@ -3,7 +3,7 @@
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.probuilder.data.local.InvoiceRepositoryImpl
-import com.example.probuilder.domain.model.Service
+import com.example.probuilder.domain.model.Job
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,13 +16,13 @@ class ServiceDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: InvoiceRepositoryImpl
 ) : ViewModel() {
-    private var _serviceState = MutableStateFlow(Service())
-    val serviceState: StateFlow<Service> = _serviceState
+    private var _jobState = MutableStateFlow(Job())
+    val jobState: StateFlow<Job> = _jobState
 
     init {
         savedStateHandle.get<String>("item")?.let {
-            val service = Gson().fromJson(it, Service::class.java)
-            _serviceState.value = service
+            val job = Gson().fromJson(it, Job::class.java)
+            _jobState.value = job
         }
     }
 

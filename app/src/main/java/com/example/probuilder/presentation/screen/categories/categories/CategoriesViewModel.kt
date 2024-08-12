@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.probuilder.common.Resource
 import com.example.probuilder.data.remote.CategoryService
-import com.example.probuilder.data.remote.JobService
 import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.use_case.CategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
