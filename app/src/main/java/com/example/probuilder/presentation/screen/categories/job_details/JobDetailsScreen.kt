@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.service_details
+package com.example.probuilder.presentation.screen.categories.job_details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,10 +29,10 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServiceDetailsScreen(
+fun JobDetailsScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
-    viewModel: ServiceDetailsViewModel = hiltViewModel(),
+    viewModel: JobDetailsViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
     val service by viewModel.jobState.collectAsState()

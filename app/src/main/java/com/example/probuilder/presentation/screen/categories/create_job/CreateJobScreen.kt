@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.create_service
+package com.example.probuilder.presentation.screen.categories.create_job
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,13 +29,13 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateServiceScreen(
+fun CreateJobScreen(
     modifier: Modifier = Modifier,
-    viewModel: CreateServiceViewModel = hiltViewModel(),
+    viewModel: CreateJobViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit),
     onBack: () -> Unit
 ) {
-    val newService by viewModel.newJob
+    val newJob by viewModel.newJob
     val state by viewModel.state.collectAsState()
     val categories by viewModel.allCategories.collectAsState(emptyList())
     val selectedCategory by viewModel.selectedCategory
@@ -58,8 +58,8 @@ fun CreateServiceScreen(
 
             TextFieldWithTitle(
                 title = "Назва послуги",
-                value = newService.name,
-                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetServiceName(it)) }
+                value = newJob.name,
+                onValueChange = { viewModel.onEvent(CreateJobEvent.SetJobName(it)) }
             )
             DropDownSearch(
                 searchTitle = "Категорія",
@@ -70,13 +70,13 @@ fun CreateServiceScreen(
             )
             TextFieldWithTitle(
                 title = "Одиниця виміру",
-                value = newService.measureUnit,
-                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetMeasureUnit(it)) }
+                value = newJob.measureUnit,
+                onValueChange = { viewModel.onEvent(CreateJobEvent.SetMeasureUnit(it)) }
             )
             TextFieldWithTitle(
                 title = "Ціна за одиницю",
                 value = state.pricePerUnit,
-                onValueChange = { viewModel.onEvent(CreateServiceEvent.SetPricePerUnit(it)) }
+                onValueChange = { viewModel.onEvent(CreateJobEvent.SetPricePerUnit(it)) }
             )
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(onClick = {

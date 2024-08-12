@@ -1,4 +1,4 @@
-﻿package com.example.probuilder.presentation.screen.categories.service_details
+﻿package com.example.probuilder.presentation.screen.categories.job_details
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ServiceDetailsViewModel @Inject constructor(
+class JobDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: InvoiceRepositoryImpl
 ) : ViewModel() {

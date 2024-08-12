@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.services_screen
+package com.example.probuilder.presentation.screen.categories.jobs_screen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,13 +15,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ServicesViewModel @Inject constructor(
+class JobsScreenViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val jobService: JobService,
     ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ServicesScreenState())
-    val state: Flow<ServicesScreenState> = _state
+    private val _state = MutableStateFlow(JobsScreenState())
+    val state: Flow<JobsScreenState> = _state
 
     private var _jobs = MutableLiveData(emptyList<Job>())
     val jobs: LiveData<List<Job>> = _jobs

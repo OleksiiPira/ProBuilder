@@ -11,11 +11,11 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.probuilder.presentation.screen.home.HomeScreen
 import com.example.probuilder.presentation.screen.invoices.invoices_screen.InvoicesScreen
-import com.example.probuilder.presentation.screen.categories.services_screen.ServicesScreen
+import com.example.probuilder.presentation.screen.categories.jobs_screen.JobsScreen
 import com.example.probuilder.presentation.screen.categories.categories.CategoryScreen
 import com.example.probuilder.presentation.screen.categories.categories.create.CreateCategoryScreen
-import com.example.probuilder.presentation.screen.categories.create_service.CreateServiceScreen
-import com.example.probuilder.presentation.screen.categories.service_details.ServiceDetailsScreen
+import com.example.probuilder.presentation.screen.categories.create_job.CreateJobScreen
+import com.example.probuilder.presentation.screen.categories.job_details.JobDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
@@ -57,7 +57,7 @@ fun HomeNavigation(
                         defaultValue = ""
                     }
                 )) {
-                ServicesScreen(
+                JobsScreen(
                     nextScreen = navController::navigate,
                     bottomBar = bottomBar
                 )
@@ -74,7 +74,7 @@ fun HomeNavigation(
                         defaultValue = ""
                     })
             ) {
-                CreateServiceScreen(
+                CreateJobScreen(
                     bottomBar = bottomBar,
                     onBack = { navController.popBackStack() }
                 )
@@ -85,7 +85,7 @@ fun HomeNavigation(
                     defaultValue = ""
                 }
             )) {
-                ServiceDetailsScreen(
+                JobDetailsScreen(
                     nextScreen = navController::navigate,
                     bottomBar = bottomBar
                 )

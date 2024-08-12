@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.services_screen
+package com.example.probuilder.presentation.screen.categories.jobs_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -34,14 +34,14 @@ import com.example.probuilder.presentation.screen.categories.component.ServiceLi
 import com.google.gson.Gson
 
 @Composable
-fun ServicesScreen(
+fun JobsScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
-    viewModel: ServicesViewModel = hiltViewModel(),
+    viewModel: JobsScreenViewModel = hiltViewModel(),
     bottomBar: @Composable() (() -> Unit)
 ) {
     val jobs by viewModel.jobs.observeAsState(emptyList())
-    val state by viewModel.state.collectAsState(ServicesScreenState())
+    val state by viewModel.state.collectAsState(JobsScreenState())
     Scaffold(
         bottomBar = bottomBar,
         floatingActionButton = {

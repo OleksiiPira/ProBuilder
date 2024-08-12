@@ -1,8 +1,8 @@
-package com.example.probuilder.presentation.screen.categories.service_details
+package com.example.probuilder.presentation.screen.categories.job_details
 
 import com.example.probuilder.domain.model.Invoice
 
-data class ServiceItemState(
+data class JobDetailsItemState(
     val id: String = "",
     val invoice: Invoice = Invoice(),
     val name: String = "",

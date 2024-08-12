@@ -1,4 +1,4 @@
-﻿package com.example.probuilder.presentation.screen.categories.create_service
+﻿package com.example.probuilder.presentation.screen.categories.create_job
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -19,19 +19,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateServiceViewModel @Inject constructor(
+class CreateJobViewModel @Inject constructor(
     private val jobService: JobService,
     private val categoryService: CategoryService,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private var _state = MutableStateFlow(CreateServiceState())
-    val state: StateFlow<CreateServiceState> = _state
+    private var _state = MutableStateFlow(CreateJobState())
+    val state: StateFlow<CreateJobState> = _state
 
     private val _selectedCategory = mutableStateOf(getCurrCategory())
     val selectedCategory: State<Category> = _selectedCategory
 
-    private val _newService = mutableStateOf(getSelectedJob())
-    val newJob: State<Job> = _newService
+    private val _newJob = mutableStateOf(getSelectedJob())
+    val newJob: State<Job> = _newJob
 
     private val _allCategories = categoryService.categories
     val allCategories: Flow<List<Category>> = _allCategories
@@ -48,18 +48,18 @@ class CreateServiceViewModel @Inject constructor(
         jobService.delete(job)
     }
 
-    fun onEvent(event: CreateServiceEvent) {
+    fun onEvent(event: CreateJobEvent) {
         when (event) {
-            is CreateServiceEvent.SetServiceName -> {
-                _newService.value = _newService.value.copy(name = event.name)
+            is CreateJobEvent.SetJobName -> {
+                _newJob.value = _newJob.value.copy(name = event.name)
             }
-            is CreateServiceEvent.SetMeasureUnit -> {
-                _newService.value = _newService.value.copy(measureUnit = event.measureUnit)
+            is CreateJobEvent.SetMeasureUnit -> {
+                _newJob.value = _newJob.value.copy(measureUnit = event.measureUnit)
             }
-            is CreateServiceEvent.SetPricePerUnit -> {
+            is CreateJobEvent.SetPricePerUnit -> {
                 val price = event.pricePreUnit
                 _state.update { it.copy(pricePerUnit = price) }
-                _newService.value = _newService.value.copy(pricePerUnit = price.toIntOrNull() ?: 0)
+                _newJob.value = _newJob.value.copy(pricePerUnit = price.toIntOrNull() ?: 0)
             }
 
         }
