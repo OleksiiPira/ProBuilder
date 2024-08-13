@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,10 +29,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
-import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.domain.model.Job
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
+import com.example.probuilder.presentation.screen.ui.theme.Typography
 import com.google.gson.Gson
 
 @Composable
@@ -40,42 +42,45 @@ fun ServiceListItem(
     screenState: CategoriesScreenState,
     job: Job,
     removeJob: () -> Unit,
-    nextScreen: (String) -> Unit
+    nextScreen: (String) -> Unit,
+    paddingValue: PaddingValues
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
-            .clickable { nextScreen(Route.SERVICE_DETAILS.replace("{item}", Gson().toJson(job))) },
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+            .clickable { nextScreen(Route.SERVICE_DETAILS.replace("{item}", Gson().toJson(job))) }
+            .padding(paddingValue),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.weight(3f),
+                modifier = Modifier.weight(4.5f),
                 text = job.name,
+                style = Typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Column(
-                modifier = Modifier.weight(2f),
+                modifier = Modifier.weight(1.5f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = job.pricePerUnit.toString() + " грн"
+                    text = job.pricePerUnit.toString(),
+                    style = Typography.titleSmall
                 )
                 Text(
                     color = MaterialTheme.colorScheme.onSurface,
-                    text = job.measureUnit
+                    text = "грн/" + job.measureUnit,
+                    style = Typography.bodySmall
                 )
             }
 
             DropDownButton(
-                modifier = Modifier.weight(0.5f),
+                modifier = Modifier.weight(1f),
             ) {
                 DropdownMenuItem(
                     leadingIcon = { Icons.MoreVert },
@@ -120,6 +125,7 @@ fun GreetingPreview() {
             job = Job(name = "Painting and Decorating", pricePerUnit = 90, measureUnit = "м2"),
             removeJob = {},
             nextScreen = System.out::println,
+            paddingValue = PaddingValues()
         )
     }
 }

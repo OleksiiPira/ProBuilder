@@ -100,5 +100,11 @@ object Icons {
             contentDescription = "Локація"
         )
 
+    //  Buttons
+    val Check: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.check),
+            contentDescription = stringResource(text.icon_check)
+        )
 
 }
