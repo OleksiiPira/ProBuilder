@@ -36,6 +36,10 @@ class CreateJobViewModel @Inject constructor(
     private val _allCategories = categoryService.categories
     val allCategories: Flow<List<Category>> = _allCategories
 
+    init {
+        viewModelScope.launch { jobService.loadTags { _state.value.tags = it } }
+    }
+
     fun saveService() = viewModelScope.launch {
         jobService.save(newJob.value.copy(categoryId = selectedCategory.value.id))
     }
@@ -61,7 +65,6 @@ class CreateJobViewModel @Inject constructor(
                 _state.update { it.copy(pricePerUnit = price) }
                 _newJob.value = _newJob.value.copy(pricePerUnit = price.toIntOrNull() ?: 0)
             }
-
         }
     }
 

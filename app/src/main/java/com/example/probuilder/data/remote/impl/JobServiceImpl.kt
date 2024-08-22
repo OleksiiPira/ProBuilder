@@ -20,6 +20,7 @@ class JobServiceImpl @Inject constructor(
 
     private val jobsCollection = firestore.collection(JOB_COLLECTION)
     private val categoriesCollection = firestore.collection(CATEGORY_COLLECTION)
+    private val metadataCollection = firestore.collection("metadata")
 
     override val jobs: Flow<List<Job>> = callbackFlow {
         val listenerRegistration = jobsCollection.addSnapshotListener { snapshot, error ->
@@ -56,6 +57,16 @@ class JobServiceImpl @Inject constructor(
             else null
         } catch (e: Exception) {
             e.printStackTrace()
+            null
+        }
+    }
+
+    override suspend fun loadTags(onTagsLoaded: (List<String>) -> Unit) {
+        try {
+            val documentSnapshot = metadataCollection.document("job").get().await()
+            val tags = documentSnapshot.get("tags") as? List<String> ?: emptyList()
+            onTagsLoaded(tags)
+        } catch (e: Exception) {
             null
         }
     }

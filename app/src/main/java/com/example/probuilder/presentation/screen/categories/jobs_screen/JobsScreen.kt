@@ -53,6 +53,7 @@ fun JobsScreen(
     bottomBar: @Composable() (() -> Unit)
 ) {
     val jobs by viewModel.jobs.observeAsState(emptyList())
+    val tags by viewModel.tags.observeAsState(emptyList())
     val state by viewModel.state.collectAsState(JobsScreenState())
     Scaffold(
         bottomBar = bottomBar,
@@ -79,18 +80,10 @@ fun JobsScreen(
         Box(modifier = modifier
             .padding(paddings)
             .fillMaxSize()) {
-            LazyColumn(
-                modifier = modifier
-                ) {
+            LazyColumn(modifier = modifier) {
                 item {
                     LazyRow(Modifier.padding(HORIZONTAL_PADDING, vertical = 8.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-//                        items(tags) { it }
-                        item { listOf(InputChipExample("Стеля", {})) }
-                        item { listOf(InputChipExample("Стіни", {})) }
-                        item { listOf(InputChipExample("Підлога", {})) }
-                        item { listOf(InputChipExample("Відкоси", {})) }
-                        item { listOf(InputChipExample("Стеля", {})) }
-                        item { listOf(InputChipExample("Стеля", {})) }
+                        items(tags){ TagButton(it, {}) }
                     }
                 }
 
@@ -139,7 +132,7 @@ fun TopBar(
 }
 
 @Composable
-fun InputChipExample(
+fun TagButton(
     text: String,
     onClick : () -> Unit,
 ) {

@@ -10,7 +10,11 @@ interface JobService {
     suspend fun save(job: Job): Boolean
 
     suspend fun getJobById(jobId: String): Job?
+
     suspend fun fetchJobs(categoryId: String, onSuccess: (List<Job>) -> Unit, onFailure: (Exception) -> Unit)
+
+    suspend fun loadTags(onTagsLoaded: (List<String>) -> Unit)
+
     suspend fun delete(job: Job)
 
     }

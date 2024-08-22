@@ -26,6 +26,9 @@ class JobsScreenViewModel @Inject constructor(
     private var _jobs = MutableLiveData(emptyList<Job>())
     val jobs: LiveData<List<Job>> = _jobs
 
+    private var _tags = MutableLiveData(emptyList<String>())
+    val tags: LiveData<List<String>> = _tags
+
     init {
         savedStateHandle.get<String>("categoryId")?.let { id ->
             _state.value.currCategory.id = id
@@ -36,6 +39,7 @@ class JobsScreenViewModel @Inject constructor(
             }
         }
         savedStateHandle.get<String>("categoryName")?.let { name -> _state.value.currCategory.name = name }
+        viewModelScope.launch { jobService.loadTags { _tags.value = it } }
     }
 
     fun selectJob(job: Job) = _state.update { state ->
