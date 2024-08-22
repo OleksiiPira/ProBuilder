@@ -12,18 +12,15 @@ import androidx.compose.ui.unit.dp
 fun CustomFloatingButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = Color(0xFFF2F2F2),
-    contentColor: Color = MaterialTheme.colorScheme.primary,
     visible: Boolean = true,
-    content: @Composable () -> Unit
 ) {
     if(!visible) return
     FloatingActionButton(
         modifier = modifier.padding(16.dp),
-        containerColor = containerColor,
-        contentColor = contentColor,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = Color(0xFF303D45),
         onClick = onClick,
     ) {
-        content()
+        Icons.Add
     }
 }

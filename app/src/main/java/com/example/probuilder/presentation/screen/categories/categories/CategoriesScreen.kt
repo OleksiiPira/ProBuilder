@@ -49,7 +49,7 @@ fun CategoryScreen(
                 onSelectAll = { viewModel.selectAllCategories(categories) },
                 onSearch = {},
                 isEditMode = screenState.isEditMode) },
-        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", screenState.currCategory.id)) }) { Icons.Add } },
+        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", screenState.currCategory.id)) }) },
         bottomBar = bottomBar
     ) { padding ->
         CategoriesScreenContent(

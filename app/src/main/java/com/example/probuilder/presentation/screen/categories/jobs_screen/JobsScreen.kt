@@ -14,9 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
@@ -53,17 +52,7 @@ fun JobsScreen(
     val state by viewModel.state.collectAsState(JobsScreenState())
     Scaffold(
         bottomBar = bottomBar,
-        floatingActionButton = {
-            FloatingActionButton(
-                modifier = modifier.padding(16.dp),
-                containerColor = Color(0xFFF2F2F2),
-                contentColor = MaterialTheme.colorScheme.primary,
-                onClick = {
-                    val currCategoryJson = Gson().toJson(state.currCategory)
-                    nextScreen(Route.CREATE_SERVICE.replace("{category}", currCategoryJson))
-                          },
-            ) { Icons.Add }
-        },
+        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_SERVICE.replace("{category}", Gson().toJson(state.currCategory))) }) },
         topBar = {
             TopBar(
                 title = state.currCategory.name,

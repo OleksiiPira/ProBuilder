@@ -49,7 +49,7 @@ fun ProjectList(
             onSearch = {},
             onNavigationPress = {},
             isEditMode = false) },
-        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", "")) }) { Icons.Add } },
+        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", "")) }) },
         bottomBar = bottomBar
     ) { padding ->
         Column(Modifier.padding(padding)) {
