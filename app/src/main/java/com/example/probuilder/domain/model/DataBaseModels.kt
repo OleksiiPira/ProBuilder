@@ -13,7 +13,7 @@ data class Job(
     val pricePerUnit: Int = 0,
     val measureUnit: String = "",
     val state: ItemState = ItemState.DEFAULT,
-    @Exclude var tags: List<String> = emptyList(),
+    val tags: List<String> = emptyList()
     )
 
 //@Entity(tableName = "categories")

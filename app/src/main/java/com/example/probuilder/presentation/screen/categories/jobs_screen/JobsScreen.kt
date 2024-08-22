@@ -83,19 +83,21 @@ fun JobsScreen(
             LazyColumn(modifier = modifier) {
                 item {
                     LazyRow(Modifier.padding(HORIZONTAL_PADDING, vertical = 8.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        items(tags){ TagButton(it, {}) }
+                        items(tags){ TagButton(it) { viewModel.selectTag(it) } }
                     }
                 }
 
                 items(jobs) { job ->
-                    ServiceListItem(
+                    if (state.selectedTags.isEmpty() || state.selectedTags.find { job.tags.contains(it) } != null) {
+                        ServiceListItem(
                             job = job,
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
                             removeJob = { viewModel.removeJobs(listOf(job)) },
                             paddingValue = PaddingValues(start = HORIZONTAL_PADDING, top = 12.dp, bottom = 12.dp)
                         )
-                    HorizontalDivider(Modifier.padding(horizontal = HORIZONTAL_PADDING),color = Color(0xFFB6B6BB))
+                        HorizontalDivider(Modifier.padding(horizontal = HORIZONTAL_PADDING),color = Color(0xFFB6B6BB))
+                    }
                 }
             }
         }

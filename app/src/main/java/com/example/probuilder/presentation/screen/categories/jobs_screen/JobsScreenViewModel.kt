@@ -58,6 +58,14 @@ class JobsScreenViewModel @Inject constructor(
         jobs.forEach { jobService.delete(it) }
     }
 
+    fun selectTag(tag: String) {
+        _state.update {state ->
+            val isTagAlreadyPresent = !state.selectedTags.contains(tag)
+            if (isTagAlreadyPresent) state.copy(selectedTags = state.selectedTags.toMutableList().apply { add(tag) })
+            else state.copy(selectedTags = state.selectedTags.filter { it != tag }.toMutableList())
+        }
+    }
+
     private fun loadAllJobs() {
 //        viewModelScope.launch {
 //            getServices.invoke().collect { result ->
