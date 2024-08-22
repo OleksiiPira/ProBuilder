@@ -3,15 +3,9 @@ package com.example.probuilder.presentation.screen.categories.categories.create
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import com.example.probuilder.presentation.components.Icons
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,17 +16,33 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.presentation.screen.ui.theme.Typography
+import com.example.probuilder.domain.model.ActionItems
+import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.PrimaryButton
+import com.example.probuilder.presentation.components.SecondaryButton
+import com.example.probuilder.presentation.components.TextFieldWithTitle
+import com.example.probuilder.presentation.screen.categories.categories.TopBar
 
 @Composable
 fun CreateCategoryScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
+    bottomBar: @Composable () -> Unit,
     viewModel: CreateCategoryViewModel = hiltViewModel(),
 ) {
     var categoryName by rememberSaveable { mutableStateOf("") }
 
-    Scaffold { padding ->
+    Scaffold(
+        bottomBar = bottomBar,
+        topBar = {
+            TopBar(
+                title = "Створити категорію",
+                moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
+                onSelectAll = {  },
+                onSearch = {},
+                onNavigationPress = onBack,
+                isEditMode = false) }
+    ) { padding ->
         Column(
             modifier = modifier
                 .padding(padding)
@@ -41,31 +51,18 @@ fun CreateCategoryScreen(
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Text(
-                text = "Створити тип роботи",
-                style = Typography.titleLarge
-            )
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = categoryName,
-                trailingIcon = { Icons.Clear },
-                onValueChange = { categoryName = it },
-                shape = RoundedCornerShape(8.dp),
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(onBack) {
-                    Text(text = "Відмінити", style = Typography.labelLarge)
-                }
-                TextButton({
-                    viewModel.createCategory(categoryName)
-                    onBack()
-                }) {
-                    Text(text = "Зберегти", style = Typography.labelLarge)
-                }
+            val onSave = {
+                viewModel.createCategory(categoryName)
+                onBack()
             }
+
+            TextFieldWithTitle(
+                title = "Назва категорії",
+                value = categoryName,
+                onValueChange = { categoryName = it })
+
+            PrimaryButton(text = "Зберегти", onClick = onSave)
+            SecondaryButton(text = "Відмінити", onClick = onBack)
         }
 
     }

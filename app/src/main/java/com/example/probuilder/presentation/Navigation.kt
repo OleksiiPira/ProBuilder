@@ -48,7 +48,9 @@ fun HomeNavigation(
             startDestination = Route.SERVICES
         ) {
             composable(route = Route.CREATE_CATEGORY) {
-                CreateCategoryScreen(onBack = navController::popBackStack)
+                CreateCategoryScreen(
+                    onBack = navController::popBackStack,
+                    bottomBar = bottomBar)
             }
             composable(
                 route = Route.SERVICES,

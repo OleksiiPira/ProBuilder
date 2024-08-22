@@ -16,9 +16,9 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun PrimaryButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
     text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Button(
         modifier = modifier.fillMaxWidth().height(44.dp),
@@ -35,9 +35,9 @@ fun PrimaryButton(
 
 @Composable
 fun SecondaryButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
     text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedButton(
         modifier = modifier.fillMaxWidth().height(44.dp),
