@@ -84,7 +84,11 @@ fun HomeNavigation(
                 )
             }
             composable(route = Route.SERVICE_DETAILS, arguments = listOf(
-                navArgument("item") {
+                navArgument("job") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("category") {
                     type = NavType.StringType
                     defaultValue = ""
                 }

@@ -25,12 +25,13 @@ fun JobDetailsScreen(
     viewModel: JobDetailsViewModel = hiltViewModel(),
     bottomBar: @Composable () -> Unit
 ) {
-    val service by viewModel.jobState.collectAsState()
+    val job by viewModel.job.collectAsState()
+    val category by viewModel.category.collectAsState()
     Scaffold(
         bottomBar = bottomBar,
         topBar = {
             TopBar(
-                title = service.name,
+                title = job.name,
                 moreActions = listOf(),
                 onNavigationPress = goBack,
                 onSelectAll = { /*TODO*/ },
@@ -45,9 +46,9 @@ fun JobDetailsScreen(
                 .padding(Constants.HORIZONTAL_PADDING),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ColumnListItem(title = "Категорія", value = "ServiceDetailsScreen")
-            ColumnListItem(title = "Одиниця виміру", value = service.measureUnit)
-            ColumnListItem(title = "Ціна", value = service.pricePerUnit.toString())
+            ColumnListItem(title = "Категорія", value = category.name)
+            ColumnListItem(title = "Одиниця виміру", value = job.measureUnit)
+            ColumnListItem(title = "Ціна", value = job.pricePerUnit.toString())
             Spacer(modifier = Modifier.padding(bottom = 8.dp))
             PrimaryButton(text = "Додати до фактури", onClick = { /*TODO*/ })
             SecondaryButton(text = "Приховати", onClick = { /*TODO*/ })
