@@ -145,15 +145,11 @@ fun UpsertInvoiceScreen(
                         viewModel = viewModel,
                         onBack = goBack
                     )
-                    PrimaryButton(onClick = {
+                    PrimaryButton(text = "Продовжити", onClick = {
                         isInfoUpdated = true
                         currentForm = InvoiceUpsertStep.PERFORMER
-                    }) {
-                        Text(text = "Продовжити", style = Typography.labelLarge)
-                    }
-                    SecondaryButton(onClick = goBack) {
-                        Text(text = "Відмінити", style = Typography.labelLarge)
-                    }
+                    })
+                    SecondaryButton(text = "Відмінити",onClick = goBack)
                 }
 
                 InvoiceUpsertStep.PERFORMER -> {
@@ -166,15 +162,11 @@ fun UpsertInvoiceScreen(
                         viewModel = viewModel,
                         onBack = goBack
                     )
-                    PrimaryButton(onClick = {
+                    PrimaryButton(text = "Продовжити", onClick = {
                         isPerformerUpdated = true
                         currentForm = InvoiceUpsertStep.CLIENT
-                    }) {
-                        Text(text = "Продовжити", style = Typography.labelLarge)
-                    }
-                    SecondaryButton(onClick = goBack) {
-                        Text(text = "Назад", style = Typography.labelLarge)
-                    }
+                    })
+                    SecondaryButton(text = "Назад", onClick = goBack)
                 }
 
                 InvoiceUpsertStep.CLIENT -> {
@@ -188,17 +180,14 @@ fun UpsertInvoiceScreen(
                         onBack = goBack
                     )
                     PrimaryButton(
+                        text = "Зберегти",
                         onClick = {
                             isClientUpdated = true
                             viewModel.onEvent(InvoiceFormEvent.SaveItem)
                             nextScreen(Route.INVOICES)
                         },
-                    ) {
-                        Text(text = "Зберегти", style = Typography.labelLarge)
-                    }
-                    SecondaryButton(onClick = goBack) {
-                        Text(text = "Назад", style = Typography.labelLarge)
-                    }
+                    )
+                    SecondaryButton(text = "Назад", onClick = goBack)
                 }
             }
         }

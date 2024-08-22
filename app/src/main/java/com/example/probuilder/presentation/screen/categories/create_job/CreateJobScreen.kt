@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,7 +23,6 @@ import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.categories.component.DropDownSearch
-import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun CreateJobScreen(
@@ -78,15 +76,11 @@ fun CreateJobScreen(
                 onValueChange = { viewModel.onEvent(CreateJobEvent.SetPricePerUnit(it)) }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            PrimaryButton(onClick = {
+            PrimaryButton(text = "Зберегти", onClick = {
                 viewModel.saveService()
                 onBack()
-            }) {
-                Text(text = "Зберегти", style = Typography.labelLarge)
-            }
-            SecondaryButton(onClick = onBack) {
-                Text(text = "Відмінити", style = Typography.labelLarge)
-            }
+            })
+            SecondaryButton(text = "Відмінити", onClick = onBack)
         }
     }
 }

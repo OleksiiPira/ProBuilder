@@ -130,18 +130,13 @@ fun InvoiceDetailsScreen(
             }
             if (currentForm != INVOICE_FULL_INFO) {
                 PrimaryButton(
+                    text = "Зберегти",
                     onClick = {
                         currentForm = INVOICE_FULL_INFO
                         viewModel.onEvent(InvoiceFormEvent.SaveItem)
                     },
-                ) {
-                    Text(text = "Зберегти", style = Typography.labelLarge)
-                }
-                SecondaryButton(onClick = {
-                    currentForm = INVOICE_FULL_INFO
-                }) {
-                    Text(text = "Відмінити", style = Typography.labelLarge)
-                }
+                )
+                SecondaryButton(text = "Відмінити", onClick = { currentForm = INVOICE_FULL_INFO })
             }
         }
     }
