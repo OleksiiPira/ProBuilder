@@ -57,9 +57,9 @@ fun DropDownSearch(
     ) {
         Column {
             if (searchTitle.isNotEmpty()) Text(
-                modifier = Modifier.padding(start = 12.dp, bottom = 4.dp),
+                modifier = Modifier.padding(bottom = 5.dp),
                 text = searchTitle,
-                style = Typography.titleMedium
+                style = Typography.titleSmall
             )
             OutlinedTextField(
                 modifier = Modifier

@@ -26,9 +26,9 @@ fun TextFieldWithTitle(
 ) {
     Column(modifier = modifier) {
         Text(
-            modifier = Modifier.padding(start = 12.dp, bottom = 4.dp),
+            modifier = Modifier.padding(bottom = 5.dp),
             text = title,
-            style = Typography.titleMedium
+            style = Typography.titleSmall
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),

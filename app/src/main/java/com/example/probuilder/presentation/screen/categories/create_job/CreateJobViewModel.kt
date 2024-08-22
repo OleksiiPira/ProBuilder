@@ -52,6 +52,10 @@ class CreateJobViewModel @Inject constructor(
         jobService.delete(job)
     }
 
+    fun updateJobTags(tag: String) {
+        _newJob.value = newJob.value.copy(tags = listOf(tag))
+    }
+
     fun onEvent(event: CreateJobEvent) {
         when (event) {
             is CreateJobEvent.SetJobName -> {

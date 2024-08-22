@@ -2,6 +2,7 @@ package com.example.probuilder.presentation.screen.categories.create_job
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,7 +41,7 @@ fun CreateJobScreen(
         bottomBar = bottomBar,
         topBar = {
             TopBar(
-                title = currCategory.name,
+                title = "Створити роботу",
                 moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
                 onSelectAll = {  },
                 onSearch = {},
@@ -48,13 +49,15 @@ fun CreateJobScreen(
                 isEditMode = state.isEditMode) }
     ) { paddings ->
         Column(
-            modifier.padding(paddings).padding(Constants.HORIZONTAL_PADDING),
+            modifier
+                .padding(paddings)
+                .padding(Constants.HORIZONTAL_PADDING),
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         ) {
 
 
             TextFieldWithTitle(
-                title = "Назва послуги",
+                title = "Назва роботи",
                 value = newJob.name,
                 onValueChange = { viewModel.onEvent(CreateJobEvent.SetJobName(it)) }
             )
@@ -65,16 +68,29 @@ fun CreateJobScreen(
                 selectItem = { searchItem -> viewModel.updateCurrentCategory(searchItem.item as Category)
                 }
             )
-            TextFieldWithTitle(
-                title = "Одиниця виміру",
-                value = newJob.measureUnit,
-                onValueChange = { viewModel.onEvent(CreateJobEvent.SetMeasureUnit(it)) }
+            val currentTag = newJob.tags.getOrNull(0).orEmpty()
+            DropDownSearch(
+                searchTitle = "Теги",
+                currentItem = SearchItem(currentTag, currentTag),
+                searchItems = state.tags.map { tag ->  SearchItem(tag, tag) },
+                selectItem = { searchItem -> viewModel.updateJobTags(searchItem.item as String)
+                }
             )
-            TextFieldWithTitle(
-                title = "Ціна за одиницю",
-                value = state.pricePerUnit,
-                onValueChange = { viewModel.onEvent(CreateJobEvent.SetPricePerUnit(it)) }
-            )
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                TextFieldWithTitle(
+                    modifier = Modifier.weight(3f),
+                    title = "Ціна",
+                    value = state.pricePerUnit,
+                    onValueChange = { viewModel.onEvent(CreateJobEvent.SetPricePerUnit(it)) }
+                )
+                TextFieldWithTitle(
+                    modifier = Modifier.weight(2f),
+                    title = "Одиниця виміру",
+                    value = newJob.measureUnit,
+                    onValueChange = { viewModel.onEvent(CreateJobEvent.SetMeasureUnit(it)) }
+                )
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(text = "Зберегти", onClick = {
                 viewModel.saveService()
