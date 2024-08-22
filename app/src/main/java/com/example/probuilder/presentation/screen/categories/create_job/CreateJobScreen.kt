@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +26,11 @@ import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.categories.component.DropDownSearch
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateJobScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateJobViewModel = hiltViewModel(),
-    bottomBar: @Composable() (() -> Unit),
+    bottomBar: @Composable () -> Unit,
     onBack: () -> Unit
 ) {
     val newJob by viewModel.newJob
@@ -48,10 +46,11 @@ fun CreateJobScreen(
                 moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
                 onSelectAll = {  },
                 onSearch = {},
+                onNavigationPress = onBack,
                 isEditMode = state.isEditMode) }
-    ) {
+    ) { paddings ->
         Column(
-            modifier.padding(it).padding(Constants.HORIZONTAL_PADDING),
+            modifier.padding(paddings).padding(Constants.HORIZONTAL_PADDING),
             verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         ) {
 

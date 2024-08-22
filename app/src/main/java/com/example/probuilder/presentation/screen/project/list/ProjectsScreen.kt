@@ -47,6 +47,7 @@ fun ProjectList(
             moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
             onSelectAll = {  },
             onSearch = {},
+            onNavigationPress = {},
             isEditMode = false) },
         floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", "")) }) { Icons.Add } },
         bottomBar = bottomBar

@@ -1,6 +1,7 @@
 package com.example.probuilder.presentation.screen.categories.categories
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.ActionItems
@@ -26,13 +28,15 @@ import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.overflow_menu.MoreActionsButton
 import com.example.probuilder.presentation.screen.categories.component.CategoryListItem
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
+import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun CategoryScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
+    goBack: () -> Unit,
     viewModel: CategoriesViewModel = hiltViewModel(),
-    bottomBar: @Composable (() -> Unit),
+    bottomBar: @Composable () -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsState()
     val categories by viewModel.categories.collectAsState(emptyList())
@@ -41,6 +45,7 @@ fun CategoryScreen(
         topBar = { TopBar(
                 title = screenState.currCategory.name,
                 moreActions = listOf(ActionItems("Видалити", { viewModel.removeCategories(screenState.selectedCategories) }, Icons.Delete)),
+                onNavigationPress = goBack,
                 onSelectAll = { viewModel.selectAllCategories(categories) },
                 onSearch = {},
                 isEditMode = screenState.isEditMode) },
@@ -91,6 +96,7 @@ private fun CategoriesScreenContent(
 fun TopBar(
     title: String,
     moreActions: List<ActionItems>,
+    onNavigationPress: () -> Unit,
     onSelectAll: () -> Unit,
     onSearch: () -> Unit,
     isEditMode: Boolean
@@ -100,8 +106,8 @@ fun TopBar(
         titleContentColor = MaterialTheme.colorScheme.onSurface)
     TopAppBar(
         colors = barColors,
-        navigationIcon = { IconButton(onClick = { /* do something */ }) { Icons.ArrowBack } },
-        title = { Text(text = title) },
+        navigationIcon = { IconButton(onNavigationPress) { Icons.ArrowBack } },
+        title = { Text(modifier = Modifier.fillMaxWidth(), text = title, style = Typography.titleMedium, textAlign = TextAlign.Center) },
         actions = {
             if (!isEditMode) IconButton(onSearch) { Icons.Search }
             else MoreActionsButton(onSelectAll, moreActions)

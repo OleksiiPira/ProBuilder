@@ -25,7 +25,7 @@ import com.example.probuilder.presentation.screen.project.list.ProjectList
 fun HomeNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    bottomBar: @Composable() (() -> Unit)
+    bottomBar: @Composable () -> Unit
 ) {
     NavHost(modifier = modifier, navController = navController, startDestination = Route.HOME) {
         composable(route = Route.HOME) {
@@ -40,6 +40,7 @@ fun HomeNavigation(
             CategoryScreen(
                 nextScreen = navController::navigate,
                 bottomBar = bottomBar,
+                goBack = navController::popBackStack
             )
         }
         navigation(
@@ -47,7 +48,7 @@ fun HomeNavigation(
             startDestination = Route.SERVICES
         ) {
             composable(route = Route.CREATE_CATEGORY) {
-                CreateCategoryScreen(onBack =  navController::popBackStack)
+                CreateCategoryScreen(onBack = navController::popBackStack)
             }
             composable(
                 route = Route.SERVICES,
@@ -59,7 +60,8 @@ fun HomeNavigation(
                 )) {
                 JobsScreen(
                     nextScreen = navController::navigate,
-                    bottomBar = bottomBar
+                    bottomBar = bottomBar,
+                    goBack = navController::popBackStack
                 )
             }
             composable(
@@ -87,7 +89,8 @@ fun HomeNavigation(
             )) {
                 JobDetailsScreen(
                     nextScreen = navController::navigate,
-                    bottomBar = bottomBar
+                    bottomBar = bottomBar,
+                    goBack = navController::popBackStack
                 )
             }
         }

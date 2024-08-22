@@ -14,15 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,11 +32,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.CategoriesScreenState
-import com.example.probuilder.presentation.screen.categories.categories.overflow_menu.MoreActionsButton
+import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.ServiceListItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 import com.google.gson.Gson
@@ -49,8 +44,9 @@ import com.google.gson.Gson
 fun JobsScreen(
     modifier: Modifier = Modifier,
     nextScreen: (String) -> Unit,
+    goBack: () -> Unit,
     viewModel: JobsScreenViewModel = hiltViewModel(),
-    bottomBar: @Composable() (() -> Unit)
+    bottomBar: @Composable () -> Unit
 ) {
     val jobs by viewModel.jobs.observeAsState(emptyList())
     val tags by viewModel.tags.observeAsState(emptyList())
@@ -71,18 +67,20 @@ fun JobsScreen(
         topBar = {
             TopBar(
                 title = state.currCategory.name,
-                actionItems = listOf(),
+                moreActions = listOf(),
+                onNavigationPress = goBack,
                 onSelectAll = { /*TODO*/ },
+                onSearch = {},
                 isEditMode = state.isEditMode)
         }
     ) { paddings ->
-        val HORIZONTAL_PADDING = 16.dp
+        val horizontalPadding = 16.dp
         Box(modifier = modifier
             .padding(paddings)
             .fillMaxSize()) {
             LazyColumn(modifier = modifier) {
                 item {
-                    LazyRow(Modifier.padding(HORIZONTAL_PADDING, vertical = 8.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    LazyRow(Modifier.padding(horizontalPadding, vertical = 8.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         items(tags){ TagButton(it) { viewModel.selectTag(it) } }
                     }
                 }
@@ -94,43 +92,14 @@ fun JobsScreen(
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
                             removeJob = { viewModel.removeJobs(listOf(job)) },
-                            paddingValue = PaddingValues(start = HORIZONTAL_PADDING, top = 12.dp, bottom = 12.dp)
+                            paddingValue = PaddingValues(start = horizontalPadding, top = 12.dp, bottom = 12.dp)
                         )
-                        HorizontalDivider(Modifier.padding(horizontal = HORIZONTAL_PADDING),color = Color(0xFFB6B6BB))
+                        HorizontalDivider(Modifier.padding(horizontal = horizontalPadding),color = Color(0xFFB6B6BB))
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun TopBar(
-    title: String,
-    actionItems: List<ActionItems>,
-    onSelectAll: () -> Unit,
-    isEditMode: Boolean
-) {
-    TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-        navigationIcon = {
-            IconButton(onClick = { /* do something */ }) { Icons.ArrowBack }
-        },
-        title = { Text(text = title) },
-        actions = {
-            if (isEditMode) {
-                MoreActionsButton(selectAll = onSelectAll, actionItems = actionItems)
-            } else {
-                IconButton(onClick = { /* do something */ }) {
-                    Icons.Search
-                }
-            }
-        },
-    )
 }
 
 @Composable
