@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.jobs_screen
+package com.example.probuilder.presentation.screen.job.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

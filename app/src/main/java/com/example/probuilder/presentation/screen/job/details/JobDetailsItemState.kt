@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.job_details
+package com.example.probuilder.presentation.screen.job.details
 
 import com.example.probuilder.domain.model.Invoice
 

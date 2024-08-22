@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.job_details
+package com.example.probuilder.presentation.screen.job.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

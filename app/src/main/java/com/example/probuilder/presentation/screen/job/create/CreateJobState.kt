@@ -1,4 +1,4 @@
-package com.example.probuilder.presentation.screen.categories.create_job
+package com.example.probuilder.presentation.screen.job.create
 
 data class CreateJobState(
     val pricePerUnit: String = "",
