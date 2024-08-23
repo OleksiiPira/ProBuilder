@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TitleLarge
@@ -51,24 +53,31 @@ fun ProjectScreenContent(
     modifier: Modifier = Modifier,
     project: Project
 ) {
-    Column(modifier) {
+    Column(modifier = modifier) {
         ProjectHero(project)
         Column(
-            Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Column {
+            modifier = Modifier.padding(start = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp))
+        {
+            Column(modifier = Modifier.padding(top = 16.dp)) {
                 TitleLarge(project.name)
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(Modifier.padding(vertical = 4.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     Icons.LocationSmall
                     BodyMedium(project.address, fontWeight = FontWeight.Light)
                 }
             }
+        }
+        UserCard(user = project.client) {}
+
+        Column(
+            Modifier.padding(Paddings.HorizontalPaddings),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             PrimaryButton(text = "Сформувати кошторис", onClick = { /*TODO*/ })
             SecondaryButton(text = "Сформувати фактуру", onClick = { /*TODO*/ })
-            UserCard(user = project.client) {}
         }
     }
+
 }
 
 

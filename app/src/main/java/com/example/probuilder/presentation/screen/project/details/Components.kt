@@ -35,6 +35,7 @@ import com.example.probuilder.domain.model.User
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.TitleSmall
 
 @Composable
@@ -81,12 +82,14 @@ fun ProjectHero(project: Project) {
 
 @Composable
 fun UserCard(
+    modifier: Modifier = Modifier,
     user: User,
     onClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier.clickable { onClick() },
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier.clickable { onClick() }.padding(vertical = 8.dp, horizontal = Paddings.HORIZONTAL_PADDING),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = user.imageUrl,
