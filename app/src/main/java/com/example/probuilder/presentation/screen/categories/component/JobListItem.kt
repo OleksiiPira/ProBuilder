@@ -51,9 +51,12 @@ fun ServiceListItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
-            .clickable { nextScreen(Route.SERVICE_DETAILS
-                .replace("{job}", Gson().toJson(job))
-                .replace("{category}", Gson().toJson(category))) }
+            .clickable {
+                nextScreen(Route.SERVICE_DETAILS
+                        .replace("{job}", Gson().toJson(job))
+                        .replace("{category}", Gson().toJson(category))
+                )
+            }
             .padding(paddingValue),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
@@ -83,8 +86,12 @@ fun ServiceListItem(
                 )
             }
 
+            var expend by remember { mutableStateOf(false) }
+            val onMoreClicked = { expend = !expend }
             DropDownButton(
                 modifier = Modifier.weight(1f),
+                expend = expend,
+                onMoreClicked = onMoreClicked
             ) {
                 DropdownMenuItem(
                     leadingIcon = { Icons.MoreVert },
@@ -95,7 +102,10 @@ fun ServiceListItem(
                 DropdownMenuItem(
                     leadingIcon = { Icons.Delete },
                     text = { Text(text = "Delete") },
-                    onClick = removeJob)
+                    onClick = {
+                        removeJob()
+                        onMoreClicked()
+                    })
             }
         }
     }
@@ -104,16 +114,18 @@ fun ServiceListItem(
 @Composable
 fun DropDownButton(
     modifier: Modifier = Modifier,
+    expend: Boolean = false,
+    onMoreClicked: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    var expend by remember { mutableStateOf(false) }
-    val onMoreClicked = { expend = !expend }
     Box(modifier = modifier.wrapContentSize(Alignment.TopEnd)) {
         IconButton(onMoreClicked) { Icons.MoreVert }
         DropdownMenu(
-            modifier = Modifier.widthIn(min = 160.dp).padding(end = 8.dp),
+            modifier = Modifier
+                .widthIn(min = 160.dp)
+                .padding(end = 8.dp),
             expanded = expend,
-            onDismissRequest = { expend = false }
+            onDismissRequest = onMoreClicked
         ) {
             content()
         }

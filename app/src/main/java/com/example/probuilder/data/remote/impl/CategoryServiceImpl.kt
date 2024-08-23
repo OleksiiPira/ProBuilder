@@ -17,8 +17,8 @@ class CategoryServiceImpl @Inject constructor(
     private val auth: AccountService
 ) : CategoryService {
 
-    private val firestoreCategories = firestore.collection(CATEGORY_COLLECTION)
-    private val firestoreServices = firestore.collection(SERVICES_COLLECTION)
+    private val firestoreCategories = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(CATEGORY_COLLECTION)
+    private val firestoreServices = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(SERVICES_COLLECTION)
 
 
     override val categories: Flow<List<Category>> = callbackFlow {
@@ -82,7 +82,8 @@ class CategoryServiceImpl @Inject constructor(
     }
 
     companion object {
-        private const val USER_ID_FIELD = "userId"
+        private const val USER_ID = "bOTQWZnTpjQ8uajIpU5x"
+        private const val USERS_COLLECTION = "users"
         private const val CATEGORY_COLLECTION = "categories"
         private const val SERVICES_COLLECTION = "services"
         private const val SAVE_CATEGORY_TRACE = "saveCategory"

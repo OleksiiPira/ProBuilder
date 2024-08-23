@@ -12,8 +12,10 @@ import com.example.probuilder.domain.use_case.auth.AccountService
 import com.example.probuilder.domain.use_case.auth.GoogleAuthService
 import com.example.probuilder.data.remote.CategoryService
 import com.example.probuilder.data.remote.JobService
+import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.data.remote.impl.CategoryServiceImpl
 import com.example.probuilder.data.remote.impl.JobServiceImpl
+import com.example.probuilder.data.remote.impl.ProjectServiceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -103,6 +105,12 @@ object AppModule {
     @Singleton
     fun provideJobService(firestore: FirebaseFirestore, accountService: AccountService): JobService {
         return JobServiceImpl(firestore, accountService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProjectService(firestore: FirebaseFirestore, accountService: AccountService): ProjectService {
+        return ProjectServiceImpl(firestore, accountService)
     }
 
 }

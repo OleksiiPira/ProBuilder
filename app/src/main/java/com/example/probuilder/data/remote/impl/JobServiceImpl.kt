@@ -18,8 +18,8 @@ class JobServiceImpl @Inject constructor(
     private val auth: AccountService
 ) : JobService {
 
-    private val jobsCollection = firestore.collection(JOB_COLLECTION)
-    private val categoriesCollection = firestore.collection(CATEGORY_COLLECTION)
+    private val categoriesCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(CATEGORY_COLLECTION)
+    private val jobsCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(JOB_COLLECTION)
     private val metadataCollection = firestore.collection("metadata")
 
     override val jobs: Flow<List<Job>> = callbackFlow {
@@ -98,9 +98,10 @@ class JobServiceImpl @Inject constructor(
     }
 
     companion object {
-        private const val USER_ID_FIELD = "userId"
-        private const val JOB_COLLECTION = "jobs"
+        private const val USER_ID = "bOTQWZnTpjQ8uajIpU5x"
+        private const val USERS_COLLECTION = "users"
         private const val CATEGORY_COLLECTION = "categories"
+        private const val JOB_COLLECTION = "jobs"
         private const val SAVE_JOB_TRACE = "saveJob"
         private const val UPDATE_JOB_TRACE = "updateJob"
     }

@@ -27,6 +27,14 @@ data class Category(
     val userId: String = "",
     )
 
-data class Feed(
-    val feed: List<Category>
+data class Project(
+    @DocumentId var id: String = "",
+    val imageUrl: String = "",
+    val name: String = "Назва проекту проекту",
+    val address: String = "м. Львів, вул. Карпенка 8а, 39",
+    val clientName: String = "Іван Шевченко Андрійович",
+    val price: Int = 200000,
+    val startDate: String = "20.05.2024",
+    val endDate: String = "20.05.2024",
+    val progress: Float = 0.2F,
 )
