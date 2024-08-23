@@ -78,7 +78,6 @@ fun JobsScreen(
                     if (state.selectedTags.isEmpty() || state.selectedTags.find { job.tags.contains(it) } != null) {
                         ServiceListItem(
                             job = job,
-                            category = state.currCategory,
                             nextScreen = nextScreen,
                             screenState = CategoriesScreenState(),
                             removeJob = { viewModel.removeJobs(listOf(job)) },

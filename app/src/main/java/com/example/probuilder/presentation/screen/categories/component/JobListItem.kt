@@ -29,7 +29,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
-import com.example.probuilder.domain.model.Category
 import com.example.probuilder.domain.model.Job
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.Icons
@@ -42,7 +41,6 @@ fun ServiceListItem(
     modifier: Modifier = Modifier,
     screenState: CategoriesScreenState,
     job: Job,
-    category: Category,
     removeJob: () -> Unit,
     nextScreen: (String) -> Unit,
     paddingValue: PaddingValues
@@ -51,12 +49,7 @@ fun ServiceListItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(0.dp))
-            .clickable {
-                nextScreen(Route.SERVICE_DETAILS
-                        .replace("{job}", Gson().toJson(job))
-                        .replace("{category}", Gson().toJson(category))
-                )
-            }
+            .clickable {}
             .padding(paddingValue),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
@@ -139,7 +132,6 @@ fun GreetingPreview() {
         ServiceListItem(
             screenState = CategoriesScreenState(),
             job = Job(name = "Painting and Decorating", pricePerUnit = 90, measureUnit = "м2"),
-            category = Category(name = "TestCategory"),
             removeJob = {},
             nextScreen = System.out::println,
             paddingValue = PaddingValues()

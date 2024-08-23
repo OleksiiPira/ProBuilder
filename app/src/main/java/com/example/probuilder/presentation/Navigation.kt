@@ -9,15 +9,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.example.probuilder.presentation.screen.home.HomeScreen
-import com.example.probuilder.presentation.screen.invoices.invoices_screen.InvoicesScreen
-import com.example.probuilder.presentation.screen.job.list.JobsScreen
 import com.example.probuilder.presentation.screen.categories.categories.CategoryScreen
 import com.example.probuilder.presentation.screen.categories.categories.create.CreateCategoryScreen
-import com.example.probuilder.presentation.screen.job.create.CreateJobScreen
-import com.example.probuilder.presentation.screen.job.details.JobDetailsScreen
-import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
+import com.example.probuilder.presentation.screen.home.HomeScreen
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceScreen
+import com.example.probuilder.presentation.screen.invoices.invoice_details.InvoiceDetailsScreen
+import com.example.probuilder.presentation.screen.invoices.invoices_screen.InvoicesScreen
+import com.example.probuilder.presentation.screen.job.create.CreateJobScreen
+import com.example.probuilder.presentation.screen.job.list.JobsScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
 import com.example.probuilder.presentation.screen.project.create.CreateProjectScreen
 import com.example.probuilder.presentation.screen.project.details.ProjectDetailsScreen
@@ -83,22 +82,6 @@ fun HomeNavigation(
                 CreateJobScreen(
                     bottomBar = bottomBar,
                     onBack = { navController.popBackStack() }
-                )
-            }
-            composable(route = Route.SERVICE_DETAILS, arguments = listOf(
-                navArgument("job") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
-                navArgument("category") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )) {
-                JobDetailsScreen(
-                    nextScreen = navController::navigate,
-                    bottomBar = bottomBar,
-                    goBack = navController::popBackStack
                 )
             }
         }
