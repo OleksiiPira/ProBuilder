@@ -44,6 +44,7 @@ import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
+import com.google.gson.Gson
 
 
 @Composable
@@ -66,7 +67,8 @@ fun ProjectList(
     ) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)){
             items(projects) { project ->
-                ProjectCard(project, {}, viewModel::removeProject)
+                val showProjectDetails = { nextScreen(Route.PROJECT_DETAILS.replace("{project}", Gson().toJson(project)))}
+                ProjectCard(project, showProjectDetails, viewModel::removeProject)
             }
         }
     }

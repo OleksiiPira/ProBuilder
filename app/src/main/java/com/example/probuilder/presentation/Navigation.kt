@@ -20,6 +20,7 @@ import com.example.probuilder.presentation.screen.invoices.invoice_details.Invoi
 import com.example.probuilder.presentation.screen.invoices.create_invoice.UpsertInvoiceScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
 import com.example.probuilder.presentation.screen.project.create.CreateProjectScreen
+import com.example.probuilder.presentation.screen.project.details.ProjectDetailsScreen
 import com.example.probuilder.presentation.screen.project.list.ProjectList
 
 @Composable
@@ -165,6 +166,12 @@ fun HomeNavigation(
                 CreateProjectScreen(
                     bottomBar = bottomBar,
                     onBack = navController::popBackStack
+                )
+            }
+            composable(route = Route.PROJECT_DETAILS) {
+                ProjectDetailsScreen(
+                    bottomBar = bottomBar,
+                    goBack = navController::popBackStack
                 )
             }
         }
