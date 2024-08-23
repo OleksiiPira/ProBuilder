@@ -89,6 +89,11 @@ object Icons {
             painter = painterResource(id = icons.arrow_right),
             contentDescription = stringResource(text.icon_arrow_right)
         )
+    val ArrowRightLarge: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.arrow_right),
+            contentDescription = stringResource(text.icon_arrow_right)
+        )
     val ProfileSmall: Unit
         @Composable get() = Icon(
             painter = painterResource(id = icons.profile_small),

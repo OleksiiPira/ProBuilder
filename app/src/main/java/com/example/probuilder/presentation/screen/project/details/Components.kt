@@ -1,6 +1,7 @@
 package com.example.probuilder.presentation.screen.project.details
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -28,7 +31,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Project
+import com.example.probuilder.domain.model.User
+import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
+import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.TitleSmall
 
 @Composable
 fun ProjectHero(project: Project) {
@@ -68,6 +75,33 @@ fun ProjectHero(project: Project) {
                     BodySmall("${project.endDate}:", Color.Green)
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun UserCard(
+    user: User,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier.clickable { onClick() },
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        AsyncImage(
+            model = user.imageUrl,
+            modifier = Modifier.size(40.dp).clip(RoundedCornerShape(20.dp)),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.project_placeholder),
+            error = painterResource(id = R.drawable.project_placeholder),
+            contentDescription = stringResource(R.string.description),
+        )
+        Column(Modifier.weight(1f)) {
+            TitleSmall("Замовник:")
+            BodyLarge(user.name)
+        }
+        IconButton(onClick) {
+            Icons.ArrowRightLarge
         }
     }
 }

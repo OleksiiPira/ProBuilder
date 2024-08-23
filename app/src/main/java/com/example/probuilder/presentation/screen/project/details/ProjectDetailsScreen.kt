@@ -66,6 +66,7 @@ fun ProjectScreenContent(
             }
             PrimaryButton(text = "Сформувати кошторис", onClick = { /*TODO*/ })
             SecondaryButton(text = "Сформувати фактуру", onClick = { /*TODO*/ })
+            UserCard(user = project.client) {}
         }
     }
 }
