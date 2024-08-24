@@ -39,7 +39,8 @@ data class Project(
     val progress: Float = 0.2F,
     @Exclude var client: Client = Client(),
     @Exclude var rooms: List<Room> = emptyList(),
-    @Exclude var workers: List<Worker> = emptyList()
+    @Exclude var workers: List<Worker> = emptyList(),
+    @Exclude var notes: List<Note> = emptyList()
 )
 
 data class Client(
@@ -61,3 +62,10 @@ data class Room(
     val name: String = "Спальня",
     val progress: Float = 0.4F
 )
+
+data class Note(
+    @DocumentId var id: String = "",
+    val name: String = "Назва нотатки",
+    val description: String = "Опис нотатки"
+)
+

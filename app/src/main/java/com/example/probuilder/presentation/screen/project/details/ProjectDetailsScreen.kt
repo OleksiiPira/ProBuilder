@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.Note
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
@@ -64,13 +65,14 @@ fun ProjectScreenContent(
     project: Project
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+        val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
         ProjectHero(project)
-        TitleLarge(project.name, Modifier.padding(horizontal = Paddings.DEFAULT))
+        TitleLarge(project.name, modifierDefault)
         Row(
-            Modifier
+            modifierDefault
                 .padding(top = 4.dp, bottom = Paddings.DEFAULT)
-                .padding(horizontal = Paddings.DEFAULT)
-                .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             Icons.LocationSmall
             BodyMedium(project.address, fontWeight = FontWeight.Light)
         }
@@ -85,15 +87,24 @@ fun ProjectScreenContent(
             SecondaryButton(text = "Сформувати фактуру", onClick = { /*TODO*/ })
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-        TitleMedium("Кімнати", Modifier.padding(horizontal = Paddings.DEFAULT))
+        Spacer(Modifier.height(20.dp))
+        TitleMedium("Кімнати", modifierDefault)
         project.rooms.forEach { room -> RoomCard(room) }
 
-        Spacer(modifier = Modifier.height(20.dp))
-        TitleMedium("Працівники", Modifier.padding(horizontal = Paddings.DEFAULT))
+        Spacer(Modifier.height(20.dp))
+        TitleMedium("Працівники", modifierDefault)
         project.workers.forEach {worker ->
+            var expend by remember { mutableStateOf(false) }
             WorkerCard(worker) {
-                var expend by remember { mutableStateOf(false) }
+                DropDownButton(expend = expend, onClick = { expend = !expend }){}
+            }
+        }
+
+        Spacer(Modifier.height(20.dp))
+        TitleMedium("Нотатки", modifierDefault)
+        project.notes.forEach { note ->
+            var expend by remember { mutableStateOf(false) }
+            Note(note.name, note.description){
                 DropDownButton(expend = expend, onClick = { expend = !expend }){}
             }
         }

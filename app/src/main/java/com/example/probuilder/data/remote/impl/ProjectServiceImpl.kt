@@ -5,6 +5,7 @@ import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.Client
+import com.example.probuilder.domain.model.Note
 import com.example.probuilder.domain.model.Worker
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -54,6 +55,14 @@ class ProjectServiceImpl @Inject constructor(
                                     }
                                 }
                             }
+                        projectsCollection.document(project.id).collection(NOTES_COLLECTION)
+                            .addSnapshotListener { snapshot, error ->
+                                if (error == null) {
+                                    snapshot?.let {
+                                        project.notes = it.toObjects(Note::class.java)
+                                    }
+                                }
+                            }
                     }
                     trySend(projectsList).isSuccess
                 }
@@ -90,6 +99,7 @@ class ProjectServiceImpl @Inject constructor(
         private const val CLIENT_COLLECTION = "client"
         private const val ROOMS_COLLECTION = "rooms"
         private const val WORKERS_COLLECTION = "workers"
+        private const val NOTES_COLLECTION = "notes"
         private const val SAVE_PROJECT_TRACE = "saveCategory"
     }
 }
