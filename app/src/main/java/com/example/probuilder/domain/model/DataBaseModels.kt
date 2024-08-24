@@ -37,11 +37,19 @@ data class Project(
     val startDate: String = "20.05.2024",
     val endDate: String = "20.05.2024",
     val progress: Float = 0.2F,
-    @Exclude var client: User = User()
+    @Exclude var client: User = User(),
+    @Exclude var rooms: List<Room> = emptyList()
 )
 
 data class User(
     @DocumentId var id: String = "",
     val imageUrl: String = "",
     val name: String = "Тарас Григорович Шевченко",
+)
+
+data class Room(
+    @DocumentId var id: String = "",
+    val imageUrl: String = "https://lunappimg.appspot.com/lun-ua/343/262/images/1028534151.jpg",
+    val name: String = "Спальня",
+    val progress: Float = 0.4F
 )

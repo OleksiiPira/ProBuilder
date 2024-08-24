@@ -3,6 +3,7 @@ package com.example.probuilder.data.remote.impl
 import androidx.compose.ui.util.trace
 import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.domain.model.Project
+import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.User
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,6 +34,14 @@ class ProjectServiceImpl @Inject constructor(
                                     snapshot?.let {
                                         val clientList = it.toObjects(User::class.java)
                                         project.client = clientList.getOrNull(0) ?: User()
+                                    }
+                                }
+                            }
+                        projectsCollection.document(project.id).collection(ROOMS_COLLECTION)
+                            .addSnapshotListener { snapshot, error ->
+                                if (error == null) {
+                                    snapshot?.let {
+                                        project.rooms = it.toObjects(Room::class.java)
                                     }
                                 }
                             }
@@ -70,6 +79,7 @@ class ProjectServiceImpl @Inject constructor(
         private const val USERS_COLLECTION = "users"
         private const val PROJECTS_COLLECTION = "projects"
         private const val CLIENT_COLLECTION = "client"
+        private const val ROOMS_COLLECTION = "rooms"
         private const val SAVE_PROJECT_TRACE = "saveCategory"
     }
 }

@@ -9,11 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Project
+import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.User
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
@@ -97,5 +93,26 @@ fun UserCard(
         IconButton(onClick) {
             Icons.ArrowRightLarge
         }
+    }
+}
+
+@Composable
+fun RoomCard(
+    room: Room,
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.clickable { onClick() }.padding(vertical = 8.dp, horizontal = Paddings.DEFAULT),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Poster(room.imageUrl, 60, 72, 4, "Фото кімнати")
+        Column(Modifier.weight(1f)) {
+            TitleSmall(room.name)
+            BodyLarge("Вартість робіт: 200 000 грн")
+            ProgressSmall(progress = room.progress)
+        }
+        IconButton(onClick) { Icons.ArrowRightLarge }
     }
 }
