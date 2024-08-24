@@ -20,7 +20,7 @@ fun MoreActionsButton(
     var expend by remember { mutableStateOf(false) }
     val onMoreClicked = { expend = !expend }
     IconButton(onClick = selectAll) { Icons.SelectAll }
-    DropDownButton(expend = expend, onMoreClicked = onMoreClicked) {
+    DropDownButton(expend = expend, onClick = onMoreClicked) {
         actionItems.forEach { item ->
             DropdownMenuItem(leadingIcon = { item.icon }, text = { Text(text = item.text) }, onClick = item.onClick)
         }

@@ -27,7 +27,8 @@ import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.domain.model.Room
-import com.example.probuilder.domain.model.User
+import com.example.probuilder.domain.model.Client
+import com.example.probuilder.domain.model.Worker
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
@@ -77,22 +78,41 @@ fun ProjectHero(project: Project) {
 @Composable
 fun UserCard(
     modifier: Modifier = Modifier,
-    user: User,
-    onClick: () -> Unit
+    client: Client = Client(),
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
 ) {
     Row(
-        modifier = modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT),
+        modifier = modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Poster(imageUrl = user.imageUrl, size = 40, radius = 20, "Фото профіля")
+        Poster(imageUrl = client.imageUrl, size = 40, radius = 20, "Фото профіля")
         Column(Modifier.weight(1f)) {
             TitleSmall("Замовник:")
-            BodyLarge(user.name)
+            BodyLarge(client.name)
         }
-        IconButton(onClick) {
-            Icons.ArrowRightLarge
+        content()
+    }
+}
+
+@Composable
+fun WorkerCard(
+    worker: Worker = Worker(),
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    Row(
+        modifier = Modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Poster(imageUrl = worker.imageUrl, size = 40, radius = 20, "Фото профіля")
+        Column(Modifier.weight(1f)) {
+            TitleSmall(worker.trade)
+            BodyLarge(worker.name)
         }
+        content()
     }
 }
 

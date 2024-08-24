@@ -87,7 +87,7 @@ private fun CategoriesScreenContent(
                 actionButton = {
                     var expend by remember { mutableStateOf(false) }
                     val onMoreClicked = { expend = !expend }
-                    if (!screenState.isEditMode) DropDownButton(expend = expend, onMoreClicked = onMoreClicked) {
+                    if (!screenState.isEditMode) DropDownButton(expend = expend, onClick = onMoreClicked) {
                         DropdownMenuItem(leadingIcon = { Icons.Delete }, text = { Text(text = "Delete") },
                             onClick = {
                                 removeCategory(category)

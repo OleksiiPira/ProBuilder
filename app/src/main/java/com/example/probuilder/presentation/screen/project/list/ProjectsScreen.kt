@@ -113,7 +113,7 @@ fun ProjectCard(
             }
             var expend by remember { mutableStateOf(false) }
             val onMoreClicked = { expend = !expend }
-            DropDownButton(expend = expend, onMoreClicked = onMoreClicked){
+            DropDownButton(expend = expend, onClick = onMoreClicked){
                     DropdownMenuItem(leadingIcon = { Icons.Delete }, text = { Text(text = "Delete") }, onClick = {
                         onMoreClicked()
                         onDelete(project)

@@ -84,7 +84,7 @@ fun ServiceListItem(
             DropDownButton(
                 modifier = Modifier.weight(1f),
                 expend = expend,
-                onMoreClicked = onMoreClicked
+                onClick = onMoreClicked
             ) {
                 DropdownMenuItem(
                     leadingIcon = { Icons.MoreVert },
@@ -108,17 +108,17 @@ fun ServiceListItem(
 fun DropDownButton(
     modifier: Modifier = Modifier,
     expend: Boolean = false,
-    onMoreClicked: () -> Unit,
+    onClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Box(modifier = modifier.wrapContentSize(Alignment.TopEnd)) {
-        IconButton(onMoreClicked) { Icons.MoreVert }
+        IconButton(onClick) { Icons.MoreVert }
         DropdownMenu(
             modifier = Modifier
                 .widthIn(min = 160.dp)
                 .padding(end = 8.dp),
             expanded = expend,
-            onDismissRequest = onMoreClicked
+            onDismissRequest = onClick
         ) {
             content()
         }

@@ -37,14 +37,22 @@ data class Project(
     val startDate: String = "20.05.2024",
     val endDate: String = "20.05.2024",
     val progress: Float = 0.2F,
-    @Exclude var client: User = User(),
-    @Exclude var rooms: List<Room> = emptyList()
+    @Exclude var client: Client = Client(),
+    @Exclude var rooms: List<Room> = emptyList(),
+    @Exclude var workers: List<Worker> = emptyList()
 )
 
-data class User(
+data class Client(
     @DocumentId var id: String = "",
     val imageUrl: String = "",
     val name: String = "Тарас Григорович Шевченко",
+)
+
+data class Worker(
+    @DocumentId var id: String = "",
+    val imageUrl: String = "",
+    val name: String = "Тарас Григорович Шевченко",
+    val trade: String = "Маляр"
 )
 
 data class Room(

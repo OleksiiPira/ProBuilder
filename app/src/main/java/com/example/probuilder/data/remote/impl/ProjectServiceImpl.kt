@@ -4,7 +4,8 @@ import androidx.compose.ui.util.trace
 import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.domain.model.Room
-import com.example.probuilder.domain.model.User
+import com.example.probuilder.domain.model.Client
+import com.example.probuilder.domain.model.Worker
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
@@ -32,8 +33,8 @@ class ProjectServiceImpl @Inject constructor(
                             .addSnapshotListener { snapshot, error ->
                                 if (error == null) {
                                     snapshot?.let {
-                                        val clientList = it.toObjects(User::class.java)
-                                        project.client = clientList.getOrNull(0) ?: User()
+                                        val clientList = it.toObjects(Client::class.java)
+                                        project.client = clientList.getOrNull(0) ?: Client()
                                     }
                                 }
                             }
@@ -42,6 +43,14 @@ class ProjectServiceImpl @Inject constructor(
                                 if (error == null) {
                                     snapshot?.let {
                                         project.rooms = it.toObjects(Room::class.java)
+                                    }
+                                }
+                            }
+                        projectsCollection.document(project.id).collection(WORKERS_COLLECTION)
+                            .addSnapshotListener { snapshot, error ->
+                                if (error == null) {
+                                    snapshot?.let {
+                                        project.workers = it.toObjects(Worker::class.java)
                                     }
                                 }
                             }
@@ -80,6 +89,7 @@ class ProjectServiceImpl @Inject constructor(
         private const val PROJECTS_COLLECTION = "projects"
         private const val CLIENT_COLLECTION = "client"
         private const val ROOMS_COLLECTION = "rooms"
+        private const val WORKERS_COLLECTION = "workers"
         private const val SAVE_PROJECT_TRACE = "saveCategory"
     }
 }
