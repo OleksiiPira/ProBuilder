@@ -36,11 +36,14 @@ import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.Poster
+import com.example.probuilder.presentation.components.ProgressLarge
+import com.example.probuilder.presentation.components.ProgressSmall
 import com.example.probuilder.presentation.components.TitleSmall
 
 @Composable
 fun ProjectHero(project: Project) {
-    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+    Column(Modifier.padding(bottom = Paddings.DEFAULT),verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Box {
             var textColor by remember { mutableStateOf(Color.Black) }
             AsyncImage(
@@ -61,12 +64,7 @@ fun ProjectHero(project: Project) {
                     .align(Alignment.BottomCenter),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                LinearProgressIndicator(
-                    progress = { project.progress },
-                    modifier = Modifier.fillMaxWidth().height(12.dp).clip(RoundedCornerShape(8.dp)),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = Color(0xFFEEEEF2)
-                )
+                ProgressLarge(progress = project.progress)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -87,18 +85,11 @@ fun UserCard(
     onClick: () -> Unit
 ) {
     Row(
-        modifier = modifier.clickable { onClick() }.padding(vertical = 8.dp, horizontal = Paddings.HORIZONTAL_PADDING),
+        modifier = modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = user.imageUrl,
-            modifier = Modifier.size(40.dp).clip(RoundedCornerShape(20.dp)),
-            contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.project_placeholder),
-            error = painterResource(id = R.drawable.project_placeholder),
-            contentDescription = stringResource(R.string.description),
-        )
+        Poster(imageUrl = user.imageUrl, size = 40, radius = 20, "Фото профіля")
         Column(Modifier.weight(1f)) {
             TitleSmall("Замовник:")
             BodyLarge(user.name)

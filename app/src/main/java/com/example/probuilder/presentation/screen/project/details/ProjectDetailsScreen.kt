@@ -53,27 +53,22 @@ fun ProjectScreenContent(
     modifier: Modifier = Modifier,
     project: Project
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         ProjectHero(project)
-        Column(
-            modifier = Modifier.padding(start = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp))
-        {
-            Column(modifier = Modifier.padding(top = 16.dp)) {
-                TitleLarge(project.name)
-                Row(Modifier.padding(vertical = 4.dp),horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Icons.LocationSmall
-                    BodyMedium(project.address, fontWeight = FontWeight.Light)
-                }
-            }
+        TitleLarge(project.name, Modifier.padding(horizontal = Paddings.DEFAULT))
+        Row(
+            Modifier
+                .padding(top = 4.dp, bottom = Paddings.DEFAULT)
+                .padding(horizontal = Paddings.DEFAULT)
+                .fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Icons.LocationSmall
+            BodyMedium(project.address, fontWeight = FontWeight.Light)
         }
         UserCard(user = project.client) {}
-
-        Column(
-            Modifier.padding(Paddings.HorizontalPaddings),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        Column(Modifier.padding(Paddings.HorizontalPaddings)
         ) {
             PrimaryButton(text = "Сформувати кошторис", onClick = { /*TODO*/ })
+            Spacer(modifier = Modifier.height(12.dp))
             SecondaryButton(text = "Сформувати фактуру", onClick = { /*TODO*/ })
         }
     }
