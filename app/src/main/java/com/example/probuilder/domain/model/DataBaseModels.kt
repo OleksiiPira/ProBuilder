@@ -47,13 +47,18 @@ data class Client(
     @DocumentId var id: String = "",
     val imageUrl: String = "",
     val name: String = "Тарас Григорович Шевченко",
+    val email: String = "test-1234@gmail.com",
+    val phone: String = "0965740000",
+    val note: String = "",
 )
 
 data class Worker(
     @DocumentId var id: String = "",
     val imageUrl: String = "",
     val name: String = "Тарас Григорович Шевченко",
-    val trade: String = "Маляр"
+    val trade: String = "Маляр",
+    val email: String = "test-1234@gmail.com",
+    val phone: String = "0965740000",
 )
 
 data class Room(

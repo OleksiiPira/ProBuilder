@@ -67,7 +67,7 @@ fun ProjectList(
     ) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)){
             items(projects) { project ->
-                val showProjectDetails = { nextScreen(Route.PROJECT_DETAILS.replace("{project}", Gson().toJson(project)))}
+                val showProjectDetails = { nextScreen(Route.PROJECT_DETAILS.replace("{projectId}", project.id))}
                 ProjectCard(project, showProjectDetails, viewModel::removeProject)
             }
         }

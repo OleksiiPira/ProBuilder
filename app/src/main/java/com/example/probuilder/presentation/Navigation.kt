@@ -20,6 +20,7 @@ import com.example.probuilder.presentation.screen.job.list.JobsScreen
 import com.example.probuilder.presentation.screen.profile.ProfileScreen
 import com.example.probuilder.presentation.screen.project.create.CreateProjectScreen
 import com.example.probuilder.presentation.screen.project.details.ProjectDetailsScreen
+import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientScreen
 import com.example.probuilder.presentation.screen.project.list.ProjectList
 
 @Composable
@@ -154,10 +155,17 @@ fun HomeNavigation(
             composable(route = Route.PROJECT_DETAILS) {
                 ProjectDetailsScreen(
                     bottomBar = bottomBar,
-                    goBack = navController::popBackStack
+                    nextScreen = navController::navigate,
+                    goBack = navController::popBackStack,
                 )
             }
-        }
+            composable(route = Route.UPSERT_CLIENT) {
+                UpsertClientScreen(
+                    bottomBar = bottomBar,
+                    goBack = navController::popBackStack
+                )
 
+            }
+        }
     }
 }

@@ -15,7 +15,9 @@ object Route {
     const val PROJECTS_SECTION = "projects_section"
     const val PROJECTS = "projects"
     const val CREATE_PROJECTS = "create_projects"
-    const val PROJECT_DETAILS = "project?project={project}"
+    const val PROJECT_DETAILS = "project?projectId={projectId}"
+
+    const val UPSERT_CLIENT = "upsert_client?projectId={projectId}&client={client}"
 
     const val INVOICES_SECTION = "invoices_section"
     const val INVOICES = "invoices"

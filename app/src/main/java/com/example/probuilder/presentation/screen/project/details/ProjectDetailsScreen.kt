@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.Project
+import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Note
@@ -33,10 +34,12 @@ import com.example.probuilder.presentation.components.TitleLarge
 import com.example.probuilder.presentation.components.TitleMedium
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
+import com.google.gson.Gson
 
 @Composable
 fun ProjectDetailsScreen(
     bottomBar: @Composable () -> Unit = {},
+    nextScreen: (String) -> Unit,
     goBack: () -> Unit = {},
     viewModel: ProjectDetailsViewModel = hiltViewModel(),
 ) {
@@ -55,14 +58,19 @@ fun ProjectDetailsScreen(
             )
         }
     ) { paddings ->
-        ProjectScreenContent(Modifier.padding(paddings), project)
+
+        val showUpsertClientScreen = { nextScreen(Route.UPSERT_CLIENT
+            .replace("{projectId}", project.id)
+            .replace("{client}", Gson().toJson(project.client))) }
+        ProjectScreenContent(Modifier.padding(paddings), project, showUpsertClientScreen)
     }
 }
 
 @Composable
 fun ProjectScreenContent(
     modifier: Modifier = Modifier,
-    project: Project
+    project: Project,
+    showClientDetailsScreen: () -> Unit
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
@@ -77,8 +85,8 @@ fun ProjectScreenContent(
             BodyMedium(project.address, fontWeight = FontWeight.Light)
         }
 
-        val onClientClick = {}
-        UserCard(client = project.client) { IconButton(onClientClick) { Icons.ArrowRightLarge } }
+
+        UserCard(client = project.client, onClick = showClientDetailsScreen) { IconButton({}) { Icons.ArrowRightLarge } }
 
         Column(Modifier.padding(Paddings.HorizontalPaddings)
         ) {
@@ -118,6 +126,6 @@ fun ProjectScreenContent(
 fun ProjectDetailsScreenPrev() {
     ProjectScreenContent(
         Modifier,
-        Project()
-    )
+        Project(),
+    ){}
 }

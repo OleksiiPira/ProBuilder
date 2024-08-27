@@ -2,10 +2,10 @@ package com.example.probuilder.data.remote.impl
 
 import androidx.compose.ui.util.trace
 import com.example.probuilder.data.remote.ProjectService
-import com.example.probuilder.domain.model.Project
-import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.Client
 import com.example.probuilder.domain.model.Note
+import com.example.probuilder.domain.model.Project
+import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.Worker
 import com.example.probuilder.domain.use_case.auth.AccountService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,7 +20,8 @@ class ProjectServiceImpl @Inject constructor(
     private val auth: AccountService
 ) : ProjectService {
 
-    private val projectsCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(PROJECTS_COLLECTION)
+    private val projectsCollection =
+        firestore.collection(USERS_COLLECTION).document(USER_ID).collection(PROJECTS_COLLECTION)
 
 
     override val projects: Flow<List<Project>> = callbackFlow {
@@ -29,41 +30,8 @@ class ProjectServiceImpl @Inject constructor(
                 snapshot?.let {
                     val projectsList: MutableList<Project> = it.toObjects(Project::class.java)
                     // get client
-                    projectsList.forEach { project ->
-                        projectsCollection.document(project.id).collection(CLIENT_COLLECTION)
-                            .addSnapshotListener { snapshot, error ->
-                                if (error == null) {
-                                    snapshot?.let {
-                                        val clientList = it.toObjects(Client::class.java)
-                                        project.client = clientList.getOrNull(0) ?: Client()
-                                    }
-                                }
-                            }
-                        projectsCollection.document(project.id).collection(ROOMS_COLLECTION)
-                            .addSnapshotListener { snapshot, error ->
-                                if (error == null) {
-                                    snapshot?.let {
-                                        project.rooms = it.toObjects(Room::class.java)
-                                    }
-                                }
-                            }
-                        projectsCollection.document(project.id).collection(WORKERS_COLLECTION)
-                            .addSnapshotListener { snapshot, error ->
-                                if (error == null) {
-                                    snapshot?.let {
-                                        project.workers = it.toObjects(Worker::class.java)
-                                    }
-                                }
-                            }
-                        projectsCollection.document(project.id).collection(NOTES_COLLECTION)
-                            .addSnapshotListener { snapshot, error ->
-                                if (error == null) {
-                                    snapshot?.let {
-                                        project.notes = it.toObjects(Note::class.java)
-                                    }
-                                }
-                            }
-                    }
+                    projectsList.forEach { project -> populateProjectsEnteties(project) }
+
                     trySend(projectsList).isSuccess
                 }
                 return@addSnapshotListener
@@ -72,20 +40,77 @@ class ProjectServiceImpl @Inject constructor(
         awaitClose { listenerRegistration.remove() }
     }
 
+    private fun populateProjectsEnteties(project: Project) : Project {
+        projectsCollection.document(project.id).collection(CLIENT_COLLECTION)
+            .addSnapshotListener { snapshot, error ->
+                if (error == null) {
+                    snapshot?.let {
+                        val clientList = it.toObjects(Client::class.java)
+                        project.client = clientList.getOrNull(0) ?: Client()
+                    }
+                }
+            }
+        projectsCollection.document(project.id).collection(ROOMS_COLLECTION)
+            .addSnapshotListener { snapshot, error ->
+                if (error == null) {
+                    snapshot?.let {
+                        project.rooms = it.toObjects(Room::class.java)
+                    }
+                }
+            }
+        projectsCollection.document(project.id).collection(WORKERS_COLLECTION)
+            .addSnapshotListener { snapshot, error ->
+                if (error == null) {
+                    snapshot?.let {
+                        project.workers = it.toObjects(Worker::class.java)
+                    }
+                }
+            }
+        projectsCollection.document(project.id).collection(NOTES_COLLECTION)
+            .addSnapshotListener { snapshot, error ->
+                if (error == null) {
+                    snapshot?.let {
+                        project.notes = it.toObjects(Note::class.java)
+                    }
+                }
+            }
+        return project
+    }
+
 
     override suspend fun save(project: Project): String = trace(SAVE_PROJECT_TRACE) {
         projectsCollection.add(project).await().id
     }
 
-    override suspend fun getProject(projectId: String): Project? {
-        return try {
-            val documentSnapshot = projectsCollection.document(projectId).get().await()
-            if (documentSnapshot.exists()) documentSnapshot.toObject(Project::class.java)?.copy(id = projectId)
-            else null
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
+    override fun getProjectById(projectId: String): Flow<Project> = callbackFlow {
+        val projectDocRef = projectsCollection.document(projectId)
+        val listenerRegistration = projectDocRef.addSnapshotListener { snapshot, error ->
+            if (error != null) { return@addSnapshotListener }
+            var project = snapshot?.toObject(Project::class.java)
+            project?.let { project = populateProjectsEnteties(it)  }
+            trySend(project?: Project()).isSuccess
         }
+        awaitClose { listenerRegistration.remove() }
+    }
+
+    override suspend fun saveClient(projectId: String, client: Client) {
+        projectsCollection.document(projectId).collection(CLIENT_COLLECTION).add(client).await().id
+    }
+
+    override suspend fun updateClient(projectId: String, client: Client) {
+        projectsCollection
+
+        val workerDocRef = projectsCollection.document(projectId)
+            .collection(CLIENT_COLLECTION)
+            .document(client.id)
+
+        workerDocRef.set(client)
+            .addOnSuccessListener {
+                println("Client document replaced successfully")
+            }
+            .addOnFailureListener { e ->
+                println("Error replacing client document: $e")
+            }
     }
 
     override suspend fun delete(projectId: String) {
