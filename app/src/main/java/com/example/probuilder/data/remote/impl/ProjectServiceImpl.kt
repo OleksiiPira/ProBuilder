@@ -83,34 +83,13 @@ class ProjectServiceImpl @Inject constructor(
     }
 
     override fun getProjectById(projectId: String): Flow<Project> = callbackFlow {
-        val projectDocRef = projectsCollection.document(projectId)
-        val listenerRegistration = projectDocRef.addSnapshotListener { snapshot, error ->
+        val listenerRegistration = projectsCollection.document(projectId).addSnapshotListener { snapshot, error ->
             if (error != null) { return@addSnapshotListener }
             var project = snapshot?.toObject(Project::class.java)
             project?.let { project = populateProjectsEnteties(it)  }
             trySend(project?: Project()).isSuccess
         }
         awaitClose { listenerRegistration.remove() }
-    }
-
-    override suspend fun saveClient(projectId: String, client: Client) {
-        projectsCollection.document(projectId).collection(CLIENT_COLLECTION).add(client).await().id
-    }
-
-    override suspend fun updateClient(projectId: String, client: Client) {
-        projectsCollection
-
-        val workerDocRef = projectsCollection.document(projectId)
-            .collection(CLIENT_COLLECTION)
-            .document(client.id)
-
-        workerDocRef.set(client)
-            .addOnSuccessListener {
-                println("Client document replaced successfully")
-            }
-            .addOnFailureListener { e ->
-                println("Error replacing client document: $e")
-            }
     }
 
     override suspend fun delete(projectId: String) {

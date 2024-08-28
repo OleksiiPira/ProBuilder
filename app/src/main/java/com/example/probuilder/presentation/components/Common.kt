@@ -45,13 +45,33 @@ fun Note(
     }
 }
 
+@Composable
+fun SimpleNote(text: String) {
+    Column(
+        Modifier
+            .padding(horizontal = Paddings.DEFAULT, vertical = 6.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xFFEBEBF0))
+            .padding(12.dp)
+    ) {
+        BodyMedium(
+            text,
+            fontWeight = FontWeight.Light,
+            Modifier.padding(end = Paddings.DEFAULT)
+        )
+    }
+}
+
 @Preview
 @Composable
 fun Prev() {
-    Note(
-        title = "Для працівника Івана",
-        text = "Особисті записи. Записуйте свої думки, почуття та події, які відбуваються у вашому житті."
-    ) {
+    Column {
+        SimpleNote(text = "Особисті записи. Записуйте свої думки, почуття та події, які відбуваються у вашому житті.")
+        Note(
+            title = "Для працівника Івана",
+            text = "Особисті записи. Записуйте свої думки, почуття та події, які відбуваються у вашому житті."
+        ) {
 
+        }
     }
 }

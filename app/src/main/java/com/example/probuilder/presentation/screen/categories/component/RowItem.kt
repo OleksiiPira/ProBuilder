@@ -21,14 +21,15 @@ import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
-fun CategoryListItem(
+fun RowItem(
     modifier: Modifier = Modifier,
-    text: String,
-    jobsCount: Int,
-    onClick: () -> Unit,
-    handleSelect: () -> Unit,
+    text: String = "",
+    onClick: () -> Unit = {},
     isSelectMode: Boolean = false,
     isSelected: Boolean = false,
+    badgeNumber: Int = 0,
+    handleSelect: () -> Unit = {},
+    leadingIcon: @Composable () -> Unit = { Icons.ArrowRight },
     actionButton: @Composable() (RowScope.() -> Unit) = {}
 ) {
     Row(
@@ -47,20 +48,20 @@ fun CategoryListItem(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icons.ArrowRight
+        leadingIcon()
         Row(
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = text, style = Typography.labelLarge,)
-            if (jobsCount > 0) Row(
+            if (badgeNumber > 0) Row(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color(0xFFF5CE54))
                     .padding(horizontal = 8.dp, vertical = 3.dp)
             ) {
-                Text(text = jobsCount.toString(), style = Typography.labelSmall)
+                Text(text = badgeNumber.toString(), style = Typography.labelSmall)
             }
         }
 

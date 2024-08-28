@@ -44,25 +44,13 @@ fun ProjectDetailsScreen(
     viewModel: ProjectDetailsViewModel = hiltViewModel(),
 ) {
     val project by viewModel.project.collectAsState(Project())
+    val showClientDetailsScreen = { nextScreen(Route.CLIENT_DETAILS.replace("{projectId}", project.id).replace("{client}", Gson().toJson(project.client))) }
 
     Scaffold(
         bottomBar = bottomBar,
-        topBar = {
-            TopBar(
-                title = project.name,
-                moreActions = listOf(),
-                onNavigationPress = goBack,
-                onSelectAll = { /*TODO*/ },
-                onSearch = { /*TODO*/ },
-                isEditMode = false
-            )
-        }
+        topBar = { TopBar(title = project.name, onNavigationPress = goBack) }
     ) { paddings ->
-
-        val showUpsertClientScreen = { nextScreen(Route.UPSERT_CLIENT
-            .replace("{projectId}", project.id)
-            .replace("{client}", Gson().toJson(project.client))) }
-        ProjectScreenContent(Modifier.padding(paddings), project, showUpsertClientScreen)
+        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen)
     }
 }
 
@@ -70,7 +58,7 @@ fun ProjectDetailsScreen(
 fun ProjectScreenContent(
     modifier: Modifier = Modifier,
     project: Project,
-    showClientDetailsScreen: () -> Unit
+    showClientDetailsScreen: () -> Unit,
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
@@ -86,7 +74,7 @@ fun ProjectScreenContent(
         }
 
 
-        UserCard(client = project.client, onClick = showClientDetailsScreen) { IconButton({}) { Icons.ArrowRightLarge } }
+        UserCard(client = project.client, onClick = showClientDetailsScreen) { IconButton(showClientDetailsScreen) { Icons.ArrowRightLarge } }
 
         Column(Modifier.padding(Paddings.HorizontalPaddings)
         ) {

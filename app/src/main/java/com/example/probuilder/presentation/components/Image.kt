@@ -26,12 +26,12 @@ fun Poster(imageUrl: String, height: Int, width: Int, radius: Int, contentDescri
 }
 
 @Composable
-fun Poster(imageUrl: String, size: Int, radius: Int, contentDescription: String = "") {
+fun Poster(imageUrl: String, size: Int, radius: Int, contentDescription: String = "", placeHolder: Int = R.drawable.project_placeholder, modifier: Modifier = Modifier) {
     AsyncImage(
         model = imageUrl,
-        modifier = Modifier.size(size.dp).clip(RoundedCornerShape(radius.dp)),
+        modifier = modifier.size(size.dp).clip(RoundedCornerShape(radius.dp)),
         contentScale = ContentScale.Crop,
-        placeholder = painterResource(id = R.drawable.project_placeholder),
+        placeholder = painterResource(id = placeHolder),
         error = painterResource(id = R.drawable.project_placeholder),
         contentDescription = contentDescription,
     )

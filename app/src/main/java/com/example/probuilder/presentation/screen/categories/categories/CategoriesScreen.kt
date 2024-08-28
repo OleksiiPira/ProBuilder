@@ -29,7 +29,7 @@ import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.overflow_menu.MoreActionsButton
-import com.example.probuilder.presentation.screen.categories.component.CategoryListItem
+import com.example.probuilder.presentation.screen.categories.component.RowItem
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
@@ -50,7 +50,6 @@ fun CategoryScreen(
                 moreActions = listOf(ActionItems("Видалити", { viewModel.removeCategories(screenState.selectedCategories) }, Icons.Delete)),
                 onNavigationPress = goBack,
                 onSelectAll = { viewModel.selectAllCategories(categories) },
-                onSearch = {},
                 isEditMode = screenState.isEditMode) },
         floatingActionButton = { CustomFloatingButton({ nextScreen(Route.CREATE_CATEGORY.replace("{parentId}", screenState.currCategory.id)) }) },
         bottomBar = bottomBar
@@ -59,7 +58,6 @@ fun CategoryScreen(
             modifier = modifier.padding(padding),
             categories = categories,
             nextScreen = nextScreen,
-            selectCategory = viewModel::selectCategory,
             removeCategory = viewModel::removeCategory,
             screenState = screenState
         )
@@ -71,19 +69,17 @@ private fun CategoriesScreenContent(
     modifier: Modifier,
     categories: List<Category>,
     nextScreen: (String) -> Unit,
-    selectCategory: (Category) -> Unit,
     removeCategory: (Category) -> Unit,
     screenState: CategoriesScreenState,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize().padding(vertical = 16.dp)) {
         items(categories) { category ->
-            CategoryListItem(
+            RowItem(
                 text = category.name,
                 onClick = { nextScreen(Route.SERVICES.replace("{categoryId}", category.id).replace("{categoryName}", category.name)) },
-                handleSelect = { selectCategory(category) },
                 isSelectMode = screenState.isEditMode,
                 isSelected = screenState.selectedCategories.contains(category),
-                jobsCount = category.jobsCount,
+                badgeNumber = category.jobsCount,
                 actionButton = {
                     var expend by remember { mutableStateOf(false) }
                     val onMoreClicked = { expend = !expend }
@@ -103,23 +99,25 @@ private fun CategoriesScreenContent(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBar(
-    title: String,
-    moreActions: List<ActionItems>,
-    onNavigationPress: () -> Unit,
-    onSelectAll: () -> Unit,
-    onSearch: () -> Unit,
-    isEditMode: Boolean
+    title: String = "",
+    moreActions: List<ActionItems> = emptyList(),
+    onNavigationPress: () -> Unit = {},
+    onSelectAll: () -> Unit = {},
+    onSearch: () -> Unit = {},
+    isEditMode: Boolean = false,
+    leadingIcon: @Composable () -> Unit = { Icons.ArrowBack },
+    trailingIcon: @Composable () -> Unit = { Icons.Search },
 ) {
     val barColors = TopAppBarDefaults.topAppBarColors(
         containerColor = MaterialTheme.colorScheme.surface,
         titleContentColor = MaterialTheme.colorScheme.onSurface)
     TopAppBar(
         colors = barColors,
-        navigationIcon = { IconButton(onNavigationPress) { Icons.ArrowBack } },
+        navigationIcon = { IconButton(onNavigationPress) { leadingIcon() } },
         title = { Text(modifier = Modifier.fillMaxWidth(), text = title, style = Typography.titleMedium, textAlign = TextAlign.Center) },
         actions = {
-            if (!isEditMode) IconButton(onSearch) { Icons.Search }
-            else MoreActionsButton(onSelectAll, moreActions)
+            if (!isEditMode) IconButton(onSearch) { trailingIcon() }
+            else if (moreActions.isNotEmpty()) MoreActionsButton(onSelectAll, moreActions)
         }
     )
 }

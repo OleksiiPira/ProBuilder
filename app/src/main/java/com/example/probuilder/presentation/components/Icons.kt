@@ -89,6 +89,16 @@ object Icons {
             painter = painterResource(id = icons.arrow_right),
             contentDescription = stringResource(text.icon_arrow_right)
         )
+    val Phone: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.phone),
+            contentDescription = "Номер телефону"
+        )
+    val Email: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.email),
+            contentDescription = "Електронна пошта іконка"
+        )
     val ArrowRightLarge: Unit
         @Composable get() = Icon(
             painter = painterResource(id = icons.arrow_right),

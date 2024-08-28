@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.probuilder.data.remote.ProjectService
+import com.example.probuilder.data.remote.ClientService
 import com.example.probuilder.domain.model.Client
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientEvent.SetEmail
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientEvent.SetName
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpsertClientViewModel @Inject constructor(
-    private val projectService: ProjectService,
+    private val clientService: ClientService,
     private val savedStateHandle: SavedStateHandle
     ) : ViewModel() {
 
@@ -35,8 +35,8 @@ class UpsertClientViewModel @Inject constructor(
         if (projectId.isEmpty()) return
 
         viewModelScope.launch {
-            if (client.value.id.isEmpty()) projectService.saveClient(projectId, client.value)
-            else projectService.updateClient(projectId, client.value)
+            if (client.value.id.isEmpty()) clientService.save(projectId, client.value)
+            else clientService.update(projectId, client.value)
         }
     }
 
