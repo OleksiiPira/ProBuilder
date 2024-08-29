@@ -45,12 +45,13 @@ fun ProjectDetailsScreen(
 ) {
     val project by viewModel.project.collectAsState(Project())
     val showClientDetailsScreen = { nextScreen(Route.CLIENT_DETAILS.replace("{projectId}", project.id).replace("{client}", Gson().toJson(project.client))) }
+    val showWorkerDetailsScreen = { workerId: String -> nextScreen(Route.WORKER_DETAILS.replace("{projectId}", project.id).replace("{workerId}", workerId)) }
 
     Scaffold(
         bottomBar = bottomBar,
         topBar = { TopBar(title = project.name, onNavigationPress = goBack) }
     ) { paddings ->
-        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen)
+        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen, showWorkerDetailsScreen)
     }
 }
 
@@ -59,6 +60,7 @@ fun ProjectScreenContent(
     modifier: Modifier = Modifier,
     project: Project,
     showClientDetailsScreen: () -> Unit,
+    showWorkerDetailsScreen: (String) -> Unit,
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
@@ -91,7 +93,7 @@ fun ProjectScreenContent(
         TitleMedium("Працівники", modifierDefault)
         project.workers.forEach {worker ->
             var expend by remember { mutableStateOf(false) }
-            WorkerCard(worker) {
+            WorkerCard(worker, { showWorkerDetailsScreen(worker.id) }) {
                 DropDownButton(expend = expend, onClick = { expend = !expend }){}
             }
         }
@@ -115,5 +117,6 @@ fun ProjectDetailsScreenPrev() {
     ProjectScreenContent(
         Modifier,
         Project(),
+        {}
     ){}
 }

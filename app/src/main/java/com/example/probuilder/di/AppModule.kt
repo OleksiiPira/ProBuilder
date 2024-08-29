@@ -14,10 +14,12 @@ import com.example.probuilder.data.remote.CategoryService
 import com.example.probuilder.data.remote.ClientService
 import com.example.probuilder.data.remote.JobService
 import com.example.probuilder.data.remote.ProjectService
+import com.example.probuilder.data.remote.WorkerService
 import com.example.probuilder.data.remote.impl.CategoryServiceImpl
 import com.example.probuilder.data.remote.impl.ClientServiceImpl
 import com.example.probuilder.data.remote.impl.JobServiceImpl
 import com.example.probuilder.data.remote.impl.ProjectServiceImpl
+import com.example.probuilder.data.remote.impl.WorkerServiceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -119,6 +121,12 @@ object AppModule {
     @Singleton
     fun provideClientService(firestore: FirebaseFirestore, accountService: AccountService): ClientService {
         return ClientServiceImpl(firestore, accountService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWorkerService(firestore: FirebaseFirestore, accountService: AccountService): WorkerService {
+        return WorkerServiceImpl(firestore, accountService)
     }
 
 }

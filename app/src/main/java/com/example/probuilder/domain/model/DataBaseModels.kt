@@ -59,6 +59,7 @@ data class Worker(
     val trade: String = "Маляр",
     val email: String = "test-1234@gmail.com",
     val phone: String = "0965740000",
+    val note: String = ""
 )
 
 data class Room(

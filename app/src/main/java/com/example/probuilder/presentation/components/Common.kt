@@ -53,9 +53,10 @@ fun SimpleNote(text: String) {
             .clip(RoundedCornerShape(12.dp))
             .background(Color(0xFFEBEBF0))
             .padding(12.dp)
+            .fillMaxWidth()
     ) {
         BodyMedium(
-            text,
+            if (text.isNotEmpty()) text else "Цей розділ поки порожній. Додайте інформацію, якщо потрібно.",
             fontWeight = FontWeight.Light,
             Modifier.padding(end = Paddings.DEFAULT)
         )
