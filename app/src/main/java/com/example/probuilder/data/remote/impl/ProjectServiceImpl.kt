@@ -30,7 +30,7 @@ class ProjectServiceImpl @Inject constructor(
                 snapshot?.let {
                     val projectsList: MutableList<Project> = it.toObjects(Project::class.java)
                     // get client
-                    projectsList.forEach { project -> populateProjectsEnteties(project) }
+                    projectsList.forEach { project -> populateProjectsData(project) }
 
                     trySend(projectsList).isSuccess
                 }
@@ -40,7 +40,7 @@ class ProjectServiceImpl @Inject constructor(
         awaitClose { listenerRegistration.remove() }
     }
 
-    private fun populateProjectsEnteties(project: Project) : Project {
+    private fun populateProjectsData(project: Project) : Project {
         projectsCollection.document(project.id).collection(CLIENT_COLLECTION)
             .addSnapshotListener { snapshot, error ->
                 if (error == null) {
@@ -86,7 +86,7 @@ class ProjectServiceImpl @Inject constructor(
         val listenerRegistration = projectsCollection.document(projectId).addSnapshotListener { snapshot, error ->
             if (error != null) { return@addSnapshotListener }
             var project = snapshot?.toObject(Project::class.java)
-            project?.let { project = populateProjectsEnteties(it)  }
+            project?.let { project = populateProjectsData(it)  }
             trySend(project?: Project()).isSuccess
         }
         awaitClose { listenerRegistration.remove() }

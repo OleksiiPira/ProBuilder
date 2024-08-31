@@ -1,5 +1,6 @@
 package com.example.probuilder.presentation.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,8 +37,8 @@ fun LabelLarge(text: String = "", modifier: Modifier = Modifier) {
     Text(text = text, style = Typography.labelLarge, modifier = modifier)
 }
 @Composable
-fun LabelMedium(text: String = "", modifier: Modifier = Modifier) {
-    Text(text = text, style = Typography.labelMedium, modifier = modifier)
+fun LabelMedium(text: String = "", color: Color = MaterialTheme.colorScheme.onSurface, modifier: Modifier = Modifier) {
+    Text(text = text, style = Typography.labelMedium, color = color, modifier = modifier)
 }
 @Composable
 fun LabelSmall(text: String = "", modifier: Modifier = Modifier) {

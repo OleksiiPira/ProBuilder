@@ -103,7 +103,9 @@ fun WorkerCard(
     content: @Composable () -> Unit
 ) {
     Row(
-        modifier = Modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
