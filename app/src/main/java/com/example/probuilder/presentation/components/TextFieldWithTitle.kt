@@ -24,9 +24,9 @@ fun TextFieldWithTitle(
     trailingIcon: @Composable (() -> Unit) = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
     shape: Shape = RoundedCornerShape(8.dp)
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(horizontal = Paddings.DEFAULT)) {
         Text(
-            modifier = Modifier.padding(bottom = 5.dp),
+            modifier = Modifier.padding(bottom = 4.dp),
             text = title,
             style = Typography.titleSmall
         )

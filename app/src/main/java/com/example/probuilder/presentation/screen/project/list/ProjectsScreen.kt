@@ -44,8 +44,6 @@ import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
-import com.google.gson.Gson
-
 
 @Composable
 fun ProjectList(
@@ -126,10 +124,7 @@ fun ProjectCard(
         }
         LinearProgressIndicator(
             progress = { project.progress },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp)
-                .clip(RoundedCornerShape(8.dp)),
+            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)),
             color = MaterialTheme.colorScheme.primary,
             trackColor = Color(0xFFEEEEF2)
         )

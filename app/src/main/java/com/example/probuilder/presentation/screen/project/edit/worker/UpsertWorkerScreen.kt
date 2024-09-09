@@ -1,6 +1,5 @@
 package com.example.probuilder.presentation.screen.project.edit.worker
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,10 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.common.Constants
-import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Worker
-import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
@@ -31,48 +27,44 @@ fun UpsertWorkerScreen(
     bottomBar: @Composable () -> Unit,
     goBack: () -> Unit
 ) {
-    val worker by viewModel.worker
+
     Scaffold(
         bottomBar = bottomBar,
-        topBar = {
-            TopBar(
-                title = "Створити працівника",
-                moreActions = listOf(ActionItems("Видалити", {  }, Icons.Delete)),
-                onSelectAll = {},
-                onSearch = {},
-                onNavigationPress = goBack,
-                isEditMode = false) }
+        topBar = { TopBar(title = "Створити працівника", onNavigationPress = goBack) }
     ) { paddings ->
-        val scrollState = rememberScrollState()
-        EditWorkerScreenContent(modifier.padding(paddings), scrollState, worker, viewModel::onEvent, viewModel::saveProject, goBack)
+        val worker by viewModel.worker
+        val saveWorker = {
+            viewModel.saveProject()
+            goBack()
+        }
+
+        Column(
+            modifier = Modifier.padding(paddings).verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+            UpsertWorkerScreenContent(worker = worker, onEvent = viewModel::onEvent)
+            PrimaryButton(text = "Зберегти", onClick = saveWorker)
+            SecondaryButton(text = "Відмінити", onClick = goBack)
+            Spacer(modifier = Modifier.height(16.dp))
+        }
     }
 }
 
 @Composable
-private fun EditWorkerScreenContent(
-    modifier: Modifier,
-    scrollState: ScrollState,
-    worker: Worker,
+fun UpsertWorkerScreenContent(
+    modifier: Modifier = Modifier,
+    worker: Worker = Worker(),
     onEvent: (UpsertWorkerEvent) -> Unit,
-    saveProject: () -> Unit,
-    goBack: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(Constants.HORIZONTAL_PADDING).verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextFieldWithTitle("ПІБ", worker.name, { onEvent(UpsertWorkerEvent.SetName(it)) })
         TextFieldWithTitle("Номер телефону", worker.phone, { onEvent(UpsertWorkerEvent.SetPhone(it)) })
         TextFieldWithTitle("Електронна адреса", worker.email, { onEvent(UpsertWorkerEvent.SetEmail(it)) })
         TextFieldWithTitle("Додаткова інформація", worker.note, { onEvent(UpsertWorkerEvent.SetEmail(it)) })
-
         Spacer(modifier = Modifier.height(16.dp))
-
-        PrimaryButton(text = "Зберегти", onClick = {
-            saveProject()
-            goBack()
-        })
-
-        SecondaryButton(text = "Відмінити", onClick = goBack)
     }
 }
