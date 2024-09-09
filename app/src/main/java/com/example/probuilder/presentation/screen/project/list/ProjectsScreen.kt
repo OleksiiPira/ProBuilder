@@ -5,14 +5,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -30,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,6 +42,7 @@ import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
@@ -64,9 +66,12 @@ fun ProjectList(
         bottomBar = bottomBar
     ) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)){
-            items(projects) { project ->
+            itemsIndexed(projects) {index, project ->
                 val showProjectDetails = { nextScreen(Route.PROJECT_DETAILS.replace("{projectId}", project.id))}
                 ProjectCard(project, showProjectDetails, viewModel::removeProject)
+                if (index != projects.lastIndex) {
+                    HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))
+                }
             }
         }
     }
@@ -83,8 +88,7 @@ fun ProjectCard(
             .fillMaxWidth()
             .clickable { onClick() }
             .background(Color.White)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-
+            .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -92,7 +96,10 @@ fun ProjectCard(
         ) {
             AsyncImage(
                 model = project.imageUrl,
-                modifier = Modifier.clip(RoundedCornerShape(4.dp)).height(60.dp).width(72.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .height(60.dp)
+                    .width(72.dp),
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.project_placeholder),
                 error = painterResource(id = R.drawable.project_placeholder),
@@ -100,11 +107,12 @@ fun ProjectCard(
             )
             Column(Modifier.weight(1f)) {
                 Text(text = project.name, style = Typography.titleSmall)
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icons.LocationSmall
                     Text(text = project.address, style = Typography.bodySmall)
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icons.ProfileSmall
                     Text(text = project.clientName, style = Typography.bodySmall)
                 }
@@ -118,21 +126,25 @@ fun ProjectCard(
                     })
                 }
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(text = "Вартість робіт:", style = Typography.bodyMedium, fontWeight = FontWeight.Light)
-            Text(text = "${project.price} грн", style = Typography.bodyMedium)
-        }
-        LinearProgressIndicator(
-            progress = { project.progress },
-            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)),
-            color = MaterialTheme.colorScheme.primary,
-            trackColor = Color(0xFFEEEEF2)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            LinearProgressIndicator(
+                progress = { project.progress },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = Color(0xFFEEEEF2)
+            )
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(modifier = Modifier.weight(1f), text = "Початок: ${project.startDate}", style = Typography.bodySmall, fontWeight = FontWeight.Light)
-            Text(text = "Завершення:", style = Typography.bodySmall)
-            Text(text = "${project.endDate}:", style = Typography.bodySmall, color = Color.Green)
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(modifier = Modifier.weight(1f), text = "Початок: ${project.startDate}", style = Typography.bodySmall)
+                Text(text = "Завершення:", style = Typography.bodySmall)
+                Text(text = "${project.endDate}", style = Typography.bodySmall, color = Color(0xFF0ED917))
+            }
         }
     }
 }

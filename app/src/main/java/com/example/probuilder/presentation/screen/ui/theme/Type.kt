@@ -52,15 +52,15 @@ val Typography = Typography(
     bodyMedium = TextStyle(
         fontFamily = nunitoFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
     bodySmall = TextStyle(
         fontFamily = nunitoFamily,
-        fontWeight = FontWeight.Light,
-        fontSize = 10.sp,
-        lineHeight = 14.sp,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
 
