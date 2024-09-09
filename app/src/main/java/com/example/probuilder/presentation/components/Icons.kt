@@ -1,7 +1,9 @@
 package com.example.probuilder.presentation.components
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.probuilder.R.string as text
@@ -22,31 +24,9 @@ object Icons {
     val Search: Unit
         @Composable get() = Icon(
             painter = painterResource(id = icons.search),
-            contentDescription = stringResource(text.icon_search)
+            contentDescription = stringResource(text.icon_search),
+            tint = MaterialTheme.colorScheme.onSurface
         )
-
-    // Bottom navigation
-    val Home: Unit
-        @Composable get() = Icon(
-            painter = painterResource(id = icons.home),
-            contentDescription = stringResource(text.icon_home)
-        )
-    val Prices: Unit
-        @Composable get() = Icon(
-            painter = painterResource(id = icons.prices),
-            contentDescription = stringResource(text.icon_prices)
-        )
-    val Projects: Unit
-        @Composable get() = Icon(
-            painter = painterResource(id = icons.projects),
-            contentDescription = stringResource(text.icon_projects)
-        )
-    val Profile: Unit
-        @Composable get() = Icon(
-            painter = painterResource(id = icons.profile),
-            contentDescription = stringResource(text.icon_search)
-        )
-
 
     // More actions
     val MoreVert: Unit
@@ -122,4 +102,41 @@ object Icons {
             contentDescription = stringResource(text.icon_check)
         )
 
+}
+
+// Bottom navigation
+@Composable
+fun HomeIcon(color: Color) {
+    Icon(
+        painter = painterResource(id = icons.home),
+        contentDescription = stringResource(text.icon_home),
+        tint = color
+    )
+}
+
+@Composable
+fun PricesIcon(color: Color) {
+    Icon(
+        painter = painterResource(id = icons.prices),
+        contentDescription = stringResource(text.icon_prices),
+        tint = color
+    )
+}
+
+@Composable
+fun ProjectsIcon(color: Color) {
+    Icon(
+        painter = painterResource(id = icons.projects),
+        contentDescription = stringResource(text.icon_projects),
+        tint = color
+    )
+}
+
+@Composable
+fun ProfileIcon(color: Color) {
+    Icon(
+        painter = painterResource(id = icons.profile),
+        contentDescription = stringResource(text.icon_search),
+        tint = color
+    )
 }

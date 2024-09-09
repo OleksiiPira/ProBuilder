@@ -133,7 +133,7 @@ fun HomeNavigation(
             route = Route.PROFILE,
         ) {
             Column {
-                ProfileScreen()
+                ProfileScreen(goBack = navController::popBackStack, bottomBar = bottomBar)
             }
         }
         navigation(

@@ -109,7 +109,7 @@ fun TopBar(
     trailingIcon: @Composable () -> Unit = { Icons.Search },
 ) {
     val barColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
         titleContentColor = MaterialTheme.colorScheme.onSurface)
     TopAppBar(
         colors = barColors,

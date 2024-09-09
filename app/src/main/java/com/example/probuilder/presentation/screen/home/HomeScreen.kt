@@ -10,17 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.domain.model.delete.Project
+import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.delete.home_screen.components.ProjectCard
 import com.example.probuilder.presentation.screen.delete.home_screen.components.WelcomeCard
 
@@ -45,29 +40,12 @@ fun HomeScreen(
     val titles = listOf("Tab 1", "Tab 2", "Tab 3 with lots of text")
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Main manu"
-                        )
-                    }
-                },
-                title = { Text(text = "Pro Builder") },
-                actions = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = "Search"
-                        )
-                    }
-                },
+            TopBar(
+                title = "Pro Builder",
+                onNavigationPress = {},
+                leadingIcon = { Icons.Menu },
+                trailingIcon = { Icons.Search },
+                moreActions = listOf()
             )
         },
         bottomBar = bottomBar
