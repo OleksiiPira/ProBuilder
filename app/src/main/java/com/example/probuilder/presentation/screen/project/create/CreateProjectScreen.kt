@@ -19,6 +19,7 @@ import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
+import com.example.probuilder.presentation.screen.project.create.sub_screens.CreateRoomsStep
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientScreenContent
 import com.example.probuilder.presentation.screen.project.edit.project.UpsertProjectScreenContent
 
@@ -64,6 +65,7 @@ fun CreateProjectScreen(
                 goNextStep = { viewModel.setProjectStep(ProjectStep.CreateRooms) }
             }
             ProjectStep.CreateRooms -> {
+                CreateRoomsStep(contentModifier)
                 goPrevStep = { viewModel.setProjectStep(ProjectStep.CreateClient) }
                 goNextStep = { viewModel.setProjectStep(ProjectStep.CreateWorkers) }
             }

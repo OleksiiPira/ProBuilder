@@ -37,6 +37,8 @@ data class Project(
     val startDate: String = "20.05.2024",
     val endDate: String = "20.05.2024",
     val progress: Float = 0.2F,
+    val totalHours: Float = 0.0F,
+    val completeHours: Float = 0.0F,
     @Exclude var client: Client = Client(),
     @Exclude var rooms: List<Room> = emptyList(),
     @Exclude var workers: List<Worker> = emptyList(),
@@ -66,7 +68,9 @@ data class Room(
     @DocumentId var id: String = "",
     val imageUrl: String = "https://lunappimg.appspot.com/lun-ua/343/262/images/1028534151.jpg",
     val name: String = "Спальня",
-    val progress: Float = 0.4F
+    val progress: Float = 0.4F,
+    val totalHours: Float = 20.0F,
+    val completeHours: Float = 10.0F
 )
 
 data class Note(

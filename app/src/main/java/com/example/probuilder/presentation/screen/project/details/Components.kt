@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -83,7 +84,9 @@ fun UserCard(
     content: @Composable () -> Unit
 ) {
     Row(
-        modifier = modifier.clickable { onClick() }.padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
+        modifier = modifier
+            .clickable { onClick() }
+            .padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -124,17 +127,32 @@ fun RoomCard(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier.clickable { onClick() }.padding(vertical = 8.dp, horizontal = Paddings.DEFAULT),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+    Column(Modifier
+        .clickable { onClick() }
+        .padding(vertical = 4.dp, horizontal = Paddings.DEFAULT)
     ) {
-        Poster(room.imageUrl, 60, 72, 4, "Фото кімнати")
-        Column(Modifier.weight(1f)) {
-            TitleSmall(room.name)
-            BodyLarge("Вартість робіт: 200 000 грн")
-            ProgressSmall(progress = room.progress)
+        Row(
+            modifier = modifier.padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Poster(room.imageUrl, 60, 72, 4, "Фото кімнати")
+            Column(Modifier.weight(1f)) {
+                TitleSmall(room.name)
+                BodySmall("Роботи: 200 000 грн")
+                BodySmall("Матеріали:  200 000 грн")
+            }
+            IconButton(onClick) { Icons.MoreVert }
         }
-        IconButton(onClick) { Icons.ArrowRightLarge }
+        ProgressSmall(progress = room.completeHours / room.totalHours)
+        Spacer(modifier = Modifier.height(4.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            BodySmall("Прогрес", modifier = Modifier.weight(1f))
+            BodySmall(room.completeHours.toString(), color = Color(0xFF0C1318))
+            BodySmall(" / ${room.totalHours} днів")
+        }
     }
 }
