@@ -40,6 +40,7 @@ import com.example.probuilder.R
 import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
@@ -69,10 +70,11 @@ fun ProjectList(
             itemsIndexed(projects) {index, project ->
                 val showProjectDetails = { nextScreen(Route.PROJECT_DETAILS.replace("{projectId}", project.id))}
                 ProjectCard(project, showProjectDetails, viewModel::removeProject)
-                if (index != projects.lastIndex) {
+                if (projects.size > 1 && index != projects.lastIndex) {
                     HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))
                 }
             }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
         }
     }
 }
@@ -131,7 +133,7 @@ fun ProjectCard(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             LinearProgressIndicator(
-                progress = { project.progress },
+                progress = { project.completeHours / project.totalHours },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
@@ -139,11 +141,10 @@ fun ProjectCard(
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = Color(0xFFEEEEF2)
             )
-
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(modifier = Modifier.weight(1f), text = "Початок: ${project.startDate}", style = Typography.bodySmall)
-                Text(text = "Завершення:", style = Typography.bodySmall)
-                Text(text = "${project.endDate}", style = Typography.bodySmall, color = Color(0xFF0ED917))
+                BodySmall("Прогрес", modifier = Modifier.weight(1f))
+                BodySmall(project.completeHours.toString(), color = Color(0xFF0C1318))
+                BodySmall(" / ${project.totalHours} днів")
             }
         }
     }

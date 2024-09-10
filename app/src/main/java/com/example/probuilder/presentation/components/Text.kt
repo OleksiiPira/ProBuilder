@@ -29,7 +29,7 @@ fun BodyMedium(text: String = "", fontWeight: FontWeight = FontWeight.Normal, mo
     Text(text = text, style = Typography.bodyMedium, modifier = modifier)
 }
 @Composable
-fun BodySmall(text: String = "", color: Color = Color.Black, modifier: Modifier = Modifier) {
+fun BodySmall(text: String = "", color: Color = Color(0xFF475259), modifier: Modifier = Modifier) {
     Text(text = text, style = Typography.bodySmall, modifier = modifier, color = color)
 }
 @Composable

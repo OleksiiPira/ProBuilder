@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
@@ -38,12 +40,13 @@ import com.example.probuilder.presentation.components.Poster
 import com.example.probuilder.presentation.components.ProgressLarge
 import com.example.probuilder.presentation.components.ProgressSmall
 import com.example.probuilder.presentation.components.TitleSmall
+import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun ProjectHero(project: Project) {
     Column(Modifier.padding(bottom = Paddings.DEFAULT),verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Box {
-            var textColor by remember { mutableStateOf(Color.Black) }
+            var textColor by remember { mutableStateOf(Color(0xFFEEEEF2)) }
             AsyncImage(
                 model = project.imageUrl,
                 modifier = Modifier.height(240.dp),
@@ -51,11 +54,11 @@ fun ProjectHero(project: Project) {
                 placeholder = painterResource(id = R.drawable.project_placeholder),
                 error = painterResource(id = R.drawable.project_placeholder),
                 contentDescription = stringResource(R.string.description),
-                onSuccess = { textColor = Color.White }
+                onSuccess = { textColor = Color(0xFFEEEEF2) }
             )
             Image(modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .alpha(0.5F), painter = painterResource(id = R.drawable.bottom_shaddow), contentDescription = null)
+                .alpha(1F), painter = painterResource(id = R.drawable.bottom_shaddow), contentDescription = null)
             Column(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 4.dp)
@@ -63,13 +66,10 @@ fun ProjectHero(project: Project) {
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 ProgressLarge(progress = project.progress)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    BodySmall("Початок: ${project.startDate}", color = textColor, modifier = Modifier.weight(1f))
-                    BodySmall("Завершення:", color = textColor)
-                    BodySmall("${project.endDate}:", Color.Green)
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    BodySmall("Прогрес", color = textColor, modifier = Modifier.weight(1f))
+                    Text(text = project.completeHours.toString(), style = Typography.bodySmall, color = textColor, fontWeight = FontWeight.Bold)
+                    BodySmall(" / ${project.totalHours} днів", color = textColor)
                 }
             }
         }

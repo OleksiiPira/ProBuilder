@@ -59,7 +59,7 @@ fun UpsertClientScreenContent(
     onEvent: (UpsertClientEvent) -> Unit
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(top = Paddings.DEFAULT),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
