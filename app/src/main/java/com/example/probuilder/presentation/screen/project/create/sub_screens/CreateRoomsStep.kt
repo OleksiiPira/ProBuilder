@@ -57,7 +57,7 @@ fun CreateRoomsStep(
             Spacer(modifier = Modifier.height(4.dp))
             BodyLarge(
                 "Щоб продовжити потрібно створити 1 кімнату. Згодом можна додати більше кімнат або внести необхідні зміни.",
-                Modifier.padding(horizontal = Paddings.DEFAULT)
+                modifier = Modifier.padding(horizontal = Paddings.DEFAULT)
             )
         } else {
             rooms.forEachIndexed { index, room ->

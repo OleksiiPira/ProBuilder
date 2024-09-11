@@ -62,21 +62,25 @@ fun CreateProjectScreen(
             ProjectStep.CreateClient -> {
                 UpsertClientScreenContent(contentModifier, client, viewModel::clientEvent)
                 goPrevStep = { viewModel.setProjectStep(ProjectStep.CreateProject) }
-                goNextStep = { viewModel.setProjectStep(ProjectStep.CreateRooms) }
+                goNextStep = { viewModel.setProjectStep(ProjectStep.CreateRoomsStep) }
             }
-            ProjectStep.CreateRooms -> {
+            ProjectStep.CreateRoomsStep -> {
                 CreateRoomsStep(contentModifier)
                 goPrevStep = { viewModel.setProjectStep(ProjectStep.CreateClient) }
                 goNextStep = { viewModel.setProjectStep(ProjectStep.CreateWorkers) }
             }
+            ProjectStep.CreateRoom -> {
+
+            }
             ProjectStep.CreateWorkers -> {
 //                UpsertWorkerScreenContent(contentModifier, worker, viewModel::workerEvent)
-                goPrevStep = { viewModel.setProjectStep(ProjectStep.CreateRooms) }
+                goPrevStep = { viewModel.setProjectStep(ProjectStep.CreateRoomsStep) }
                 goNextStep = {
                     viewModel.saveProject()
                     goBack()
                 }
             }
+
         }
     }
 }
