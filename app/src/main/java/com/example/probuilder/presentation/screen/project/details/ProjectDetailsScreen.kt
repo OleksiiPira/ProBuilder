@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -32,7 +33,6 @@ import com.example.probuilder.presentation.components.Note
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
-import com.example.probuilder.presentation.components.TitleLarge
 import com.example.probuilder.presentation.components.TitleMedium
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
@@ -66,19 +66,20 @@ fun ProjectScreenContent(
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
-        ProjectHero(project)
-        TitleLarge(project.name, modifierDefault)
+        DetailsScreenHero(project.imageUrl, project.totalHours, project.completeHours)
         Row(
             modifierDefault
-                .padding(top = 4.dp, bottom = Paddings.DEFAULT)
+                .padding(vertical = 4.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icons.LocationSmall
             BodyMedium(project.address, fontWeight = FontWeight.Light)
         }
 
-
         UserCard(client = project.client, onClick = showClientDetailsScreen) { IconButton(showClientDetailsScreen) { Icons.ArrowRightLarge } }
+        PricesInfo(totalJobsPrice = 400023, totalMaterialsPrice = 400500, totalPrice = 800523)
 
         Column(Modifier.padding(Paddings.HorizontalPaddings)
         ) {

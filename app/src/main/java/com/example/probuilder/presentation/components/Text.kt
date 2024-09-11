@@ -21,7 +21,7 @@ fun TitleSmall(text: String = "", modifier: Modifier = Modifier) {
     Text(text = text, style = Typography.titleSmall, modifier = modifier)
 }
 @Composable
-fun BodyLarge(text: String = "", modifier: Modifier = Modifier) {
+fun BodyLarge(text: String = "", fontWeight: FontWeight = FontWeight.Normal, modifier: Modifier = Modifier) {
     Text(text = text, style = Typography.bodyLarge, modifier = modifier)
 }
 @Composable

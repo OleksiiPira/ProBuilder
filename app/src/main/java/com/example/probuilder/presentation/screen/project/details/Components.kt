@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
-import com.example.probuilder.domain.model.Project
-import com.example.probuilder.domain.model.Room
+import com.example.probuilder.common.ext.toUAH
 import com.example.probuilder.domain.model.Client
+import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.Worker
+import com.example.probuilder.presentation.components.Badge
 import com.example.probuilder.presentation.components.BodyLarge
+import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
@@ -43,20 +46,24 @@ import com.example.probuilder.presentation.components.TitleSmall
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
-fun ProjectHero(project: Project) {
+fun DetailsScreenHero(imageUrl: String, totalHours: Float, completeHours: Float) {
     Column(Modifier.padding(bottom = Paddings.DEFAULT),verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Box {
-            var textColor by remember { mutableStateOf(Color(0xFFEEEEF2)) }
+            var textColor by remember { mutableStateOf(Color(0xFF475259)) }
+            var showShadow by remember { mutableStateOf(false) }
             AsyncImage(
-                model = project.imageUrl,
+                model = imageUrl,
                 modifier = Modifier.height(240.dp),
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.project_placeholder),
                 error = painterResource(id = R.drawable.project_placeholder),
                 contentDescription = stringResource(R.string.description),
-                onSuccess = { textColor = Color(0xFFEEEEF2) }
+                onSuccess = {
+                    showShadow = true
+                    textColor = Color(0xFFEEEEF2)
+                }
             )
-            Image(modifier = Modifier
+            if (showShadow) Image(modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .alpha(1F), painter = painterResource(id = R.drawable.bottom_shaddow), contentDescription = null)
             Column(
@@ -65,11 +72,11 @@ fun ProjectHero(project: Project) {
                     .align(Alignment.BottomCenter),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                ProgressLarge(progress = project.progress)
+                ProgressLarge(progress = completeHours / totalHours)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     BodySmall("Прогрес", color = textColor, modifier = Modifier.weight(1f))
-                    Text(text = project.completeHours.toString(), style = Typography.bodySmall, color = textColor, fontWeight = FontWeight.Bold)
-                    BodySmall(" / ${project.totalHours} днів", color = textColor)
+                    Text(text = completeHours.toString(), style = Typography.bodySmall, color = textColor, fontWeight = FontWeight.Bold)
+                    BodySmall(" / $totalHours днів", color = textColor)
                 }
             }
         }
@@ -86,7 +93,7 @@ fun UserCard(
     Row(
         modifier = modifier
             .clickable { onClick() }
-            .padding(horizontal = Paddings.DEFAULT, vertical = 8.dp),
+            .padding(horizontal = Paddings.DEFAULT, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -153,6 +160,31 @@ fun RoomCard(
             BodySmall("Прогрес", modifier = Modifier.weight(1f))
             BodySmall(room.completeHours.toString(), color = Color(0xFF0C1318))
             BodySmall(" / ${room.totalHours} днів")
+        }
+    }
+}
+
+@Composable
+fun PricesInfo(totalJobsPrice: Int, totalMaterialsPrice: Int, totalPrice: Int) {
+    Column(Modifier.padding(horizontal = Paddings.DEFAULT).padding(top = 12.dp, bottom = 20.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                BodyMedium("Вартість робіт", fontWeight = FontWeight.ExtraLight)
+                Badge("16")
+            }
+            BodyMedium(totalJobsPrice.toUAH(), fontWeight = FontWeight.ExtraLight)
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                BodyMedium("Вартість матеріалів", fontWeight = FontWeight.ExtraLight)
+                Badge("35")
+            }
+            BodyMedium(totalMaterialsPrice.toUAH(), fontWeight = FontWeight.ExtraLight)
+        }
+        HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(vertical = 4.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            BodyLarge("Загальна вартість", fontWeight = FontWeight.Normal)
+            BodyLarge(totalPrice.toUAH(), fontWeight = FontWeight.Normal)
         }
     }
 }
