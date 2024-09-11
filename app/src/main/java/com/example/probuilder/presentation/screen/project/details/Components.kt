@@ -47,7 +47,7 @@ import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun DetailsScreenHero(imageUrl: String, totalHours: Float, completeHours: Float) {
-    Column(Modifier.padding(bottom = Paddings.DEFAULT),verticalArrangement = Arrangement.spacedBy(24.dp)) {
+    Column(Modifier.padding(bottom = Paddings.DEFAULT), verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Box {
             var textColor by remember { mutableStateOf(Color(0xFF475259)) }
             var showShadow by remember { mutableStateOf(false) }
@@ -165,21 +165,21 @@ fun RoomCard(
 }
 
 @Composable
-fun PricesInfo(totalJobsPrice: Int, totalMaterialsPrice: Int, totalPrice: Int) {
-    Column(Modifier.padding(horizontal = Paddings.DEFAULT).padding(top = 12.dp, bottom = 20.dp)) {
+fun PricesInfo(modifier: Modifier = Modifier, totalJobsPrice: Int, totalMaterialsPrice: Int, totalPrice: Int) {
+    Column(modifier.padding(horizontal = Paddings.DEFAULT).padding(top = 12.dp, bottom = 20.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                BodyMedium("Вартість робіт", fontWeight = FontWeight.ExtraLight)
+                BodyMedium("Вартість робіт", fontWeight = FontWeight.Light)
                 Badge("16")
             }
-            BodyMedium(totalJobsPrice.toUAH(), fontWeight = FontWeight.ExtraLight)
+            BodyMedium(totalJobsPrice.toUAH(), fontWeight = FontWeight.Light)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                BodyMedium("Вартість матеріалів", fontWeight = FontWeight.ExtraLight)
+                BodyMedium("Вартість матеріалів", fontWeight = FontWeight.Light)
                 Badge("35")
             }
-            BodyMedium(totalMaterialsPrice.toUAH(), fontWeight = FontWeight.ExtraLight)
+            BodyMedium(totalMaterialsPrice.toUAH(), fontWeight = FontWeight.Light)
         }
         HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(vertical = 4.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {

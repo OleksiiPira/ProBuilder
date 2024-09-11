@@ -21,20 +21,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.Route
-import com.example.probuilder.presentation.components.BodyMedium
+import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Note
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
+import com.example.probuilder.presentation.components.TitleLarge
 import com.example.probuilder.presentation.components.TitleMedium
-import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.google.gson.Gson
 
@@ -49,10 +48,7 @@ fun ProjectDetailsScreen(
     val showClientDetailsScreen = { nextScreen(Route.CLIENT_DETAILS.replace("{projectId}", project.id).replace("{client}", Gson().toJson(project.client))) }
     val showWorkerDetailsScreen = { workerId: String -> nextScreen(Route.WORKER_DETAILS.replace("{projectId}", project.id).replace("{workerId}", workerId)) }
 
-    Scaffold(
-        bottomBar = bottomBar,
-        topBar = { TopBar(title = project.name, onNavigationPress = goBack) }
-    ) { paddings ->
+    Scaffold(bottomBar = bottomBar) { paddings ->
         ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen, showWorkerDetailsScreen)
     }
 }
@@ -67,6 +63,7 @@ fun ProjectScreenContent(
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
         DetailsScreenHero(project.imageUrl, project.totalHours, project.completeHours)
+        TitleLarge(project.name, Modifier.padding(horizontal = Paddings.DEFAULT))
         Row(
             modifierDefault
                 .padding(vertical = 4.dp)
@@ -75,20 +72,19 @@ fun ProjectScreenContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icons.LocationSmall
-            BodyMedium(project.address, fontWeight = FontWeight.Light)
+            BodyLarge(project.address)
         }
 
         UserCard(client = project.client, onClick = showClientDetailsScreen) { IconButton(showClientDetailsScreen) { Icons.ArrowRightLarge } }
         PricesInfo(totalJobsPrice = 400023, totalMaterialsPrice = 400500, totalPrice = 800523)
 
-        Column(Modifier.padding(Paddings.HorizontalPaddings)
-        ) {
+        Column(Modifier.padding(horizontal = Paddings.DEFAULT)) {
             PrimaryButton(text = "Сформувати кошторис", onClick = { /*TODO*/ })
             Spacer(modifier = Modifier.height(12.dp))
             SecondaryButton(text = "Сформувати фактуру", onClick = { /*TODO*/ })
         }
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(32.dp))
         TitleMedium("Кімнати", modifierDefault)
         project.rooms.forEachIndexed { index, room ->
             RoomCard(room)

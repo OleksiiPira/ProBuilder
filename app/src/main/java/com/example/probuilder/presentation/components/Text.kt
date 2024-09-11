@@ -22,11 +22,11 @@ fun TitleSmall(text: String = "", modifier: Modifier = Modifier) {
 }
 @Composable
 fun BodyLarge(text: String = "", fontWeight: FontWeight = FontWeight.Normal, modifier: Modifier = Modifier) {
-    Text(text = text, style = Typography.bodyLarge, modifier = modifier)
+    Text(text = text, style = Typography.bodyLarge, fontWeight = fontWeight, modifier = modifier)
 }
 @Composable
 fun BodyMedium(text: String = "", fontWeight: FontWeight = FontWeight.Normal, modifier: Modifier = Modifier) {
-    Text(text = text, style = Typography.bodyMedium, modifier = modifier)
+    Text(text = text, style = Typography.bodyMedium, fontWeight = fontWeight, modifier = modifier)
 }
 @Composable
 fun BodySmall(text: String = "", color: Color = Color(0xFF475259), modifier: Modifier = Modifier) {
