@@ -8,3 +8,7 @@ fun Int.toUAH(): String {
     val formatter = NumberFormat.getNumberInstance(Locale("uk", "UA"))
     return formatter.format(this) + " грн"
 }
+
+fun Double.toMeasure(measure: String): String {
+    return "$this $measure"
+}

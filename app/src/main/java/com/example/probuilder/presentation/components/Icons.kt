@@ -101,6 +101,11 @@ object Icons {
             painter = painterResource(id = icons.check),
             contentDescription = stringResource(text.icon_check)
         )
+    val ListDot: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.list_dot),
+            contentDescription = "List dot"
+        )
 
 }
 

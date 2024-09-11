@@ -22,6 +22,8 @@ object Route {
     const val WORKER_DETAILS = "worker_details?projectId={projectId}&client={workerId}"
     const val UPSERT_WORKER = "worker_client?projectId={projectId}&client={worker}"
 
+    const val ROOM_DETAILS = "room?projectId={projectId}&roomId={roomId}"
+
     const val INVOICES_SECTION = "invoices_section"
     const val INVOICES = "invoices"
     const val INVOICE_DETAILS = "invoice_details?invoice={invoice}"

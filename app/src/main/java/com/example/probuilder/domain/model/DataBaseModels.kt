@@ -73,6 +73,23 @@ data class Room(
     val completeHours: Float = 10.0F
 )
 
+data class RoomSurface(
+    @DocumentId var id: String = "",
+    val name: String = "Стеля 1",
+    val height: Double = 20.0,
+    val width: Double = 20.0,
+    val length: Double = 20.0,
+    val perimeter: Double = 40.0,
+    val area: Double = 45.0,
+    @Exclude val openings: List<Opening> = listOf(Opening(), Opening(), Opening())
+)
+
+data class Opening(
+    val name: String = "Отвір двері 1",
+    val height: Double = 2.0,
+    val width: Double = 1.1,
+)
+
 data class Note(
     @DocumentId var id: String = "",
     val name: String = "Назва нотатки",

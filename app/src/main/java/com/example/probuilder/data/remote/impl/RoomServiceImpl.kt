@@ -1,0 +1,62 @@
+package com.example.probuilder.data.remote.impl
+
+import com.example.probuilder.data.remote.RoomService
+import com.example.probuilder.domain.model.Room
+import com.example.probuilder.domain.use_case.auth.AccountService
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+
+class RoomServiceImpl @Inject constructor(
+    private val firestore: FirebaseFirestore,
+    private val auth: AccountService
+) : RoomService {
+
+    private val projectsCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(PROJECTS_COLLECTION)
+    
+    override suspend fun save(projectId: String, room: Room) {
+        projectsCollection.document(projectId).collection(ROOMS_COLLECTION).add(room).await().id
+    }
+
+    override suspend fun update(projectId: String, room: Room) {
+        projectsCollection
+
+        val roomDocRef = projectsCollection.document(projectId).collection(ROOMS_COLLECTION).document(room.id)
+        roomDocRef.set(room)
+            .addOnSuccessListener {
+                println("Room document replaced successfully")
+            }
+            .addOnFailureListener { e ->
+                println("Error replacing room document: $e")
+            }
+    }
+    
+    override suspend fun delete(projectId: String, roomId: String) {
+        projectsCollection.document(projectId).collection(ROOMS_COLLECTION).document(roomId).delete().await()
+    }
+
+    override fun getRoomById(projectId: String, roomId: String): Flow<Room> = callbackFlow {
+        val listenerRegistration = projectsCollection.document(projectId).collection(
+            ROOMS_COLLECTION).document(roomId).addSnapshotListener { snapshot, error ->
+            if (error != null) { return@addSnapshotListener }
+            projectsCollection.document(projectId).collection(ROOMS_COLLECTION)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) return@addSnapshotListener
+                    snapshot?.let { it.toObjects(Room::class.java).firstOrNull { it.id == roomId }
+                        ?.let { room -> trySend(room).isSuccess }
+                    }
+                }
+        }
+        awaitClose { listenerRegistration.remove() }
+    }
+
+    companion object {
+        private const val USER_ID = "bOTQWZnTpjQ8uajIpU5x"
+        private const val USERS_COLLECTION = "users"
+        private const val PROJECTS_COLLECTION = "projects"
+        private const val ROOMS_COLLECTION = "rooms"
+    }
+}

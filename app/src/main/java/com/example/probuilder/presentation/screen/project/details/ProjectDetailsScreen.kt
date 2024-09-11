@@ -47,9 +47,10 @@ fun ProjectDetailsScreen(
     val project by viewModel.project.collectAsState(Project())
     val showClientDetailsScreen = { nextScreen(Route.CLIENT_DETAILS.replace("{projectId}", project.id).replace("{client}", Gson().toJson(project.client))) }
     val showWorkerDetailsScreen = { workerId: String -> nextScreen(Route.WORKER_DETAILS.replace("{projectId}", project.id).replace("{workerId}", workerId)) }
+    val showRoomDetailsScreen = { roomId: String -> nextScreen(Route.ROOM_DETAILS.replace("{projectId}", project.id).replace("{roomId}", roomId)) }
 
     Scaffold(bottomBar = bottomBar) { paddings ->
-        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen, showWorkerDetailsScreen)
+        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen, showWorkerDetailsScreen, showRoomDetailsScreen)
     }
 }
 
@@ -59,6 +60,7 @@ fun ProjectScreenContent(
     project: Project,
     showClientDetailsScreen: () -> Unit,
     showWorkerDetailsScreen: (String) -> Unit,
+    showRoomDetailsScreen: (String) -> Unit,
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
@@ -87,7 +89,7 @@ fun ProjectScreenContent(
         Spacer(Modifier.height(32.dp))
         TitleMedium("Кімнати", modifierDefault)
         project.rooms.forEachIndexed { index, room ->
-            RoomCard(room)
+            RoomCard(room, { showRoomDetailsScreen(room.id) })
             if (project.rooms.size > 1 && index != project.rooms.lastIndex) {
                 HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))
             }
@@ -121,6 +123,7 @@ fun ProjectDetailsScreenPrev() {
     ProjectScreenContent(
         Modifier,
         Project(),
+        {},
         {}
     ){}
 }

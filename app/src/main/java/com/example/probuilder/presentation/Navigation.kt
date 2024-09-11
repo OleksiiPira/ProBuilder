@@ -21,6 +21,7 @@ import com.example.probuilder.presentation.screen.profile.ProfileScreen
 import com.example.probuilder.presentation.screen.project.create.CreateProjectScreen
 import com.example.probuilder.presentation.screen.project.details.ProjectDetailsScreen
 import com.example.probuilder.presentation.screen.project.details.client.ClientDetailsScreen
+import com.example.probuilder.presentation.screen.project.details.room.RoomDetailsScreen
 import com.example.probuilder.presentation.screen.project.details.worker.WorkerDetailsScreen
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientScreen
 import com.example.probuilder.presentation.screen.project.edit.worker.UpsertWorkerScreen
@@ -172,6 +173,9 @@ fun HomeNavigation(
             }
             composable(Route.UPSERT_WORKER) {
                 UpsertWorkerScreen(bottomBar = bottomBar, goBack = navController::popBackStack)
+            }
+            composable(Route.ROOM_DETAILS) {
+                RoomDetailsScreen(bottomBar = bottomBar, nextScreen = navController::navigate, goBack = navController::popBackStack)
             }
         }
     }
