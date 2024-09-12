@@ -87,8 +87,8 @@ fun MainScene() {
                     )
                     BottomNavigationItem(
                         onClick = { goToRoute(Route.PROFILE) },
-                        label = { Text(text = "Профіль", maxLines = 1, color = if(selectedRoute == Route.PROFILE) ThemeColors.primary else ThemeColors.onSurface) },
-                        icon = { ProfileIcon(color = if(selectedRoute == Route.PROFILE) ThemeColors.primary else ThemeColors.onSurface) },
+                        label = { Text(text = "Профіль", maxLines = 1, color = if(selectedRoute == Route.PROFILE) ThemeColors.primary else Color(0xFFEEEEF2)) },
+                        icon = { ProfileIcon(color = if(selectedRoute == Route.PROFILE) ThemeColors.primary else Color(0xFFEEEEF2)) },
                         selected = selectedRoute == Route.PROFILE,
                     )
                 }
@@ -100,7 +100,7 @@ fun MainScene() {
 @Composable
 private fun getItemColor(selectedRoute: String, itemRoute: String): Color {
     if (selectedRoute == itemRoute) return ThemeColors.primary
-    return ThemeColors.onSurface
+    return Color(0xFFEEEEF2)
 }
 
 @Preview(showBackground = true)

@@ -90,7 +90,7 @@ fun InvoicesScreen(
                     IconButton(onClick = { /* do something */ }) {
                         Icon(
                             imageVector = Icons.Filled.Search,
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = Color(0xFFEEEEF2),
                             contentDescription = "Search"
                         )
                     }

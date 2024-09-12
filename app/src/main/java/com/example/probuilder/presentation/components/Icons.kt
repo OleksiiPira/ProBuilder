@@ -25,7 +25,7 @@ object Icons {
         @Composable get() = Icon(
             painter = painterResource(id = icons.search),
             contentDescription = stringResource(text.icon_search),
-            tint = MaterialTheme.colorScheme.onSurface
+            tint = Color(0xFFEEEEF2)
         )
 
     // More actions

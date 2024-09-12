@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -110,7 +111,9 @@ fun TopBar(
 ) {
     val barColors = TopAppBarDefaults.topAppBarColors(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        titleContentColor = MaterialTheme.colorScheme.onSurface)
+        titleContentColor = Color(0xFFEEEEF2),
+        navigationIconContentColor = Color(0xFFEEEEF2),
+    )
     TopAppBar(
         colors = barColors,
         navigationIcon = { IconButton(onNavigationPress) { leadingIcon() } },
