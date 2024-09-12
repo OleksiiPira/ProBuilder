@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.common.ext.toUAH
+import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Client
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.Worker
@@ -37,12 +38,12 @@ import com.example.probuilder.presentation.components.Badge
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
-import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.Poster
 import com.example.probuilder.presentation.components.ProgressLarge
 import com.example.probuilder.presentation.components.ProgressSmall
 import com.example.probuilder.presentation.components.TitleSmall
+import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
@@ -132,6 +133,7 @@ fun WorkerCard(
 fun RoomCard(
     room: Room,
     onClick: () -> Unit = {},
+    actionItems: List<ActionItems>,
     modifier: Modifier = Modifier
 ) {
     Column(Modifier
@@ -149,7 +151,16 @@ fun RoomCard(
                 BodySmall("Роботи: 200 000 грн")
                 BodySmall("Матеріали:  200 000 грн")
             }
-            IconButton(onClick) { Icons.MoreVert }
+            var expend by remember { mutableStateOf(false) }
+            val onMoreClicked = { expend = !expend }
+            DropDownButton(expend = expend, onClick = onMoreClicked) {
+                actionItems.forEach { item ->
+                    DropdownMenuItem(leadingIcon = { item.icon }, text = { Text(text = item.text) }, onClick = {
+                        onMoreClicked()
+                        item.onClick()
+                    })
+                }
+            }
         }
         ProgressSmall(progress = room.completeHours / room.totalHours)
         Spacer(modifier = Modifier.height(4.dp))
@@ -166,7 +177,10 @@ fun RoomCard(
 
 @Composable
 fun PricesInfo(modifier: Modifier = Modifier, totalJobsPrice: Int, totalMaterialsPrice: Int, totalPrice: Int) {
-    Column(modifier.padding(horizontal = Paddings.DEFAULT).padding(top = 12.dp, bottom = 20.dp)) {
+    Column(
+        modifier
+            .padding(horizontal = Paddings.DEFAULT)
+            .padding(top = 12.dp, bottom = 20.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 BodyMedium("Вартість робіт", fontWeight = FontWeight.Light)

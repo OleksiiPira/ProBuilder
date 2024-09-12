@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface RoomService {
 
+    fun getRooms(projectId: String): Flow<List<Room>>
+
     suspend fun save(projectId: String, room: Room)
 
     suspend fun update(projectId: String, room: Room)

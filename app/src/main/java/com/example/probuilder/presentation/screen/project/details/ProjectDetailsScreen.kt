@@ -21,12 +21,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.common.ext.toJSON
+import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Project
+import com.example.probuilder.domain.model.Room
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodyLarge
+import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Note
 import com.example.probuilder.presentation.components.Paddings
@@ -45,12 +48,25 @@ fun ProjectDetailsScreen(
     viewModel: ProjectDetailsViewModel = hiltViewModel(),
 ) {
     val project by viewModel.project.collectAsState(Project())
+    val rooms by viewModel.rooms.collectAsState(emptyList())
     val showClientDetailsScreen = { nextScreen(Route.CLIENT_DETAILS.replace("{projectId}", project.id).replace("{client}", Gson().toJson(project.client))) }
     val showWorkerDetailsScreen = { workerId: String -> nextScreen(Route.WORKER_DETAILS.replace("{projectId}", project.id).replace("{workerId}", workerId)) }
     val showRoomDetailsScreen = { roomId: String -> nextScreen(Route.ROOM_DETAILS.replace("{projectId}", project.id).replace("{roomId}", roomId)) }
 
-    Scaffold(bottomBar = bottomBar) { paddings ->
-        ProjectScreenContent(Modifier.padding(paddings), project, showClientDetailsScreen, showWorkerDetailsScreen, showRoomDetailsScreen)
+    Scaffold(
+        bottomBar = bottomBar,
+        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id)) }) },
+        ) { paddings ->
+        ProjectScreenContent(
+            modifier = Modifier.padding(paddings),
+            project = project,
+            rooms = rooms,
+            showClientDetailsScreen = showClientDetailsScreen,
+            showWorkerDetailsScreen = showWorkerDetailsScreen,
+            showRoomDetailsScreen = showRoomDetailsScreen,
+            deleteRoom = viewModel::deleteRoom,
+            nextScreen = nextScreen
+        )
     }
 }
 
@@ -58,9 +74,12 @@ fun ProjectDetailsScreen(
 fun ProjectScreenContent(
     modifier: Modifier = Modifier,
     project: Project,
+    rooms: List<Room>,
     showClientDetailsScreen: () -> Unit,
     showWorkerDetailsScreen: (String) -> Unit,
     showRoomDetailsScreen: (String) -> Unit,
+    deleteRoom: (String, String) -> Unit,
+    nextScreen: (String) -> Unit
 ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         val modifierDefault = Modifier.padding(horizontal = Paddings.DEFAULT)
@@ -88,8 +107,11 @@ fun ProjectScreenContent(
 
         Spacer(Modifier.height(32.dp))
         TitleMedium("Кімнати", modifierDefault)
-        project.rooms.forEachIndexed { index, room ->
-            RoomCard(room, { showRoomDetailsScreen(room.id) })
+        rooms.forEachIndexed { index, room ->
+            RoomCard(room, { showRoomDetailsScreen(room.id) }, actionItems = listOf(
+                ActionItems("Видалити", { deleteRoom(project.id, room.id) }),
+                ActionItems("Редагувати", { nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id).replace("{room}", room.toJSON())) })
+            ))
             if (project.rooms.size > 1 && index != project.rooms.lastIndex) {
                 HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))
             }
@@ -114,16 +136,4 @@ fun ProjectScreenContent(
         }
     }
 
-}
-
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun ProjectDetailsScreenPrev() {
-    ProjectScreenContent(
-        Modifier,
-        Project(),
-        {},
-        {}
-    ){}
 }

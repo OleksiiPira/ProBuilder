@@ -1,5 +1,6 @@
 package com.example.probuilder.common.ext
 
+import com.google.gson.Gson
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -11,4 +12,8 @@ fun Int.toUAH(): String {
 
 fun Double.toMeasure(measure: String): String {
     return "$this $measure"
+}
+
+fun Any.toJSON(): String {
+    return Gson().toJson(this)
 }

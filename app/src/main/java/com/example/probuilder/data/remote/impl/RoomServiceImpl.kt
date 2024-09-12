@@ -16,7 +16,21 @@ class RoomServiceImpl @Inject constructor(
 ) : RoomService {
 
     private val projectsCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(PROJECTS_COLLECTION)
-    
+
+    override fun getRooms(projectId: String): Flow<List<Room>> = callbackFlow {
+        val listenerRegistration = projectsCollection.document(projectId).collection(ROOMS_COLLECTION).addSnapshotListener { snapshot, error ->
+            if (error == null) {
+                snapshot?.let {
+                    val projectsList: MutableList<Room> = it.toObjects(Room::class.java)
+                    trySend(projectsList).isSuccess
+                }
+                return@addSnapshotListener
+            }
+        }
+        awaitClose { listenerRegistration.remove() }
+    }
+
+
     override suspend fun save(projectId: String, room: Room) {
         projectsCollection.document(projectId).collection(ROOMS_COLLECTION).add(room).await().id
     }
@@ -39,6 +53,10 @@ class RoomServiceImpl @Inject constructor(
     }
 
     override fun getRoomById(projectId: String, roomId: String): Flow<Room> = callbackFlow {
+        if (roomId.isBlank()) {
+            close(IllegalArgumentException("Room ID cannot be empty"))
+            return@callbackFlow
+        }
         val listenerRegistration = projectsCollection.document(projectId).collection(
             ROOMS_COLLECTION).document(roomId).addSnapshotListener { snapshot, error ->
             if (error != null) { return@addSnapshotListener }
