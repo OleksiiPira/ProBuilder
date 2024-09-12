@@ -24,6 +24,7 @@ import com.example.probuilder.presentation.screen.project.details.client.ClientD
 import com.example.probuilder.presentation.screen.project.details.room.RoomDetailsScreen
 import com.example.probuilder.presentation.screen.project.details.worker.WorkerDetailsScreen
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientScreen
+import com.example.probuilder.presentation.screen.project.edit.room.UpsertRoomScreen
 import com.example.probuilder.presentation.screen.project.edit.worker.UpsertWorkerScreen
 import com.example.probuilder.presentation.screen.project.list.ProjectList
 
@@ -161,6 +162,7 @@ fun HomeNavigation(
                 )
             }
 
+            // CLIENT
             composable(Route.CLIENT_DETAILS) {
                 ClientDetailsScreen(bottomBar = bottomBar, nextScreen = navController::navigate, goBack = navController::popBackStack)
             }
@@ -168,14 +170,20 @@ fun HomeNavigation(
                 UpsertClientScreen(bottomBar = bottomBar, goBack = navController::popBackStack)
             }
 
+            // WORKERS
             composable(Route.WORKER_DETAILS) {
                 WorkerDetailsScreen(bottomBar = bottomBar, nextScreen = navController::navigate, goBack = navController::popBackStack)
             }
             composable(Route.UPSERT_WORKER) {
                 UpsertWorkerScreen(bottomBar = bottomBar, goBack = navController::popBackStack)
             }
+
+            // ROOM
             composable(Route.ROOM_DETAILS) {
                 RoomDetailsScreen(bottomBar = bottomBar, nextScreen = navController::navigate, goBack = navController::popBackStack)
+            }
+            composable(Route.UPSERT_ROOM) {
+                UpsertRoomScreen(bottomBar = bottomBar, goBack = navController::popBackStack)
             }
         }
     }

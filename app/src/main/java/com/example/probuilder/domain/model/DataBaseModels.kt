@@ -67,8 +67,7 @@ data class Worker(
 data class Room(
     @DocumentId var id: String = "",
     val imageUrl: String = "https://lunappimg.appspot.com/lun-ua/343/262/images/1028534151.jpg",
-    val name: String = "Спальня",
-    val progress: Float = 0.4F,
+    val name: String = "",
     val totalHours: Float = 20.0F,
     val completeHours: Float = 10.0F
 )
