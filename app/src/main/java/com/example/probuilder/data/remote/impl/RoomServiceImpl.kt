@@ -11,11 +11,11 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class RoomServiceImpl @Inject constructor(
-    private val firestore: FirebaseFirestore,
-    private val auth: AccountService
+    firestore: FirebaseFirestore,
+    auth: AccountService
 ) : RoomService {
-
-    private val projectsCollection = firestore.collection(USERS_COLLECTION).document(USER_ID).collection(PROJECTS_COLLECTION)
+    private val userId = auth.currentUserId
+    private val projectsCollection = firestore.collection(USERS_COLLECTION).document(userId).collection(PROJECTS_COLLECTION)
 
     override fun getRooms(projectId: String): Flow<List<Room>> = callbackFlow {
         val listenerRegistration = projectsCollection.document(projectId).collection(ROOMS_COLLECTION).addSnapshotListener { snapshot, error ->
@@ -36,8 +36,6 @@ class RoomServiceImpl @Inject constructor(
     }
 
     override suspend fun update(projectId: String, room: Room) {
-        projectsCollection
-
         val roomDocRef = projectsCollection.document(projectId).collection(ROOMS_COLLECTION).document(room.id)
         roomDocRef.set(room)
             .addOnSuccessListener {
@@ -57,22 +55,18 @@ class RoomServiceImpl @Inject constructor(
             close(IllegalArgumentException("Room ID cannot be empty"))
             return@callbackFlow
         }
-        val listenerRegistration = projectsCollection.document(projectId).collection(
-            ROOMS_COLLECTION).document(roomId).addSnapshotListener { snapshot, error ->
-            if (error != null) { return@addSnapshotListener }
-            projectsCollection.document(projectId).collection(ROOMS_COLLECTION)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) return@addSnapshotListener
-                    snapshot?.let { it.toObjects(Room::class.java).firstOrNull { it.id == roomId }
-                        ?.let { room -> trySend(room).isSuccess }
-                    }
+        val listenerRegistration = projectsCollection.document(projectId).collection(ROOMS_COLLECTION).document(roomId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) return@addSnapshotListener
+                snapshot?.let {
+                    val room = snapshot.toObject(Room::class.java)
+                    room?.let { trySend(room).isSuccess }
                 }
-        }
+            }
         awaitClose { listenerRegistration.remove() }
     }
 
     companion object {
-        private const val USER_ID = "bOTQWZnTpjQ8uajIpU5x"
         private const val USERS_COLLECTION = "users"
         private const val PROJECTS_COLLECTION = "projects"
         private const val ROOMS_COLLECTION = "rooms"

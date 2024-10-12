@@ -15,12 +15,14 @@ import com.example.probuilder.data.remote.ClientService
 import com.example.probuilder.data.remote.JobService
 import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.data.remote.RoomService
+import com.example.probuilder.data.remote.SurfaceService
 import com.example.probuilder.data.remote.WorkerService
 import com.example.probuilder.data.remote.impl.CategoryServiceImpl
 import com.example.probuilder.data.remote.impl.ClientServiceImpl
 import com.example.probuilder.data.remote.impl.JobServiceImpl
 import com.example.probuilder.data.remote.impl.ProjectServiceImpl
 import com.example.probuilder.data.remote.impl.RoomServiceImpl
+import com.example.probuilder.data.remote.impl.SurfaceServiceImpl
 import com.example.probuilder.data.remote.impl.WorkerServiceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -135,6 +137,12 @@ object AppModule {
     @Singleton
     fun provideRoomService(firestore: FirebaseFirestore, accountService: AccountService): RoomService {
         return RoomServiceImpl(firestore, accountService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSurfaceService(firestore: FirebaseFirestore, accountService: AccountService): SurfaceService {
+        return SurfaceServiceImpl(firestore, accountService)
     }
 
 }

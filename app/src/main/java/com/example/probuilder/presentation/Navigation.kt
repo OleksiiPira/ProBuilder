@@ -25,6 +25,7 @@ import com.example.probuilder.presentation.screen.project.details.room.RoomDetai
 import com.example.probuilder.presentation.screen.project.details.worker.WorkerDetailsScreen
 import com.example.probuilder.presentation.screen.project.edit.client.UpsertClientScreen
 import com.example.probuilder.presentation.screen.project.edit.room.UpsertRoomScreen
+import com.example.probuilder.presentation.screen.project.edit.room.upsert_surface_screen.EditSurfaceScreen
 import com.example.probuilder.presentation.screen.project.edit.worker.UpsertWorkerScreen
 import com.example.probuilder.presentation.screen.project.list.ProjectList
 
@@ -180,7 +181,7 @@ fun HomeNavigation(
 
             // ROOM
             composable(Route.ROOM_DETAILS) {
-                RoomDetailsScreen(bottomBar = bottomBar, nextScreen = navController::navigate, goBack = navController::popBackStack)
+                RoomDetailsScreen(bottomBar = bottomBar, navigateTo = navController::navigate, goBack = navController::popBackStack)
             }
             composable(Route.UPSERT_ROOM) {
                 UpsertRoomScreen(goBack = navController::popBackStack)

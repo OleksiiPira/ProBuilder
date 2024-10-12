@@ -11,12 +11,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProjectDetailsViewModel @Inject constructor(
-    private val projectService: ProjectService,
+    projectService: ProjectService,
+    savedStateHandle: SavedStateHandle,
     private val roomService: RoomService,
-    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    var project = projectService.getProjectById(savedStateHandle.get<String>("projectId")?: "")
-    var rooms = roomService.getRooms(savedStateHandle.get<String>("projectId")?: "")
+    val projectId = savedStateHandle.get<String>("projectId")?: ""
+    var project = projectService.getProjectById(projectId)
+    var rooms = roomService.getRooms(projectId)
 
     fun deleteRoom(projectId: String, roomId: String) = viewModelScope.launch {
         roomService.delete(projectId, roomId)

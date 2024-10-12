@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
@@ -30,7 +30,7 @@ fun RowItem(
     badgeNumber: Int = 0,
     handleSelect: () -> Unit = {},
     leadingIcon: @Composable () -> Unit = { Icons.ArrowRight },
-    actionButton: @Composable() (RowScope.() -> Unit) = {}
+    actionButton: @Composable (RowScope.() -> Unit) = {}
 ) {
     Row(
         modifier = modifier
@@ -54,10 +54,10 @@ fun RowItem(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = text, style = Typography.labelLarge,)
+            Text(text = text, style = Typography.labelLarge)
             if (badgeNumber > 0) Row(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(ButtonCfg.RoundedShape)
                     .background(Color(0xFFF5CE54))
                     .padding(horizontal = 8.dp, vertical = 3.dp)
             ) {

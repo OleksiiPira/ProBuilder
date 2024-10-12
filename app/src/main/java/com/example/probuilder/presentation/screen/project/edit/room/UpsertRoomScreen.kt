@@ -1,67 +1,71 @@
 package com.example.probuilder.presentation.screen.project.edit.room
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.domain.model.Room
+import com.example.probuilder.R
+import com.example.probuilder.presentation.components.FixedButtonBackground
+import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
-import com.example.probuilder.presentation.components.SecondaryButton
-import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
+import com.example.probuilder.presentation.screen.project.edit.room.upsert_content.UpsertRoomContent
+import com.example.probuilder.presentation.screen.project.edit.room.upsert_content.UpsertSurfaceContent
+import com.example.probuilder.presentation.screen.project.edit.room.UpsertSurfaceEvent as SurfaceEvent
 
 @Composable
 fun UpsertRoomScreen(
     viewModel: UpsertRoomViewModel = hiltViewModel(),
-    bottomBar: @Composable () -> Unit,
     goBack: () -> Unit
 ) {
     Scaffold(
-        bottomBar = bottomBar,
-        topBar = { TopBar(title = "Створити працівника", onNavigationPress = goBack) }
+        topBar = { TopBar(title = "Створити кімнати", onNavigationPress = goBack) }
     ) { paddings ->
         val room by viewModel.room
-        val saveRoom = {
-            viewModel.saveRoom()
-            goBack()
-        }
+        val surface by viewModel.surface
+        var step by remember { mutableStateOf(Create.ROOM) }
 
-        Column(
+        val saveRoom = { viewModel.roomEvent(UpsertRoomEvent.Save); goBack(); }
+        val saveSurface = { viewModel.surfaceEvent(SurfaceEvent.Save); step = Create.ROOM  }
+
+        Box(
             modifier = Modifier
                 .padding(paddings)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .fillMaxSize()
+                .padding(bottom = Paddings.DEFAULT)
         ) {
-            UpsertRoomScreenContent(room = room, onEvent = viewModel::onEvent)
-            PrimaryButton(text = "Зберегти", onClick = saveRoom)
-            SecondaryButton(text = "Відмінити", onClick = goBack)
-            Spacer(modifier = Modifier.height(16.dp))
+            when (step) {
+                Create.ROOM -> UpsertRoomContent(
+                    room = room,
+                    addMeasurement = { step = Create.SURFACE },
+                    onEvent = viewModel::roomEvent
+                )
+                Create.SURFACE -> UpsertSurfaceContent(
+                    surface = surface,
+                    onEvent = viewModel::surfaceEvent,
+                    goBack = goBack
+                )
+            }
+
+            FixedButtonBackground(Modifier.align(Alignment.BottomCenter))
+            PrimaryButton(
+                text = stringResource(R.string.save_btn),
+                onClick = if (step == Create.ROOM) saveRoom else saveSurface,
+                modifier = Modifier.padding(Paddings.DEFAULT, 4.dp).align(Alignment.BottomCenter)
+            )
+
         }
     }
 }
 
-@Composable
-fun UpsertRoomScreenContent(
-    modifier: Modifier = Modifier,
-    room: Room = Room(),
-    onEvent: (UpsertRoomEvent) -> Unit,
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TextFieldWithTitle("Назва кімнати", room.name, { onEvent(UpsertRoomEvent.SetName(it)) })
-        Spacer(modifier = Modifier.height(16.dp))
-    }
-}
+enum class Create { ROOM, SURFACE }

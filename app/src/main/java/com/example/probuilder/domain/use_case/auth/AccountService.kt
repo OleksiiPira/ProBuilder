@@ -41,7 +41,7 @@ class AccountService @Inject constructor(
 )  : CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     val currentUserId: String
-        get() = auth.currentUser?.uid.orEmpty()
+        get() = "bOTQWZnTpjQ8uajIpU5x" // auth.currentUser?.uid.orEmpty()
 
     val hasUser: Boolean
         get() = auth.currentUser != null

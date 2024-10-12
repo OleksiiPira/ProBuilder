@@ -8,8 +8,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RoomDetailsViewModel @Inject constructor(
-    private val roomService: RoomService,
-    private val savedStateHandle: SavedStateHandle,
+    roomService: RoomService,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val room = roomService.getRoomById(savedStateHandle.get<String>("projectId")?: "", savedStateHandle.get<String>("roomId")?: "")
+    val projectId = savedStateHandle.get<String>("projectId")?: ""
+    private val roomId = savedStateHandle.get<String>("roomId")?: ""
+
+    val room = roomService.getRoomById(projectId, roomId)
 }
