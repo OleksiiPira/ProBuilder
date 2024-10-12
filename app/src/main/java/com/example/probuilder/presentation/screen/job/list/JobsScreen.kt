@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
@@ -101,8 +101,8 @@ fun TagButton(
     Row(
         modifier = Modifier
             .height(32.dp)
-            .border(1.dp, borderColor, RoundedCornerShape(8.dp))
-            .clip(RoundedCornerShape(8.dp))
+            .border(1.dp, borderColor, ButtonCfg.RoundedShape)
+            .clip(ButtonCfg.RoundedShape)
             .clickable {
                 onClick()
                 enabled = !enabled

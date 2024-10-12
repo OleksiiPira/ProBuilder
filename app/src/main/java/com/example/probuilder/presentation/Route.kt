@@ -4,7 +4,6 @@ object Route {
     //    Bottom navigation
     const val HOME = "home"
 
-    const val CATEGORIES_SECTION = "categories_section"
     const val CATEGORIES = "categories?category={category}"
     const val CREATE_CATEGORY = "create_category?parentId={parentId}"
 
@@ -24,6 +23,7 @@ object Route {
 
     const val ROOM_DETAILS = "room?projectId={projectId}&roomId={roomId}"
     const val UPSERT_ROOM = "upsert_room?projectId={projectId}&room={room}"
+    const val EDIT_SURFACE_SCREEN = "edit_surface?projectId={projectId}&roomId={room}&surface={surface}"
 
     const val INVOICES_SECTION = "invoices_section"
     const val INVOICES = "invoices"

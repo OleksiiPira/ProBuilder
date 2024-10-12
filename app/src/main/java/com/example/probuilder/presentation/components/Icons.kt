@@ -1,13 +1,12 @@
 package com.example.probuilder.presentation.components
 
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.example.probuilder.R.string as text
 import com.example.probuilder.R.drawable as icons
+import com.example.probuilder.R.string as text
 
 object Icons {
     // Navigation
@@ -68,6 +67,11 @@ object Icons {
         @Composable get() = Icon(
             painter = painterResource(id = icons.arrow_right),
             contentDescription = stringResource(text.icon_arrow_right)
+        )
+    val ArrowDown: Unit
+        @Composable get() = Icon(
+            painter = painterResource(id = icons.arrow_down),
+            contentDescription = "arrow down"
         )
     val Phone: Unit
         @Composable get() = Icon(

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.probuilder.domain.model.ButtonCfg
 
 @Composable
 fun Note(
@@ -27,7 +27,7 @@ fun Note(
     Column(
         Modifier
             .padding(horizontal = Paddings.DEFAULT, vertical = 6.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(ButtonCfg.RoundedShape)
             .background(Color(0xFFEBEBF0))
             .padding(start = 12.dp)
             .padding(bottom = 8.dp)
@@ -50,7 +50,7 @@ fun SimpleNote(text: String) {
     Column(
         Modifier
             .padding(horizontal = Paddings.DEFAULT, vertical = 6.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(ButtonCfg.RoundedShape)
             .background(Color(0xFFEBEBF0))
             .padding(12.dp)
             .fillMaxWidth()

@@ -74,14 +74,32 @@ data class Room(
 
 data class RoomSurface(
     @DocumentId var id: String = "",
-    val name: String = "Стеля 1",
-    val height: Double = 20.0,
-    val width: Double = 20.0,
-    val length: Double = 20.0,
-    val perimeter: Double = 40.0,
-    val area: Double = 45.0,
-    @Exclude val openings: List<Opening> = listOf(Opening(), Opening(), Opening())
-)
+    val name: String = "",
+    val type: SurfaceType = SurfaceType.WALL,
+    val height: Double = 0.0,
+    val width: Double = 0.0,
+    val length: Double = 0.0,
+    val depth: Double = 0.0,
+    @Exclude val openings: List<Opening> = emptyList()
+) {
+    val area: Double
+        get() = when (type) {
+            SurfaceType.WALL -> height * width
+            SurfaceType.CEILING, SurfaceType.FLOOR -> width * length
+            SurfaceType.OTHER -> if (height > 0) {
+                openings.sumOf { width * height }
+            } else {
+                openings.sumOf { width * depth }
+            }
+        }
+    val perimeter: Double
+        get() = when (type) {
+            SurfaceType.WALL -> 0.0
+            SurfaceType.CEILING, SurfaceType.FLOOR -> 2 * (width + length)
+            SurfaceType.OTHER -> 0.0
+        }
+//    val netArea: Double get() = area - openings.sumOf { it.width * it.height }
+}
 
 data class Opening(
     val name: String = "Отвір двері 1",

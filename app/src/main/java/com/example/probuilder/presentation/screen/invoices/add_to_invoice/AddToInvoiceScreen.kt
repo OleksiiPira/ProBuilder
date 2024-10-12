@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -54,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants.HORIZONTAL_PADDING
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.domain.model.Invoice
 import com.example.probuilder.domain.model.SearchItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
@@ -145,7 +145,7 @@ fun AddToInvoiceScreen(
                         onValueChange = {
                             viewModel.onEvent(AddItemInvoiceEvent.SetName(it))
                         },
-                        shape = RoundedCornerShape(8.dp),
+                        shape = ButtonCfg.RoundedShape,
                         trailingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Close,
@@ -169,7 +169,7 @@ fun AddToInvoiceScreen(
                         ) {
                             OutlinedTextField(
                                 modifier = Modifier.weight(3f),
-                                shape = RoundedCornerShape(8.dp),
+                                shape = ButtonCfg.RoundedShape,
                                 value = item.pricePerUnit.toDoubleOrNull().toString(),
                                 onValueChange = {
                                 },
@@ -203,7 +203,7 @@ fun AddToInvoiceScreen(
 //
 //                        )
 //                        OutlinedTextField(
-//                            shape = RoundedCornerShape(8.dp),
+//                            shape = ButtonCfg.RoundedShape,
 //                            value = item.pricePerUnit.toDoubleOrNull().toString(),
 //                            onValueChange = {
 //                                viewModel.onEvent(
@@ -239,7 +239,7 @@ fun AddToInvoiceScreen(
 ////                                .onFocusChanged { focusState ->
 ////                                    isOverlayVisible = focusState.hasFocus
 ////                                },
-////                            shape = RoundedCornerShape(8.dp),
+////                            shape = ButtonCfg.RoundedShape,
 ////                            value = item.unit,
 ////                            onValueChange = { viewModel.onEvent(AddItemInvoiceEvent.SetUnit(it)) },
 ////                            trailingIcon = {
@@ -281,7 +281,7 @@ fun AddToInvoiceScreen(
                         style = Typography.titleMedium
                     )
                     OutlinedTextField(
-                        shape = RoundedCornerShape(8.dp),
+                        shape = ButtonCfg.RoundedShape,
                         value = if (item.quantity.toIntOrNull() != null && item.quantity.toDouble() > 0) item.quantity else "",
                         onValueChange = {
                             viewModel.onEvent(
@@ -305,7 +305,7 @@ fun AddToInvoiceScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .onFocusChanged { expanded = it.hasFocus },
-                        shape = RoundedCornerShape(8.dp),
+                        shape = ButtonCfg.RoundedShape,
                         value = item.invoice.name,
                         onValueChange = {
                             viewModel.onEvent(

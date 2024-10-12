@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
@@ -133,7 +134,7 @@ fun RoomCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(ButtonCfg.RoundedShape),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = Color(0xFFEEEEF2)
             )

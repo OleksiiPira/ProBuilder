@@ -38,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.ActionItems
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodySmall
@@ -137,7 +138,7 @@ fun ProjectCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(ButtonCfg.RoundedShape),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = Color(0xFFEEEEF2)
             )

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.Button
@@ -33,6 +32,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.probuilder.domain.model.ButtonCfg
 import com.example.probuilder.domain.model.SearchItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
@@ -71,7 +71,7 @@ fun DropDownSearch(
                     inputText = it
                     isSearchExpanded = true
                 },
-                shape = RoundedCornerShape(8.dp),
+                shape = ButtonCfg.RoundedShape,
                 trailingIcon = {
                     Icon(
                         modifier = modifier.clickable {
