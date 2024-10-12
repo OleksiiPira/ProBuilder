@@ -1,5 +1,6 @@
 package com.example.probuilder.presentation.screen.project.details
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -23,17 +25,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.R
+import com.example.probuilder.common.ext.shadowBtn
 import com.example.probuilder.common.ext.toJSON
 import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodyLarge
-import com.example.probuilder.presentation.components.CustomFloatingButton
+import com.example.probuilder.presentation.components.DimmedBlockingOverlay
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Note
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
+import com.example.probuilder.presentation.components.ProjectFloatingButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TitleLarge
 import com.example.probuilder.presentation.components.TitleMedium
@@ -42,9 +47,7 @@ import com.google.gson.Gson
 
 @Composable
 fun ProjectDetailsScreen(
-    bottomBar: @Composable () -> Unit = {},
     nextScreen: (String) -> Unit,
-    goBack: () -> Unit = {},
     viewModel: ProjectDetailsViewModel = hiltViewModel(),
 ) {
     val project by viewModel.project.collectAsState(Project())
@@ -53,10 +56,20 @@ fun ProjectDetailsScreen(
     val showWorkerDetailsScreen = { workerId: String -> nextScreen(Route.WORKER_DETAILS.replace("{projectId}", project.id).replace("{workerId}", workerId)) }
     val showRoomDetailsScreen = { roomId: String -> nextScreen(Route.ROOM_DETAILS.replace("{projectId}", project.id).replace("{roomId}", roomId)) }
 
+    val showCreateRoomScreen = { nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id)) }
+
+    var expendedButtons by remember { mutableStateOf(false) }
     Scaffold(
-        bottomBar = bottomBar,
-        floatingActionButton = { CustomFloatingButton({ nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id)) }) },
+        floatingActionButton = {
+            ProjectFloatingButton(pressed = expendedButtons, onClick = { expendedButtons = !expendedButtons }){
+                val buttonColor = ButtonDefaults.buttonColors(containerColor = Color(0xFFF0B90A), contentColor = Color(0xFF0C1318))
+                PrimaryButton(text = "Кімнату", onClick = showCreateRoomScreen, icon = R.drawable.room, colors = buttonColor, modifier = Modifier.shadowBtn())
+                PrimaryButton(text = "Працівника", onClick = { /*TODO*/ }, icon = R.drawable.worker, colors = buttonColor, modifier = Modifier.shadowBtn())
+                PrimaryButton(text = "Нотатку", onClick = { /*TODO*/ }, icon = R.drawable.note, colors = buttonColor, modifier = Modifier.shadowBtn())
+            }
+                               },
         ) { paddings ->
+
         ProjectScreenContent(
             modifier = Modifier.padding(paddings),
             project = project,
@@ -67,6 +80,10 @@ fun ProjectDetailsScreen(
             deleteRoom = viewModel::deleteRoom,
             nextScreen = nextScreen
         )
+        if (expendedButtons) {
+            DimmedBlockingOverlay()
+            BackHandler { expendedButtons = false }
+        }
     }
 }
 

@@ -156,11 +156,7 @@ fun HomeNavigation(
                 CreateProjectScreen(goBack = navController::popBackStack)
             }
             composable(route = Route.PROJECT_DETAILS) {
-                ProjectDetailsScreen(
-                    bottomBar = bottomBar,
-                    nextScreen = navController::navigate,
-                    goBack = navController::popBackStack,
-                )
+                ProjectDetailsScreen(nextScreen = navController::navigate)
             }
 
             // CLIENT

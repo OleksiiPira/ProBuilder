@@ -1,17 +1,18 @@
 package com.example.probuilder.common.ext
 
-.border
-
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.domain.model.ButtonCfg
 
+fun Modifier.shadowBtn(shape: RoundedCornerShape = ButtonCfg.RoundedShape): Modifier {
+    return this.shadow(elevation = 3.dp, shape = shape, clip = false)
+}
 
-fun Modifier.outlined(): Modifier {
-    return this.fillMaxWidth().height(56.dp)
-        .border(1.dp, Color(0xFF9F9FA4), ButtonCfg.RoundedShape)
+fun Modifier.blockActions(block: Boolean): Modifier {
+    if (!block) return this
+    return this.pointerInput(Unit) { detectTapGestures {} }
 }
