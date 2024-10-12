@@ -5,25 +5,23 @@ import androidx.credentials.CredentialManager
 import com.example.probuilder.data.local.AppDatabase
 import com.example.probuilder.data.local.InvoiceRepositoryImpl
 import com.example.probuilder.data.remote.AppApi
-import com.example.probuilder.data.remote.dto.AppRepositoryImpl
-import com.example.probuilder.domain.repository.AppRepository
-import com.example.probuilder.domain.repository.InvoiceDao
-import com.example.probuilder.domain.use_case.auth.AccountService
-import com.example.probuilder.domain.use_case.auth.GoogleAuthService
 import com.example.probuilder.data.remote.CategoryService
 import com.example.probuilder.data.remote.ClientService
 import com.example.probuilder.data.remote.JobService
 import com.example.probuilder.data.remote.ProjectService
 import com.example.probuilder.data.remote.RoomService
-import com.example.probuilder.data.remote.SurfaceService
 import com.example.probuilder.data.remote.WorkerService
+import com.example.probuilder.data.remote.dto.AppRepositoryImpl
 import com.example.probuilder.data.remote.impl.CategoryServiceImpl
 import com.example.probuilder.data.remote.impl.ClientServiceImpl
 import com.example.probuilder.data.remote.impl.JobServiceImpl
 import com.example.probuilder.data.remote.impl.ProjectServiceImpl
 import com.example.probuilder.data.remote.impl.RoomServiceImpl
-import com.example.probuilder.data.remote.impl.SurfaceServiceImpl
 import com.example.probuilder.data.remote.impl.WorkerServiceImpl
+import com.example.probuilder.domain.repository.AppRepository
+import com.example.probuilder.domain.repository.InvoiceDao
+import com.example.probuilder.domain.use_case.auth.AccountService
+import com.example.probuilder.domain.use_case.auth.GoogleAuthService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -137,12 +135,6 @@ object AppModule {
     @Singleton
     fun provideRoomService(firestore: FirebaseFirestore, accountService: AccountService): RoomService {
         return RoomServiceImpl(firestore, accountService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSurfaceService(firestore: FirebaseFirestore, accountService: AccountService): SurfaceService {
-        return SurfaceServiceImpl(firestore, accountService)
     }
 
 }
