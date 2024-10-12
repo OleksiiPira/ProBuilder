@@ -12,7 +12,7 @@ fun Modifier.shadowBtn(shape: RoundedCornerShape = ButtonCfg.RoundedShape): Modi
     return this.shadow(elevation = 3.dp, shape = shape, clip = false)
 }
 
-fun Modifier.blockActions(block: Boolean): Modifier {
+fun Modifier.blockActions(block: Boolean = true, dismiss: () -> Unit): Modifier {
     if (!block) return this
-    return this.pointerInput(Unit) { detectTapGestures {} }
+    return this.pointerInput(Unit) { detectTapGestures { dismiss() } }
 }

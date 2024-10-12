@@ -81,7 +81,7 @@ fun ProjectDetailsScreen(
             nextScreen = nextScreen
         )
         if (expendedButtons) {
-            DimmedBlockingOverlay()
+            DimmedBlockingOverlay(dismiss = { expendedButtons = false })
             BackHandler { expendedButtons = false }
         }
     }
