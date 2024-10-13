@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.RoomSurface
@@ -54,10 +55,10 @@ fun UpsertSurfaceContent(
     val saveSurface = { onEvent(UpsertSurfaceEvent.Save); goBack() }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = Paddings.DEFAULT)
                 .padding(vertical = Paddings.DEFAULT)
@@ -65,7 +66,7 @@ fun UpsertSurfaceContent(
             verticalArrangement = Arrangement.spacedBy(Paddings.DEFAULT)
         ) {
             TextFieldWithTitle(stringResource(R.string.name_title), surface.name, setName)
-            Column(modifier.padding(horizontal = Paddings.DEFAULT)) {
+            Column(Modifier.padding(horizontal = Paddings.DEFAULT)) {
                 var showOptionsDialog by remember { mutableStateOf(false) }
                 val surfaceTypes = listOf(SurfaceType.WALL, SurfaceType.FLOOR, SurfaceType.CEILING, SurfaceType.OTHER)
                 val dismiss = { showOptionsDialog = !showOptionsDialog }
@@ -179,4 +180,14 @@ fun MeasureResultSection(
             }
         }
     }
+}
+
+
+@Preview
+@Composable
+fun Prevvv() {
+    UpsertSurfaceContent(
+        onEvent = {},
+        goBack = {}
+    )
 }
