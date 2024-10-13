@@ -24,12 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.probuilder.R
+import com.example.probuilder.common.ext.toJSON
 import com.example.probuilder.common.ext.toMeasure
 import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.RoomSurface
+import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
+import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.RoomSurfaces
@@ -47,12 +51,12 @@ fun RoomDetailsScreen(
     viewModel: RoomDetailsViewModel = hiltViewModel(),
 ) {
     val room by viewModel.room.collectAsState(initial = Room())
-
+    val showUpdateRoomScreen = { navigateTo(Route.UPSERT_ROOM.replace("{projectId}", viewModel.projectId).replace("{room}", room.toJSON())) }
     Scaffold(
+        floatingActionButton = { CustomFloatingButton(onClick = showUpdateRoomScreen, icon = R.drawable.edit) },
         bottomBar = bottomBar,
         topBar = { TopBar(title = room.name, onNavigationPress = goBack) }
     ) { paddings ->
-//        val showEditScreen = { nextScreen("") }
         RoomScreenContent(
             modifier = Modifier.padding(paddings),
             projectId = viewModel.projectId, 
