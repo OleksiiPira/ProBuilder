@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,17 +60,17 @@ fun TextFieldWithTitle(
 
 @Composable
 fun NumericTextFieldWithTitle(
+    modifier: Modifier = Modifier,
     title: String,
     value: Double,
     onValueChange: (Double) -> Unit = {},
-    modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit) = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
     shape: Shape = ButtonCfg.RoundedShape,
-    horizPaddings: Dp = 16.dp
+    horizPaddings: Dp = Paddings.DEFAULT
 ) {
     var inputValue by remember { mutableStateOf(value.toString()) }
     var isValid by remember { mutableStateOf(true) }
-
+    LaunchedEffect(value) { inputValue = value.toString().replace(".0", "") }
     Column(modifier = modifier.padding(horizontal = horizPaddings)) {
         Text(
             modifier = Modifier.padding(bottom = 4.dp),
@@ -82,12 +83,8 @@ fun NumericTextFieldWithTitle(
             onValueChange = { newValue ->
                 inputValue = newValue
                 val doubleValue = newValue.toDoubleOrNull()
-                if (doubleValue != null) {
-                    isValid = true
-                    onValueChange(doubleValue)
-                } else {
-                    isValid = false
-                }
+                isValid = doubleValue != null
+                if (isValid) onValueChange(doubleValue!!)
             },
             shape = shape,
             trailingIcon = trailingIcon,
