@@ -27,6 +27,7 @@ import com.example.probuilder.presentation.screen.project.edit.room.UpsertSurfac
 @Composable
 fun UpsertRoomScreen(
     viewModel: UpsertRoomViewModel = hiltViewModel(),
+    navigateTo: (String) -> Unit,
     goBack: () -> Unit
 ) {
     var step by remember { mutableStateOf(Create.ROOM) }
@@ -56,7 +57,8 @@ fun UpsertRoomScreen(
                     room = room,
                     addMeasurement = { step = Create.SURFACE },
                     onEvent = viewModel::roomEvent,
-                    deleteSurface = deleteSurface
+                    deleteSurface = deleteSurface,
+                    navigateTo = navigateTo
                 )
                 Create.SURFACE -> UpsertSurfaceContent(
                     surface = surface,

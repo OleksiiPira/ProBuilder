@@ -37,7 +37,8 @@ fun UpsertRoomContent(
     room: Room = Room(),
     addMeasurement: () -> Unit,
     onEvent: (UpsertRoomEvent) -> Unit,
-    deleteSurface: (RoomSurface) -> Unit
+    deleteSurface: (RoomSurface) -> Unit,
+    navigateTo: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -79,7 +80,7 @@ fun UpsertRoomContent(
             RoomSurfaces(
                 room = room,
                 projectId = projectId,
-                navigateTo = { },
+                navigateTo = navigateTo,
                 deleteSurface = deleteSurface
             )
         }
