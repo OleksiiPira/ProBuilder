@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.common.ext.toJSON
 import com.example.probuilder.common.ext.toMeasure
@@ -44,14 +45,17 @@ fun RoomSurfaces(
         SurfaceType.OTHER to mutableListOf()
     )
     room.surfaces.forEach { surfacesMap[it.type]?.add(it) }
-    surfacesMap.filter { it.value.isNotEmpty() }.forEach { pair ->
-        SurfaceSection(
-            name = pair.key.label,
-            room = room,
-            surfaces = pair.value,
-            showSurfaceEditScreen = showSurfaceEditScreen,
-            deleteSurface = deleteSurface
-        )
+
+    Column {
+        surfacesMap.filter { it.value.isNotEmpty() }.forEach { pair ->
+            SurfaceSection(
+                name = pair.key.label,
+                room = room,
+                surfaces = pair.value,
+                showSurfaceEditScreen = showSurfaceEditScreen,
+                deleteSurface = deleteSurface
+            )
+        }
     }
 }
 
@@ -63,7 +67,7 @@ fun SurfaceSection(
     showSurfaceEditScreen: (RoomSurface) -> Unit,
     deleteSurface: (RoomSurface) -> Unit
 ) {
-    Column {
+    Column(Modifier.padding(vertical = 12.dp)) {
         Text(
             text = name.toTitle(),
             modifier = Modifier.fillMaxWidth(),
@@ -71,7 +75,6 @@ fun SurfaceSection(
         )
         surfaces.forEach { surface ->
             RoomSurfaceCard(
-                modifier = Modifier.padding(top = Paddings.DEFAULT),
                 surface = surface,
                 actionItems = listOf(
                     ActionItems("Редагувати", { showSurfaceEditScreen(surface) }),
@@ -80,8 +83,8 @@ fun SurfaceSection(
             )
         }
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                .padding(top = 14.dp)
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFA4C6E1))
                 .padding(horizontal = Paddings.DEFAULT, vertical = 4.dp)
@@ -92,4 +95,20 @@ fun SurfaceSection(
             BodyMedium("Площа ${area.toMeasure("м2")}")
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Adddsd() {
+    RoomSurfaces(
+        projectId = "",
+        navigateTo = {},
+        deleteSurface = {},
+        room = Room(surfaces = listOf(
+        RoomSurface(name = "Test", height = 2.4, width = 4.0),
+        RoomSurface(name = "Test",height = 2.4, width = 4.0),
+        RoomSurface(name = "Test",height = 2.4, width = 4.0),
+        RoomSurface(name = "Test",type = SurfaceType.CEILING),
+        RoomSurface(name = "Test",type = SurfaceType.FLOOR),
+    )))
 }

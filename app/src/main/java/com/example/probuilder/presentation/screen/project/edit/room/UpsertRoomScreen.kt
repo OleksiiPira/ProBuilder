@@ -29,12 +29,13 @@ fun UpsertRoomScreen(
     viewModel: UpsertRoomViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
+    var step by remember { mutableStateOf(Create.ROOM) }
+    val backActions = mapOf(Create.ROOM to { goBack() }, Create.SURFACE to { step = Create.ROOM })
     Scaffold(
-        topBar = { TopBar(title = "Створити кімнати", onNavigationPress = goBack) }
+        topBar = { TopBar(title = "Створити кімнати", onNavigationPress = { backActions[step]?.invoke() }) }
     ) { paddings ->
         val room by viewModel.room
         val surface by viewModel.surface
-        var step by remember { mutableStateOf(Create.ROOM) }
 
         val saveRoom = { viewModel.roomEvent(UpsertRoomEvent.Save); goBack(); }
         val saveSurface = { viewModel.surfaceEvent(SurfaceEvent.Save); step = Create.ROOM  }

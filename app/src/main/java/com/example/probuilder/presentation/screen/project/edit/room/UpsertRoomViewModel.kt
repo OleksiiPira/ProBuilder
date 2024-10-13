@@ -64,20 +64,17 @@ class UpsertRoomViewModel @Inject constructor(
     }
 
     private fun onSaveSurface() = viewModelScope.launch {
-        val newSurface = surface.value
+        var newSurface = surface.value.copy()
         when(newSurface.type) {
-            SurfaceType.WALL -> _surface.value = surface.value.copy(length = 0.0, depth = 0.0)
-            SurfaceType.CEILING -> _surface.value = surface.value.copy(height = 0.0, depth = 0.0)
-            SurfaceType.FLOOR -> _surface.value = surface.value.copy(height = 0.0, depth = 0.0)
-            SurfaceType.OTHER -> _surface.value = surface.value // don't clear any field
+            SurfaceType.WALL -> newSurface = newSurface.copy(length = 0.0, depth = 0.0)
+            SurfaceType.CEILING -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
+            SurfaceType.FLOOR -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
+            SurfaceType.OTHER -> {} // don't clear any field
         }
         _room.value = room.value.copy(surfaces = _room.value.surfaces.toMutableList().apply {
-            val outdatedSurface = find { it.id == newSurface.id }
-            if (outdatedSurface != null) {
-                val outdatedSurfaceIndex = indexOf(outdatedSurface)
-                set(outdatedSurfaceIndex, newSurface)
-            } else {
-                add(newSurface)
+            find { it.id == newSurface.id }.let { outdatedSurface ->
+                if (outdatedSurface != null) set(indexOf(outdatedSurface), newSurface)
+                else add(newSurface)
             }
             _surface.value = RoomSurface()
         })
