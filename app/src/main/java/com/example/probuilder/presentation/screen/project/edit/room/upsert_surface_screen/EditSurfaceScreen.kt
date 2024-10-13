@@ -38,10 +38,7 @@ fun EditSurfaceScreen(
             FixedButtonBackground(Modifier.align(Alignment.BottomCenter)){
                 PrimaryButton(
                     text = stringResource(id = R.string.save_btn),
-                    onClick = {
-                        viewModel.onSurfaceEvent(UpsertSurfaceEvent.Save)
-                        goBack()
-                              },
+                    onClick = { viewModel.onSurfaceEvent(UpsertSurfaceEvent.Save); goBack() },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = Paddings.DEFAULT)
                 )
             }

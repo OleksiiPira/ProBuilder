@@ -53,21 +53,17 @@ class EditSurfaceViewModel @Inject constructor(
     }
 
     private fun saveSurface(){
-        val newSurface = surface.value
+        var newSurface = surface.value.copy()
         when(newSurface.type) {
-            SurfaceType.WALL -> _surface.value = newSurface.copy(length = 0.0, depth = 0.0)
-            SurfaceType.CEILING -> _surface.value = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
-            SurfaceType.FLOOR -> _surface.value = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
+            SurfaceType.WALL -> newSurface = newSurface.copy(length = 0.0, depth = 0.0)
+            SurfaceType.CEILING -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
+            SurfaceType.FLOOR -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
             SurfaceType.OTHER -> {} // don't clear any field
         }
         _room.value = room.value.copy(surfaces = _room.value.surfaces.toMutableList().apply {
             val outdatedSurface = find { it.id == newSurface.id }
-            if (outdatedSurface != null) {
-                val outdatedSurfaceIndex = indexOf(outdatedSurface)
-                set(outdatedSurfaceIndex, newSurface)
-            } else {
-                add(newSurface)
-            }
+            if (outdatedSurface != null) set(indexOf(outdatedSurface), newSurface)
+            else add(newSurface)
         })
 
         viewModelScope.launch {

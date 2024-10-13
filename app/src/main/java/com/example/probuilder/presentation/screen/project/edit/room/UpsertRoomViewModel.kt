@@ -64,11 +64,11 @@ class UpsertRoomViewModel @Inject constructor(
     }
 
     private fun onSaveSurface() = viewModelScope.launch {
-        var newSurface = surface.value
+        var newSurface = surface.value.copy()
         when(newSurface.type) {
             SurfaceType.WALL -> newSurface = newSurface.copy(length = 0.0, depth = 0.0)
-            SurfaceType.CEILING -> newSurface = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
-            SurfaceType.FLOOR -> newSurface = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
+            SurfaceType.CEILING -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
+            SurfaceType.FLOOR -> newSurface = newSurface.copy(height = 0.0, depth = 0.0)
             SurfaceType.OTHER -> {} // don't clear any field
         }
         _room.value = room.value.copy(surfaces = _room.value.surfaces.toMutableList().apply {
