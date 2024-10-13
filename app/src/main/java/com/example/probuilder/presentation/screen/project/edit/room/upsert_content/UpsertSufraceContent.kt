@@ -46,7 +46,6 @@ fun UpsertSurfaceContent(
     val setWidth = { width: Double -> onEvent(UpsertSurfaceEvent.SetWidth(width)) }
     val setLength = { length: Double -> onEvent(UpsertSurfaceEvent.SetLength(length)) }
     val setDepth = { depth: Double -> onEvent(UpsertSurfaceEvent.SetDepth(depth)) }
-
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -115,7 +114,7 @@ fun UpsertSurfaceContent(
                     modifier = Modifier.weight(1f),
                     title = SurfaceOption.LENGTH.label,
                     value = surface.length,
-                    onValueChange = setDepth,
+                    onValueChange = setLength,
                     horizPaddings = Paddings.EMPTY
                 )
                 NumericTextFieldWithTitle(
