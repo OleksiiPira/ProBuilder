@@ -14,7 +14,6 @@ import com.example.probuilder.presentation.screen.project.edit.room.UpsertRoomEv
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,19 +64,19 @@ class UpsertRoomViewModel @Inject constructor(
     }
 
     private fun onSaveSurface() = viewModelScope.launch {
-        val newSurface = surface.value
+        var newSurface = surface.value
         when(newSurface.type) {
-            SurfaceType.WALL -> _surface.value = newSurface.copy(length = 0.0, depth = 0.0)
-            SurfaceType.CEILING -> _surface.value = newSurface.copy(height = 0.0, depth = 0.0)
-            SurfaceType.FLOOR -> _surface.value = newSurface.copy(height = 0.0, depth = 0.0)
-            SurfaceType.OTHER -> _surface.value = newSurface // don't clear any field
+            SurfaceType.WALL -> newSurface = newSurface.copy(length = 0.0, depth = 0.0)
+            SurfaceType.CEILING -> newSurface = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
+            SurfaceType.FLOOR -> newSurface = newSurface.copy(height = 0.0, depth = 0.0, length = 0.0)
+            SurfaceType.OTHER -> {} // don't clear any field
         }
         _room.value = room.value.copy(surfaces = _room.value.surfaces.toMutableList().apply {
             find { it.id == newSurface.id }.let { outdatedSurface ->
-                if (outdatedSurface != null) set(indexOf(outdatedSurface), surface.value)
+                if (outdatedSurface != null) set(indexOf(outdatedSurface), newSurface)
                 else add(newSurface)
             }
-            _surface.value = newSurface.copy(id = UUID.randomUUID().toString(), name = "", type = SurfaceType.WALL)
+            _surface.value = RoomSurface()
         })
     }
 }
