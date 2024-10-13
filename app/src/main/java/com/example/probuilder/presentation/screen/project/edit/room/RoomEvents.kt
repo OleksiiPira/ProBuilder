@@ -1,5 +1,6 @@
 package com.example.probuilder.presentation.screen.project.edit.room
 
+import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.domain.model.SurfaceType
 
 sealed interface UpsertRoomEvent {
@@ -17,4 +18,5 @@ sealed interface UpsertSurfaceEvent {
     data class SetLength(val length: Double): UpsertSurfaceEvent
     data class SetDepth(val depth: Double): UpsertSurfaceEvent
     data object Save: UpsertSurfaceEvent
+    data class Delete(val surface: RoomSurface): UpsertSurfaceEvent
 }

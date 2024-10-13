@@ -22,7 +22,7 @@ class UpsertRoomViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
     ) : ViewModel() {
 
-    private var projectId = savedStateHandle.get<String>("projectId")?: ""
+    var projectId = savedStateHandle.get<String>("projectId")?: ""
 
     private var _room = mutableStateOf(Room())
     val room: State<Room> = _room
@@ -59,6 +59,7 @@ class UpsertRoomViewModel @Inject constructor(
             is UpsertSurfaceEvent.SetLength -> _surface.value = surface.value.copy(length = event.length)
             is UpsertSurfaceEvent.SetDepth -> _surface.value = surface.value.copy(depth = event.depth)
             is UpsertSurfaceEvent.Save -> onSaveSurface()
+            is UpsertSurfaceEvent.Delete -> { _room.value = room.value.copy(surfaces = room.value.surfaces.filter { it.id != event.surface.id }) }
         }
     }
 
@@ -78,6 +79,7 @@ class UpsertRoomViewModel @Inject constructor(
             } else {
                 add(newSurface)
             }
+            _surface.value = RoomSurface()
         })
     }
 }

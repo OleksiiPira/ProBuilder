@@ -74,14 +74,14 @@ data class Room(
 )
 
 data class RoomSurface(
-    @DocumentId var id: String = "",
+    var id: String = UUID.randomUUID().toString(),
     val name: String = "",
     val type: SurfaceType = SurfaceType.WALL,
     val height: Double = 0.0,
     val width: Double = 0.0,
     val length: Double = 0.0,
     val depth: Double = 0.0,
-    @Exclude val openings: List<Opening> = emptyList()
+    val openings: List<Opening> = emptyList()
 ) {
     val area: Double
         get() = when (type) {

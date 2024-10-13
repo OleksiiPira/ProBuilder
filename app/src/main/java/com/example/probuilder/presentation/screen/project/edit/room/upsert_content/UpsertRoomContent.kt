@@ -19,21 +19,24 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Room
+import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.LabelMedium
 import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.RoomSurfaces
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.components.TitleMedium
-import com.example.probuilder.presentation.screen.project.details.room.SurfaceSection
 import com.example.probuilder.presentation.screen.project.edit.room.UpsertRoomEvent
 
 @Composable
 fun UpsertRoomContent(
     modifier: Modifier = Modifier,
+    projectId: String,
     room: Room = Room(),
     addMeasurement: () -> Unit,
     onEvent: (UpsertRoomEvent) -> Unit,
+    deleteSurface: (RoomSurface) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -71,7 +74,12 @@ fun UpsertRoomContent(
         if (room.surfaces.isEmpty()) {
             BodyLarge(stringResource(R.string.add_mesure_later_description), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))
         } else {
-            SurfaceSection(stringResource(R.string.walls_title), room = room, navigateTo = { })
+            RoomSurfaces(
+                room = room,
+                projectId = projectId,
+                navigateTo = { },
+                deleteSurface = deleteSurface
+            )
         }
 
         SecondaryButton(

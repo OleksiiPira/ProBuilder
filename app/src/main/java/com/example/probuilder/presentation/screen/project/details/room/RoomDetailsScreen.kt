@@ -22,25 +22,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.common.ext.toJSON
 import com.example.probuilder.common.ext.toMeasure
 import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.RoomSurface
-import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.RoomSurfaces
 import com.example.probuilder.presentation.components.TitleMedium
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.project.details.DetailsScreenHero
 import com.example.probuilder.presentation.screen.project.details.PricesInfo
-import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
 fun RoomDetailsScreen(
@@ -60,7 +57,9 @@ fun RoomDetailsScreen(
             modifier = Modifier.padding(paddings),
             projectId = viewModel.projectId, 
             room = room,
-            navigateTo = navigateTo)
+            navigateTo = navigateTo,
+            deleteSurface = viewModel::deleteSurfaces
+        )
     }
 }
 
@@ -69,7 +68,8 @@ fun RoomScreenContent(
     modifier: Modifier = Modifier,
     projectId: String,
     room: Room,
-    navigateTo: (String) -> Unit
+    navigateTo: (String) -> Unit,
+    deleteSurface: (RoomSurface) -> Unit
     ) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         DetailsScreenHero(room.imageUrl, room.totalHours, room.completeHours)
@@ -81,53 +81,14 @@ fun RoomScreenContent(
         )
         TitleMedium("Заміри", Modifier.padding(horizontal = Paddings.DEFAULT))
         Spacer(modifier = Modifier.height(12.dp))
-        SurfaceSection(
-            name = "Стіни",
+
+        RoomSurfaces(
             room = room,
             projectId = projectId,
-            navigateTo = navigateTo)
-        Spacer(modifier = Modifier.padding(16.dp))
-    }
-}
+            navigateTo = navigateTo,
+            deleteSurface = deleteSurface)
 
-@Composable
-fun SurfaceSection(
-    name: String,
-    room: Room,
-    projectId: String = "",
-    navigateTo: (String) -> Unit,
-) {
-    Column {
-        Text(
-            text = name,
-            modifier = Modifier.fillMaxWidth(),
-            style = Typography.titleSmall.copy(textAlign = TextAlign.Center)
-        )
-        room.surfaces.forEachIndexed { index, surface ->
-            RoomSurfaceCard(modifier = Modifier.padding(top = 16.dp), surface = surface, actionItems = listOf(
-                ActionItems("Редагувати", { navigateTo(Route.EDIT_SURFACE_SCREEN
-                    .replace("{projectId}", projectId)
-                    .replace("{room}", room.toJSON())
-                    .replace("{surface}", surface.toJSON())
-                ) })
-            ))
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                .padding(top = 14.dp)
-                .fillMaxWidth()
-                .background(Color(0xFFA4C6E1))
-                .padding(horizontal = 16.dp, vertical = 4.dp)
-        ) {
-            var perimeter = 0.0
-            var area = 0.0
-            room.surfaces.forEach {surface ->
-                area = surface.height * surface.width
-                perimeter = (surface.height + surface.width) * 2
-            }
-            BodyMedium("Периметр ${perimeter.toMeasure("м")}")
-            BodyMedium("Площа ${area.toMeasure("м2")}")
-        }
+        Spacer(modifier = Modifier.padding(16.dp))
     }
 }
 

@@ -85,7 +85,6 @@
     <!--  Room Screen  -->
     <string name="room_name_title">Назва кімнати</string>
     <string name="measures_title">Заміри</string>
-    <string name="walls_title">Стіни</string>
     <string name="add_measure_btn">Додати замір</string>
 
     <!--  Common  -->

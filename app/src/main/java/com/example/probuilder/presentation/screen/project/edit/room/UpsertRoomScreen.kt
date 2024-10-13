@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.R
+import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.presentation.components.FixedButtonBackground
 import com.example.probuilder.presentation.components.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
@@ -37,6 +38,7 @@ fun UpsertRoomScreen(
 
         val saveRoom = { viewModel.roomEvent(UpsertRoomEvent.Save); goBack(); }
         val saveSurface = { viewModel.surfaceEvent(SurfaceEvent.Save); step = Create.ROOM  }
+        val deleteSurface = { surfaceItem: RoomSurface -> viewModel.surfaceEvent(SurfaceEvent.Delete(surfaceItem)) }
 
         Box(
             modifier = Modifier
@@ -46,9 +48,11 @@ fun UpsertRoomScreen(
         ) {
             when (step) {
                 Create.ROOM -> UpsertRoomContent(
+                    projectId = viewModel.projectId,
                     room = room,
                     addMeasurement = { step = Create.SURFACE },
-                    onEvent = viewModel::roomEvent
+                    onEvent = viewModel::roomEvent,
+                    deleteSurface = deleteSurface
                 )
                 Create.SURFACE -> UpsertSurfaceContent(
                     surface = surface,

@@ -126,8 +126,8 @@ fun ProjectScreenContent(
         TitleMedium("Кімнати", modifierDefault)
         rooms.forEachIndexed { index, room ->
             RoomCard(room, { showRoomDetailsScreen(room.id) }, actionItems = listOf(
-                ActionItems("Видалити", { deleteRoom(project.id, room.id) }),
-                ActionItems("Редагувати", { nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id).replace("{room}", room.toJSON())) })
+                ActionItems("Редагувати", { nextScreen(Route.UPSERT_ROOM.replace("{projectId}", project.id).replace("{room}", room.toJSON())) }),
+                ActionItems("Видалити", { deleteRoom(project.id, room.id) })
             ))
             if (project.rooms.size > 1 && index != project.rooms.lastIndex) {
                 HorizontalDivider(color = Color(0xFFB6B6BB), modifier = Modifier.padding(horizontal = Paddings.DEFAULT))

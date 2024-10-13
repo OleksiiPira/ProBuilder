@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditSurfaceViewModel @Inject constructor(
     private val roomService: RoomService,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
     ) : ViewModel() {
 
     private var projectId = savedStateHandle.get<String>("projectId")?: ""
@@ -48,6 +48,7 @@ class EditSurfaceViewModel @Inject constructor(
             is UpsertSurfaceEvent.SetLength -> _surface.value = surface.value.copy(length = event.length)
             is UpsertSurfaceEvent.SetDepth -> _surface.value = surface.value.copy(depth = event.depth)
             is UpsertSurfaceEvent.Save -> saveSurface()
+            is UpsertSurfaceEvent.Delete -> {}
         }
     }
 
