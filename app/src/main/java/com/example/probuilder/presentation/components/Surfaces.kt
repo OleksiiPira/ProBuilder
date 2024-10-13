@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.common.ext.toJSON
 import com.example.probuilder.common.ext.toMeasure
+import com.example.probuilder.common.ext.toTitle
 import com.example.probuilder.domain.model.ActionItems
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.RoomSurface
@@ -64,14 +65,13 @@ fun SurfaceSection(
 ) {
     Column {
         Text(
-            text = name,
+            text = name.toTitle(),
             modifier = Modifier.fillMaxWidth(),
             style = Typography.titleSmall.copy(textAlign = TextAlign.Center)
         )
         surfaces.forEach { surface ->
             RoomSurfaceCard(
-                modifier = Modifier
-                    .padding(top = Paddings.DEFAULT),
+                modifier = Modifier.padding(top = Paddings.DEFAULT),
                 surface = surface,
                 actionItems = listOf(
                     ActionItems("Редагувати", { showSurfaceEditScreen(surface) }),

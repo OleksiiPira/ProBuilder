@@ -2,13 +2,10 @@ package com.example.probuilder.presentation.screen.project.edit.room.upsert_cont
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -22,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.RoomSurface
@@ -34,7 +30,6 @@ import com.example.probuilder.presentation.components.FrameButton
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.NumericTextFieldWithTitle
 import com.example.probuilder.presentation.components.Paddings
-import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.components.TitleMedium
 import com.example.probuilder.presentation.screen.project.edit.room.UpsertSurfaceEvent
@@ -44,7 +39,6 @@ fun UpsertSurfaceContent(
     modifier: Modifier = Modifier,
     surface: RoomSurface = RoomSurface(),
     onEvent: (UpsertSurfaceEvent) -> Unit,
-    goBack: () -> Unit
 ) {
     val setName = { name: String -> onEvent(UpsertSurfaceEvent.SetName(name)) }
     val setType = { type: SurfaceType -> onEvent(UpsertSurfaceEvent.SetType(type)) }
@@ -52,102 +46,89 @@ fun UpsertSurfaceContent(
     val setWidth = { width: Double -> onEvent(UpsertSurfaceEvent.SetWidth(width)) }
     val setLength = { length: Double -> onEvent(UpsertSurfaceEvent.SetLength(length)) }
     val setDepth = { depth: Double -> onEvent(UpsertSurfaceEvent.SetDepth(depth)) }
-    val saveSurface = { onEvent(UpsertSurfaceEvent.Save); goBack() }
 
-    Box(
-        modifier = modifier.fillMaxSize()
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = Paddings.DEFAULT)
+            .padding(vertical = Paddings.DEFAULT)
+            .padding(WindowInsets.ime.asPaddingValues()),
+        verticalArrangement = Arrangement.spacedBy(Paddings.DEFAULT)
     ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = Paddings.DEFAULT)
-                .padding(vertical = Paddings.DEFAULT)
-                .padding(WindowInsets.ime.asPaddingValues()),
-            verticalArrangement = Arrangement.spacedBy(Paddings.DEFAULT)
-        ) {
-            TextFieldWithTitle(stringResource(R.string.name_title), surface.name, setName)
-            Column(Modifier.padding(horizontal = Paddings.DEFAULT)) {
-                var showOptionsDialog by remember { mutableStateOf(false) }
-                val surfaceTypes = listOf(SurfaceType.WALL, SurfaceType.FLOOR, SurfaceType.CEILING, SurfaceType.OTHER)
-                val dismiss = { showOptionsDialog = !showOptionsDialog }
+        TextFieldWithTitle(stringResource(R.string.name_title), surface.name, setName)
+        Column(Modifier.padding(horizontal = Paddings.DEFAULT)) {
+            var showOptionsDialog by remember { mutableStateOf(false) }
+            val surfaceTypes = listOf(SurfaceType.WALL, SurfaceType.FLOOR, SurfaceType.CEILING, SurfaceType.OTHER)
+            val dismiss = { showOptionsDialog = !showOptionsDialog }
 
-                BodyLarge(stringResource(R.string.surface_title), modifier = Modifier.padding(bottom = 4.dp))
+            BodyLarge(stringResource(R.string.surface_title), modifier = Modifier.padding(bottom = 4.dp))
 
-                FrameButton(onClick = dismiss) {
-                    BodyLarge(surface.type.label, modifier = Modifier.weight(1f))
-                    Icons.ArrowDown
-                }
-
-                if (showOptionsDialog) DialogOptions(
-                    options = surfaceTypes,
-                    dismiss = dismiss,
-                    onOptionSelected = { setType(it as SurfaceType) }
-                )
+            FrameButton(onClick = dismiss) {
+                BodyLarge(surface.type.label, modifier = Modifier.weight(1f))
+                Icons.ArrowDown
             }
 
+            if (showOptionsDialog) DialogOptions(
+                options = surfaceTypes,
+                dismiss = dismiss,
+                onOptionSelected = { setType(it as SurfaceType) }
+            )
+        }
 
+
+        Row(
+            modifier = Modifier.padding(horizontal = Paddings.DEFAULT),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            when (surface.type) {
+                SurfaceType.WALL, SurfaceType.OTHER -> NumericTextFieldWithTitle(
+                    modifier = Modifier.weight(1f),
+                    title = SurfaceOption.HEIGHT.label,
+                    value = surface.height,
+                    onValueChange = setHeight,
+                    horizPaddings = Paddings.EMPTY
+                )
+
+                SurfaceType.CEILING, SurfaceType.FLOOR -> NumericTextFieldWithTitle(
+                    modifier = Modifier.weight(1f),
+                    title = SurfaceOption.LENGTH.label,
+                    value = surface.length,
+                    onValueChange = setLength,
+                    horizPaddings = Paddings.EMPTY
+                )
+            }
+            NumericTextFieldWithTitle(
+                modifier = Modifier.weight(1f),
+                title = SurfaceOption.WIDTH.label,
+                value = surface.width,
+                onValueChange = setWidth,
+                horizPaddings = Paddings.EMPTY
+            )
+        }
+
+        if (surface.type == SurfaceType.OTHER) {
             Row(
                 modifier = Modifier.padding(horizontal = Paddings.DEFAULT),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                when (surface.type) {
-                    SurfaceType.WALL, SurfaceType.OTHER -> NumericTextFieldWithTitle(
-                        modifier = Modifier.weight(1f),
-                        title = SurfaceOption.HEIGHT.label,
-                        value = surface.height,
-                        onValueChange = setHeight,
-                        horizPaddings = Paddings.EMPTY
-                    )
-
-                    SurfaceType.CEILING, SurfaceType.FLOOR -> NumericTextFieldWithTitle(
-                        modifier = Modifier.weight(1f),
-                        title = SurfaceOption.LENGTH.label,
-                        value = surface.length,
-                        onValueChange = setLength,
-                        horizPaddings = Paddings.EMPTY
-                    )
-                }
                 NumericTextFieldWithTitle(
                     modifier = Modifier.weight(1f),
-                    title = SurfaceOption.WIDTH.label,
-                    value = surface.width,
-                    onValueChange = setWidth,
+                    title = SurfaceOption.LENGTH.label,
+                    value = surface.length,
+                    onValueChange = setDepth,
+                    horizPaddings = Paddings.EMPTY
+                )
+                NumericTextFieldWithTitle(
+                    modifier = Modifier.weight(1f),
+                    title = SurfaceOption.DEPTH.label,
+                    value = surface.depth,
+                    onValueChange = setDepth,
                     horizPaddings = Paddings.EMPTY
                 )
             }
-
-            if (surface.type == SurfaceType.OTHER) {
-                Row(
-                    modifier = Modifier.padding(horizontal = Paddings.DEFAULT),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    NumericTextFieldWithTitle(
-                        modifier = Modifier.weight(1f),
-                        title = SurfaceOption.LENGTH.label,
-                        value = surface.length,
-                        onValueChange = setDepth,
-                        horizPaddings = Paddings.EMPTY
-                    )
-                    NumericTextFieldWithTitle(
-                        modifier = Modifier.weight(1f),
-                        title = SurfaceOption.DEPTH.label,
-                        value = surface.depth,
-                        onValueChange = setDepth,
-                        horizPaddings = Paddings.EMPTY
-                    )
-                }
-            }
-
-            if (surface.type != SurfaceType.OTHER) MeasureResultSection(surface)
         }
 
-        PrimaryButton(
-            text = stringResource(id = R.string.save_btn),
-            onClick = saveSurface,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-        )
+        if (surface.type != SurfaceType.OTHER) MeasureResultSection(surface)
     }
 }
 
@@ -168,7 +149,8 @@ fun MeasureResultSection(
                 title = SurfaceOption.AREA.label,
                 value = surface.area,
                 horizPaddings = Paddings.EMPTY,
-                modifier = Modifier.weight(1f))
+                modifier = Modifier.weight(1f)
+            )
 
             if (surface.type != SurfaceType.WALL) {
                 NumericTextFieldWithTitle(
@@ -180,14 +162,4 @@ fun MeasureResultSection(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun Prevvv() {
-    UpsertSurfaceContent(
-        onEvent = {},
-        goBack = {}
-    )
 }

@@ -3,6 +3,7 @@ package com.example.probuilder.presentation.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -36,7 +37,9 @@ fun PrimaryButton(
     icon: Int = -1
 ) {
     TextButton(
-        modifier = modifier.fillMaxWidth().height(48.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp),
         colors = colors,
         shape = ButtonCfg.RoundedShape,
         onClick = onClick
@@ -95,9 +98,17 @@ fun FrameButton(
 @Composable
 fun FixedButtonBackground(
     modifier: Modifier,
+    content: @Composable () -> Unit
+
 ) {
-    Spacer(modifier = modifier
-        .fillMaxWidth()
-        .height(76.dp)
-        .background(Color(0xFFF5F5F5)))
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ){
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(76.dp)
+            .background(Color(0xFFF5F5F5)))
+        content()
+    }
 }

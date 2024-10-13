@@ -39,12 +39,15 @@ fun UpsertRoomScreen(
         val saveRoom = { viewModel.roomEvent(UpsertRoomEvent.Save); goBack(); }
         val saveSurface = { viewModel.surfaceEvent(SurfaceEvent.Save); step = Create.ROOM  }
         val deleteSurface = { surfaceItem: RoomSurface -> viewModel.surfaceEvent(SurfaceEvent.Delete(surfaceItem)) }
+        val saveButtonLabel = mapOf(
+            Create.ROOM to stringResource(R.string.save_btn),
+            Create.SURFACE to stringResource(R.string.add_btn)
+        )
 
         Box(
             modifier = Modifier
                 .padding(paddings)
                 .fillMaxSize()
-                .padding(bottom = Paddings.DEFAULT)
         ) {
             when (step) {
                 Create.ROOM -> UpsertRoomContent(
@@ -57,17 +60,16 @@ fun UpsertRoomScreen(
                 Create.SURFACE -> UpsertSurfaceContent(
                     surface = surface,
                     onEvent = viewModel::surfaceEvent,
-                    goBack = goBack
                 )
             }
 
-            FixedButtonBackground(Modifier.align(Alignment.BottomCenter))
-            PrimaryButton(
-                text = stringResource(R.string.save_btn),
-                onClick = if (step == Create.ROOM) saveRoom else saveSurface,
-                modifier = Modifier.padding(Paddings.DEFAULT, 4.dp).align(Alignment.BottomCenter)
-            )
-
+            FixedButtonBackground(Modifier.align(Alignment.BottomCenter)){
+                PrimaryButton(
+                    text = saveButtonLabel[step] ?: stringResource(R.string.save_btn),
+                    onClick = if (step == Create.ROOM) saveRoom else saveSurface,
+                    modifier = Modifier.padding(Paddings.DEFAULT, 4.dp)
+                )
+            }
         }
     }
 }
