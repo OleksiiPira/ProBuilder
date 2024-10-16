@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.screen.categories.categories.TopBar

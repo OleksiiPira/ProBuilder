@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.domain.model.SearchItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
@@ -71,7 +71,7 @@ fun DropDownSearch(
                     inputText = it
                     isSearchExpanded = true
                 },
-                shape = ButtonCfg.RoundedShape,
+                shape = ButtonCfg.shape,
                 trailingIcon = {
                     Icon(
                         modifier = modifier.clickable {

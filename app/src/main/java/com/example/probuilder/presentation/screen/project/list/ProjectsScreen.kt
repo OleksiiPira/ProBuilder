@@ -38,13 +38,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.ActionItems
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
 import com.example.probuilder.presentation.screen.ui.theme.Typography
@@ -138,7 +138,7 @@ fun ProjectCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
-                    .clip(ButtonCfg.RoundedShape),
+                    .clip(ButtonCfg.shape),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = Color(0xFFEEEEF2)
             )

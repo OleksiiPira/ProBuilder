@@ -36,7 +36,7 @@ import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.DimmedBlockingOverlay
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.Note
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.ProjectFloatingButton
 import com.example.probuilder.presentation.components.SecondaryButton

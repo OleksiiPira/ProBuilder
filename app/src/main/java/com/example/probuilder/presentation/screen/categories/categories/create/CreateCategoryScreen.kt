@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.domain.model.ActionItems
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.presentation.components.Icons
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
@@ -46,7 +46,7 @@ fun CreateCategoryScreen(
         Column(
             modifier = modifier
                 .padding(padding)
-                .clip(ButtonCfg.RoundedShape)
+                .clip(ButtonCfg.shape)
                 .background(Color.White)
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)

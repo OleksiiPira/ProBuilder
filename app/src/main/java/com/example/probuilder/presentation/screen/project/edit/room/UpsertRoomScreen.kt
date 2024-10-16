@@ -17,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.presentation.components.FixedButtonBackground
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.screen.categories.categories.TopBar
 import com.example.probuilder.presentation.screen.project.edit.room.upsert_content.UpsertRoomContent

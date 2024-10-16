@@ -31,12 +31,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.Icons
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TitleLarge
 import com.example.probuilder.presentation.screen.categories.component.DropDownButton
@@ -134,7 +134,7 @@ fun RoomCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
-                    .clip(ButtonCfg.RoundedShape),
+                    .clip(ButtonCfg.shape),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = Color(0xFFEEEEF2)
             )

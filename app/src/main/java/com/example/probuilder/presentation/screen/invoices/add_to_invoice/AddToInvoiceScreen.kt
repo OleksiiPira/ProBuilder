@@ -53,7 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.common.Constants.HORIZONTAL_PADDING
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.domain.model.Invoice
 import com.example.probuilder.domain.model.SearchItem
 import com.example.probuilder.presentation.screen.ui.theme.Typography
@@ -145,7 +145,7 @@ fun AddToInvoiceScreen(
                         onValueChange = {
                             viewModel.onEvent(AddItemInvoiceEvent.SetName(it))
                         },
-                        shape = ButtonCfg.RoundedShape,
+                        shape = ButtonCfg.shape,
                         trailingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Close,
@@ -169,7 +169,7 @@ fun AddToInvoiceScreen(
                         ) {
                             OutlinedTextField(
                                 modifier = Modifier.weight(3f),
-                                shape = ButtonCfg.RoundedShape,
+                                shape = ButtonCfg.shape,
                                 value = item.pricePerUnit.toDoubleOrNull().toString(),
                                 onValueChange = {
                                 },
@@ -281,7 +281,7 @@ fun AddToInvoiceScreen(
                         style = Typography.titleMedium
                     )
                     OutlinedTextField(
-                        shape = ButtonCfg.RoundedShape,
+                        shape = ButtonCfg.shape,
                         value = if (item.quantity.toIntOrNull() != null && item.quantity.toDouble() > 0) item.quantity else "",
                         onValueChange = {
                             viewModel.onEvent(
@@ -305,7 +305,7 @@ fun AddToInvoiceScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .onFocusChanged { expanded = it.hasFocus },
-                        shape = ButtonCfg.RoundedShape,
+                        shape = ButtonCfg.shape,
                         value = item.invoice.name,
                         onValueChange = {
                             viewModel.onEvent(

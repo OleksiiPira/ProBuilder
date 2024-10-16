@@ -180,7 +180,7 @@ fun HomeNavigation(
                 RoomDetailsScreen(bottomBar = bottomBar, navigateTo = navController::navigate, goBack = navController::popBackStack)
             }
             composable(Route.UPSERT_ROOM) {
-                UpsertRoomScreen(goBack = navController::popBackStack)
+                UpsertRoomScreen(navigateTo = navController::navigate, goBack = navController::popBackStack)
             }
             composable(Route.EDIT_SURFACE_SCREEN) {
                 EditSurfaceScreen(goBack = navController::popBackStack)

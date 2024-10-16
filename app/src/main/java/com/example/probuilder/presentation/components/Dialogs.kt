@@ -20,7 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.probuilder.domain.enums.DisplayableEnum
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
@@ -51,7 +52,7 @@ fun DialogOptions(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(ButtonCfg.Height)
+                        .height(ButtonCfg.height)
                         .clickable { onItemClick(option) },
                     verticalAlignment = Alignment.CenterVertically
                 ) {

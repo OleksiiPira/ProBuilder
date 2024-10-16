@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.presentation.components.config.TextFieldCfg
 import com.example.probuilder.presentation.components.config.contentPadding
 import com.example.probuilder.presentation.components.config.contentWidth
@@ -91,7 +91,7 @@ fun FrameButton(
             .height(TextFieldCfg.height)
             .border(1.dp, Color(0xFF9F9FA4), shape),
         shape = shape,
-        colors = ButtonCfg.OutlinedColors,
+        colors = ButtonCfg.outlinedColors,
         contentPadding = contentPadding(),
         onClick = onClick
     ) {

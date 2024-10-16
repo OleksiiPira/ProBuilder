@@ -38,7 +38,7 @@ import com.example.probuilder.presentation.components.Badge
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.Poster
 import com.example.probuilder.presentation.components.ProgressLarge
 import com.example.probuilder.presentation.components.ProgressSmall

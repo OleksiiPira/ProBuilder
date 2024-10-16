@@ -35,7 +35,7 @@ import com.example.probuilder.presentation.components.BodyMedium
 import com.example.probuilder.presentation.components.BodySmall
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.RoomSurfaces
 import com.example.probuilder.presentation.components.TitleMedium
 import com.example.probuilder.presentation.screen.categories.categories.TopBar

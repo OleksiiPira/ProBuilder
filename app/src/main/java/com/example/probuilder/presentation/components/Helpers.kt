@@ -7,18 +7,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.zIndex
 import com.example.probuilder.common.ext.blockActions
 
 @Composable
 fun DimmedBlockingOverlay(
     modifier: Modifier = Modifier,
     show: Boolean = true,
+    color: Color = Color(0x40000000),
+    opacity: Float = 0.25F,
     dismiss: () -> Unit
 ) {
-    Box(
+    if (show) Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0x40000000)).alpha(0.25F)
+            .background(color)
+            .alpha(opacity)
             .blockActions(show, dismiss)
     ){
 

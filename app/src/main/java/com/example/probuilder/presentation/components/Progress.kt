@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 
 @Composable
 fun ProgressSmall(progress: Float) {
@@ -18,7 +18,7 @@ fun ProgressSmall(progress: Float) {
         modifier = Modifier
             .fillMaxWidth()
             .height(8.dp)
-            .clip(ButtonCfg.RoundedShape),
+            .clip(ButtonCfg.shape),
         color = MaterialTheme.colorScheme.primary,
         trackColor = Color(0xFFEEEEF2)
     )
@@ -28,7 +28,7 @@ fun ProgressSmall(progress: Float) {
 fun ProgressLarge(progress: Float) {
     LinearProgressIndicator(
         progress = { progress },
-        modifier = Modifier.fillMaxWidth().height(12.dp).clip(ButtonCfg.RoundedShape),
+        modifier = Modifier.fillMaxWidth().height(12.dp).clip(ButtonCfg.shape),
         color = MaterialTheme.colorScheme.primary,
         trackColor = Color(0xFFEEEEF2)
     )

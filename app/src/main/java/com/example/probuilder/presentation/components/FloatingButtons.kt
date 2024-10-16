@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.R
+import com.example.probuilder.presentation.components.config.Paddings
 
 @Composable
 fun CustomFloatingButton(

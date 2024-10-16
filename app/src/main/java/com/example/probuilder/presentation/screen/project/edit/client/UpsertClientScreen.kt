@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Client
 import com.example.probuilder.presentation.components.LabelMedium
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.Poster
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton

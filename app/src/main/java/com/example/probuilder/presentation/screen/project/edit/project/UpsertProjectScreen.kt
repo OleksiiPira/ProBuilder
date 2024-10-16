@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 import com.example.probuilder.R
 import com.example.probuilder.domain.model.Project
 import com.example.probuilder.presentation.components.LabelMedium
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.PrimaryButton
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle

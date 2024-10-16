@@ -23,7 +23,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
@@ -33,7 +34,7 @@ fun TextFieldWithTitle(
     onValueChange: (String) -> Unit = {},
     modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit) = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
-    shape: Shape = ButtonCfg.RoundedShape,
+    shape: Shape = ButtonCfg.shape,
     horizPaddings: Dp = 16.dp
 ) {
     Column(modifier = modifier.padding(horizontal = horizPaddings)) {
@@ -65,7 +66,7 @@ fun NumericTextFieldWithTitle(
     value: Double,
     onValueChange: (Double) -> Unit = {},
     trailingIcon: @Composable (() -> Unit) = { Icon(imageVector = Icons.Outlined.Close, contentDescription = null) },
-    shape: Shape = ButtonCfg.RoundedShape,
+    shape: Shape = ButtonCfg.shape,
     horizPaddings: Dp = Paddings.DEFAULT
 ) {
     var inputValue by remember { mutableStateOf(value.toString()) }

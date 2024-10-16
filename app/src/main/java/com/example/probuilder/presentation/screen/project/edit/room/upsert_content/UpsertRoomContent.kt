@@ -18,12 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.probuilder.R
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.presentation.components.BodyLarge
 import com.example.probuilder.presentation.components.LabelMedium
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.RoomSurfaces
 import com.example.probuilder.presentation.components.SecondaryButton
 import com.example.probuilder.presentation.components.TextFieldWithTitle
@@ -43,7 +43,7 @@ fun UpsertRoomContent(
     Column(
         modifier = Modifier
             .padding(WindowInsets.ime.asPaddingValues())
-            .padding(bottom = ButtonCfg.Height + 24.dp)
+            .padding(bottom = ButtonCfg.height + 24.dp)
             .verticalScroll(rememberScrollState()),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

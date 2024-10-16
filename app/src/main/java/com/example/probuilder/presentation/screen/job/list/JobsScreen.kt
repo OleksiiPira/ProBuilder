@@ -29,7 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.ButtonCfg
 import com.example.probuilder.presentation.Route
 import com.example.probuilder.presentation.components.CustomFloatingButton
 import com.example.probuilder.presentation.components.Icons
@@ -101,8 +101,8 @@ fun TagButton(
     Row(
         modifier = Modifier
             .height(32.dp)
-            .border(1.dp, borderColor, ButtonCfg.RoundedShape)
-            .clip(ButtonCfg.RoundedShape)
+            .border(1.dp, borderColor, ButtonCfg.shape)
+            .clip(ButtonCfg.shape)
             .clickable {
                 onClick()
                 enabled = !enabled

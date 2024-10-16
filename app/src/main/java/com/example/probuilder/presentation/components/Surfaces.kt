@@ -21,6 +21,7 @@ import com.example.probuilder.domain.model.Room
 import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.domain.model.SurfaceType
 import com.example.probuilder.presentation.Route
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.screen.project.details.room.RoomSurfaceCard
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
