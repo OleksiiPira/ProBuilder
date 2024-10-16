@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,13 +22,12 @@ import com.example.probuilder.domain.model.RoomSurface
 import com.example.probuilder.domain.model.SurfaceOption
 import com.example.probuilder.domain.model.SurfaceType
 import com.example.probuilder.presentation.components.BodyLarge
-import com.example.probuilder.presentation.components.DialogOptions
-import com.example.probuilder.presentation.components.FrameButton
-import com.example.probuilder.presentation.components.Icons
+import com.example.probuilder.presentation.components.CustomDropDownMenu
 import com.example.probuilder.presentation.components.NumericTextFieldWithTitle
-import com.example.probuilder.presentation.components.Paddings
+import com.example.probuilder.presentation.components.config.Paddings
 import com.example.probuilder.presentation.components.TextFieldWithTitle
 import com.example.probuilder.presentation.components.TitleMedium
+import com.example.probuilder.presentation.components.config.contentPadding
 import com.example.probuilder.presentation.screen.project.edit.room.UpsertSurfaceEvent
 
 @Composable
@@ -46,6 +42,7 @@ fun UpsertSurfaceContent(
     val setWidth = { width: Double -> onEvent(UpsertSurfaceEvent.SetWidth(width)) }
     val setLength = { length: Double -> onEvent(UpsertSurfaceEvent.SetLength(length)) }
     val setDepth = { depth: Double -> onEvent(UpsertSurfaceEvent.SetDepth(depth)) }
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -55,28 +52,19 @@ fun UpsertSurfaceContent(
         verticalArrangement = Arrangement.spacedBy(Paddings.DEFAULT)
     ) {
         TextFieldWithTitle(stringResource(R.string.name_title), surface.name, setName)
-        Column(Modifier.padding(horizontal = Paddings.DEFAULT)) {
-            var showOptionsDialog by remember { mutableStateOf(false) }
-            val surfaceTypes = listOf(SurfaceType.WALL, SurfaceType.FLOOR, SurfaceType.CEILING, SurfaceType.OTHER)
-            val dismiss = { showOptionsDialog = !showOptionsDialog }
-
+        Column(
+            Modifier.fillMaxWidth().padding(contentPadding())) {
             BodyLarge(stringResource(R.string.surface_title), modifier = Modifier.padding(bottom = 4.dp))
-
-            FrameButton(onClick = dismiss) {
-                BodyLarge(surface.type.label, modifier = Modifier.weight(1f))
-                Icons.ArrowDown
-            }
-
-            if (showOptionsDialog) DialogOptions(
-                options = surfaceTypes,
-                dismiss = dismiss,
-                onOptionSelected = { setType(it as SurfaceType) }
+            CustomDropDownMenu(
+                defaultItem = surface.type,
+                onSelected = { setType(it as SurfaceType)},
+                items = listOf(SurfaceType.WALL, SurfaceType.FLOOR, SurfaceType.CEILING, SurfaceType.OTHER)
             )
         }
 
 
         Row(
-            modifier = Modifier.padding(horizontal = Paddings.DEFAULT),
+            modifier = Modifier.padding(contentPadding()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             when (surface.type) {
@@ -107,7 +95,7 @@ fun UpsertSurfaceContent(
 
         if (surface.type == SurfaceType.OTHER) {
             Row(
-                modifier = Modifier.padding(horizontal = Paddings.DEFAULT),
+                modifier = Modifier.padding(contentPadding()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 NumericTextFieldWithTitle(
@@ -139,7 +127,7 @@ fun MeasureResultSection(
         modifier = Modifier
             .padding(top = Paddings.DEFAULT)
             .background(Color(0xFFEEEEF2))
-            .padding(vertical = 12.dp, horizontal = Paddings.DEFAULT),
+            .padding(contentPadding(vertical = 12.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TitleMedium("Результат", modifier = Modifier.padding(bottom = 12.dp))

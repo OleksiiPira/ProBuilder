@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -20,9 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.probuilder.domain.model.ButtonCfg
+import com.example.probuilder.presentation.components.config.TextFieldCfg
+import com.example.probuilder.presentation.components.config.contentPadding
+import com.example.probuilder.presentation.components.config.contentWidth
 import com.example.probuilder.presentation.screen.ui.theme.Typography
 
 @Composable
@@ -37,11 +42,9 @@ fun PrimaryButton(
     icon: Int = -1
 ) {
     TextButton(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(48.dp),
+        modifier = modifier.width(contentWidth()).height(ButtonCfg.height),
         colors = colors,
-        shape = ButtonCfg.RoundedShape,
+        shape = ButtonCfg.shape,
         onClick = onClick
     ) {
         val iconPresent = icon > -1
@@ -63,15 +66,13 @@ fun SecondaryButton(
     modifier: Modifier = Modifier,
 ) {
     OutlinedButton(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(44.dp),
+        modifier = modifier.width(contentWidth()).height(ButtonCfg.height),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             contentColor = Color(0xFF0C1318),
             containerColor = Color.Transparent
         ),
-        shape = ButtonCfg.RoundedShape,
+        shape = ButtonCfg.shape,
     ) {
         Text(text = text, style = Typography.labelLarge)
     }
@@ -80,15 +81,18 @@ fun SecondaryButton(
 @Composable
 fun FrameButton(
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    shape: Shape = ButtonCfg.shape,
     content: @Composable (RowScope.() -> Unit)
 ) {
     TextButton(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .border(1.dp, Color(0xFF9F9FA4), ButtonCfg.RoundedShape),
-        shape = ButtonCfg.RoundedShape,
+            .height(TextFieldCfg.height)
+            .border(1.dp, Color(0xFF9F9FA4), shape),
+        shape = shape,
         colors = ButtonCfg.OutlinedColors,
+        contentPadding = contentPadding(),
         onClick = onClick
     ) {
         content()
